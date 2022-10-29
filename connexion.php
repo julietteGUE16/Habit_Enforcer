@@ -13,8 +13,7 @@ if(isset($_POST['envoi'])){//nom du bouton
         $_SESSION['pseudo'] = $pseudo;
         $_SESSION['mdp'] = $mdp;
         $_SESSION['id'] = $recupUser->fetch()['id'];
-        echo "$pseudo est connecté";
-        //header('Location: index.php');
+        header('Location: menu.php');
        } else {
         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
        }
