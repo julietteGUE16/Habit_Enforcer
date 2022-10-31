@@ -14,15 +14,19 @@ class task
 
     //si c'est hebdomadaire il faut choisir le jour de la semaine qui va revenir
     private string $day;
-    //
+    //id user qui à créé la tâche
+    private int $idUser;
     
-    public function __construct(type_task $task, string $name, int $level, bool $isDaily, string $day)
+
+    //TODO : id task ????
+    public function __construct(type_task $task, string $name, int $level, bool $isDaily, string $day, int $idUser)
     {
         $this->$task = $task;
         $this->$name = $name;
         $this->$level = $level;
         $this->$isDaily = $isDaily;     
         $this->$day = $day;
+        $this->$idUser = $idUser;
     }
 
     public function getTask (): type_task{
@@ -46,5 +50,8 @@ class task
     }
     public function getDay (): string{
         return $day;
+    }
+    public function getIdUser (): int {
+        return $idUser;
     }
 }
