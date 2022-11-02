@@ -25,18 +25,41 @@ if(isset($_POST['envoi'])){
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Inscription</title>
-    <meta charset="utf-8">
-</head>
-<body>
 
-<form method="POST" action="">
-<input type="text" name="pseudo" autocomplete="off">
-<br/>
-<input type="password" name="mdp" autocomplete="off">
-<br/><br/>
-<input type="submit" name="envoi">
-</form>
+<head>
+    <title>Connexion</title>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Habit_Enforcer/style.css" crossorigin="anonymous">
+</head>
+<img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
+
+<body class="login">
+
+
+  <div class="container">
+
+    <div class="login-wrapo flex">
+
+      <div class="login-box">
+
+        <h2>Inscription</h2>
+
+        <form id="loginForm" method="POST" action="">
+            <input type="text" name="pseudo" required placeholder="pseudo">
+            <br/>
+            <input type="password" name="mdp" required placeholder="mot de passe">
+            <br/><br/>
+            <button type="submit" name= "envoi" class="ripple cursor"> S'inscrire ! </button>
+        </form>
+
+        <p class="flex"> <a href="../Habit_Enforcer/connexion.php"> Déjà inscrit ? </a> </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </body>
 </html>

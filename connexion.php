@@ -25,18 +25,40 @@ if(isset($_POST['envoi'])){//nom du bouton
 
 <!DOCTYPE html>
 <html>
+<html lang="en-US">
 <head>
     <title>Connexion</title>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Habit_Enforcer/style.css" crossorigin="anonymous">
 </head>
-<body>
+<img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
 
-<form method="POST" action="" align="center">
-<input type="text" name="pseudo">
-<br/>
-<input type="password" name="mdp">
-<br/><br/>
-<input type="submit" name="envoi">
-</form>
+<body class="login">
+
+
+  <div class="container">
+
+    <div class="login-wrapo flex">
+
+      <div class="login-box">
+
+        <h2>Connexion</h2>
+
+        <form id="loginForm"  method="POST" action="" align="center">
+            <input type="text" name="pseudo" required placeholder="pseudo">
+            <br/>
+            <input type="password" name="mdp" required placeholder="mot de passe">
+            <br/><br/>
+            <button type="submit" name= "envoi" class="ripple cursor"> Se connecter ! </button>
+        </form>
+
+        <p class="flex"> <a href="../Habit_Enforcer/inscription.php"> Nouvel utilisateur ? </a> </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </body>
-</html>
