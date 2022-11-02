@@ -1,0 +1,187 @@
+:root{
+    --couleur-1: #6d3cbc;
+    --couleur-2: #7367cb;
+    --couleur-3: #98bae7;
+    --couleur-4: #B8E4F0;
+    --couleur-5: #6eacfd;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, var(--couleur-1),var(--couleur-2), var(--couleur-3), var(--couleur-1),var(--couleur-2), var(--couleur-3));
+    background-size: 400% 400%;
+	animation: gradient 10s ease infinite;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.content-total{
+    position: relative;
+    width: 100vh;
+    height: 50vh;
+    display: flex;
+    border-radius: 15px;
+    justify-content: space-around;
+    -webkit-box-shadow: -5px 4px 10px -1px rgba(0,0,0,0.4); 
+    box-shadow: -5px 4px 10px -1px rgba(0,0,0,0.4);
+    transition: 0.5s;
+}
+
+.content-total:hover{
+    transform: translate(10px, -10px);
+    -webkit-box-shadow: -9px 11px 10px -1px rgba(0,0,0,0.6); 
+    box-shadow: -9px 11px 10px -1px rgba(0,0,0,0.6);
+    transition: 0.5s;
+
+}
+
+.logindiv{
+    position: absolute;
+    width: 50vh;
+    height: 50vh;
+    background: linear-gradient(50deg, #5a50a6, var(--couleur-2) );
+    display: flex;
+    flex-direction: column;
+    justify-content:   space-around;
+    align-items: center;
+    right: 0;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.welcomediv{
+    position: absolute;
+    left: 0;
+    width: 50vh;
+    height: 50vh;
+    background-color: var(--couleur-1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.welcomediv h2{
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: 'Finger Paint', cursive;
+    margin-top: -1rem;
+}
+
+.welcomediv h4 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -4rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    
+}
+
+.welcomediv p {
+    color: white;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: -5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+
+.logindiv h2{
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: -5rem;
+}
+
+
+.pseudo{
+    margin-bottom: 1rem;
+}
+
+.pseudo, .mdp{
+    width: 25vh;
+    height: 7vh;
+    border: none;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    outline: none;
+    background: none;
+    color: white;
+    border-bottom: 1px solid white;
+}
+
+.pseudo:focus, .mdp:focus{
+    border-bottom: 1px solid var(--couleur-5);
+}
+
+.pseudo::placeholder, .mdp::placeholder {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.envoi{
+    position: relative;
+    width: 25vh;
+    height: 5vh;
+    display: flex;
+    margin-top: 1rem;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    background: linear-gradient(var(--couleur-1), #874ee2);
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    overflow: hidden;
+    border-radius: 16px;
+    -webkit-box-shadow: -2px 8px 10px -1px rgba(0,0,0,0.26); 
+    box-shadow: -2px 8px 10px -1px rgba(0,0,0,0.26);
+    transition: all 0.5s;
+}
+
+.envoi:hover{
+    transform: translate(0px, -5px);
+    background: linear-gradient(#874ee2,var(--couleur-1)) ;
+    color: white;
+    cursor: pointer;
+    -webkit-box-shadow: -2px 8px 10px -1px rgba(0,0,0,0.37); 
+    box-shadow: -2px 8px 10px -1px rgba(0,0,0,0.37);
+    transition: all 0.5s;
+}

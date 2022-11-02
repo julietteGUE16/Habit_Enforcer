@@ -27,16 +27,33 @@ if(isset($_POST['envoi'])){//nom du bouton
 <html>
 <head>
     <title>Connexion</title>
+    <link rel="stylesheet" type="text/css" href="connexion.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
     <meta charset="utf-8">
 </head>
 <body>
 
-<form method="POST" action="" align="center">
-<input type="text" name="pseudo">
-<br/>
-<input type="password" name="mdp">
-<br/><br/>
-<input type="submit" name="envoi">
-</form>
+<div class="content-total">
+    <div class="logindiv">
+
+        <h2>Connectez vous</h2>
+        <form method="POST" action="" align="center">
+        <input type="text" class="pseudo" name="pseudo" placeholder="Nom d'utilisateur">
+        <br/>
+        <input type="password" class="mdp" name="mdp" placeholder="Mot de Passe">
+        <br/><br/>
+        <input type="submit" class="envoi" name="envoi" value="Se connecter">
+        </form>
+    </div>
+    <div class="welcomediv">
+        <h2>Taroutyn</h2>
+        <h4>Bienvenue sur Taroutyne, le site pour prende les bonnes habitudes !</h4>
+        <p>Connectez-vous pour accéder à votre espace personnel</p>
+
+    </div>
+</div>
+
 </body>
 </html>
