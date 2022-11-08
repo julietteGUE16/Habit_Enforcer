@@ -17,9 +17,15 @@ class task
     //id user qui à créé la tâche
     private int $idUser;
     
+    //bool qui permet de valider ou non le task
+    private bool $isValid;
+
+
+    //TODO : récurrence de la task
+    
 
     //TODO : id task ????
-    public function __construct(type_task $task, string $name, int $level, bool $isDaily, string $day, int $idUser)
+    public function __construct(type_task $task, string $name, int $level, bool $isDaily, string $day, int $idUser, bool $isValid)
     {
         $this->$task = $task;
         $this->$name = $name;
@@ -27,6 +33,7 @@ class task
         $this->$isDaily = $isDaily;     
         $this->$day = $day;
         $this->$idUser = $idUser;
+        $this->$isValid = $isValid;
     }
 
     public function getTask (): type_task{
@@ -53,5 +60,9 @@ class task
     }
     public function getIdUser (): int {
         return $idUser;
+    }
+
+    public function getIsValid () : bool {
+        return $isValid;
     }
 }
