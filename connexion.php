@@ -1,6 +1,6 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=espace_membres;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 if(isset($_POST['envoi'])){//nom du bouton
     if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
        $pseudo = htmlspecialchars($_POST['pseudo']);
@@ -12,7 +12,7 @@ if(isset($_POST['envoi'])){//nom du bouton
        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
         $_SESSION['pseudo'] = $pseudo;
         $_SESSION['mdp'] = $mdp;
-        $_SESSION['id'] = $recupUser->fetch()['id'];
+        $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
         header('Location: menu.php');
        } else {
         echo "<script>alert('Votre mot de passe ou nom d'utilisateur est incorrecte')</script>";
@@ -25,6 +25,7 @@ if(isset($_POST['envoi'])){//nom du bouton
 
 <!DOCTYPE html>
 <html>
+<html lang="en-US">
 <head>
     <title>Connexion</title>
     <link rel="stylesheet" type="text/css" href="connexion.css">
@@ -32,6 +33,8 @@ if(isset($_POST['envoi'])){//nom du bouton
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Habit_Enforcer/style.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -54,6 +57,34 @@ if(isset($_POST['envoi'])){//nom du bouton
         <p>Connectez-vous pour accéder à votre espace personnel</p>
     </div>
 </div>
+
+<!-- <img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
+<body class="login">
+
+
+  <div class="container">
+
+    <div class="login-wrapo flex">
+
+      <div class="login-box">
+
+        <h2>Connexion</h2>
+
+        <form id="loginForm"  method="POST" action="" align="center">
+            <input type="text" name="pseudo" required placeholder="pseudo">
+            <br/>
+            <input type="password" name="mdp" required placeholder="mot de passe">
+            <br/><br/>
+            <button type="submit" name= "envoi" class="ripple cursor"> Se connecter ! </button>
+        </form>
+
+        <p class="flex"> <a href="../Habit_Enforcer/inscription.php"> Nouvel utilisateur ? </a> </p>
+
+      </div>
+
+    </div>
+
+  </div> -->
 
 </body>
 </html>
