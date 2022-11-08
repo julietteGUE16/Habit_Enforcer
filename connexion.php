@@ -1,6 +1,6 @@
 <?php
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=espace_membres;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 if(isset($_POST['envoi'])){//nom du bouton
     if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
        $pseudo = htmlspecialchars($_POST['pseudo']);
@@ -12,7 +12,7 @@ if(isset($_POST['envoi'])){//nom du bouton
        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
         $_SESSION['pseudo'] = $pseudo;
         $_SESSION['mdp'] = $mdp;
-        $_SESSION['id'] = $recupUser->fetch()['id'];
+        $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
         header('Location: menu.php');
        } else {
         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
