@@ -51,13 +51,13 @@ body {
     transition: 0.5s;
 }
 
-.content-total:hover{
+/* .content-total:hover{
     transform: translate(10px, -10px);
     -webkit-box-shadow: -9px 11px 10px -1px rgba(0,0,0,0.6); 
     box-shadow: -9px 11px 10px -1px rgba(0,0,0,0.6);
     transition: 0.5s;
 
-}
+} */
 
 .logindiv{
     position: absolute;
@@ -71,6 +71,29 @@ body {
     right: 0;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+.logindiv form{
+    margin-top: 6rem;
+}
+
+.logindiv p{
+    color: white;
+    font-size: 1em;
+    font-weight: 200;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logindiv a {
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.logindiv a:hover{
+    color: rgb(192, 192, 192);
+    transition: 0.5s;
 }
 
 .welcomediv{
@@ -93,7 +116,7 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     font-family: 'Finger Paint', cursive;
-    margin-top: -1rem;
+    margin-top: -2rem;
 }
 
 .welcomediv h4 {
@@ -101,7 +124,7 @@ body {
     font-size: 1.5rem;
     font-weight: 500;
     font-family: Arial, Helvetica, sans-serif;
-    margin-top: -4rem;
+    margin-top: -6rem;
     margin-left: 1rem;
     margin-right: 1rem;
     
@@ -109,12 +132,13 @@ body {
 
 .welcomediv p {
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     font-family: Arial, Helvetica, sans-serif;
     margin-top: -5rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    margin-bottom: -1rem;
 }
 
 
@@ -123,6 +147,7 @@ body {
     font-size: 2.5rem;
     font-weight: 600;
     font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2rem;
     margin-bottom: -5rem;
 }
 

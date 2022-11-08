@@ -12,7 +12,7 @@ class Groupe{
             $_SESSION['id'] = $recupUser->fetch()['id'];
             $_SESSION['nom'] = $nom;
             $_SESSION['description'] = $description;
-            header('Location: groupe.php');
+            header('Location: menu.php');
         }
 }
 }
@@ -22,26 +22,24 @@ class Groupe{
 <html>
 <head>
     <title>Groupe</title>
+    <link rel="stylesheet" type="text/css" href="groupe.css">
     <meta charset="utf-8">
 </head>
 <body>
 
 <form method="POST" action="" >
-<input type="text" name="nom" placeholder="Nom du groupe">
+<input type="text" name="nom" placeholder="Nom du groupe" required="required" autocomplete="off">
 <br/>
-<input type="text" name="description" placeholder="Description">
+<input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
 <br/><br/>
 <input type="submit" name="envoi" >
 
 <?php
     if(!empty($_POST['nom']) AND !empty($_POST['description'])){
-        echo "avant ajout";
         Groupe::createGroupe($_POST['nom'], $_POST['description']);
-        echo "groupe ajouté";
-    } else {
-        echo " Votre nom de groupe ou votre description est incorrecte";
     }
 ?>
 </form>
+
 </body>
 </html>
