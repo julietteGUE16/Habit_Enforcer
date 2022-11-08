@@ -13,7 +13,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             - type
             - level
             - isdaily
-            - day
+            - jour
             - id_users
             - isvalid
         */
@@ -29,27 +29,27 @@ if(isset($_POST['btn'])){//nom du bouton
         
         if($_POST['periode'] == "Quotidienne"){
              $isdaily = true; 
-             $day = $_POST['day'];
+             $jour = $_POST['jour'];
         } else {
             $isdaily = false;
-            $day = NULL;
+            $jour = NULL;
         }
         //TODO : verif que cela marche
         $id_users = $_SESSION['id_users'];
         $isvalid = false;
        
+
+        echo "user = " . $id_users;
+        
         //TODO : 
-        $insertUser = $bdd->prepare('INSERT INTO task(day,id_users,isdaily,isvalid,level,name,type)VALUES(?,?,?,?,?,?,?)');
-        $insertUser->execute(array($day, $id_users, $isdaily, $isvalid, $level, $name, $type));
+        //$insertUser = $bdd->prepare('INSERT INTO task(jour,id_users,isdaily,isvalid,niveau,nom,style)VALUES(?,?,?,?,?,?,?)');
+        //$insertUser->execute(array($jour, $id_users, $isdaily, $isvalid, $level, $name, $type));
 
     }else{
         echo "Veuillez compléter tous les champs..";
     }
     
 }
-
-
-
 //TODO : liste de choix parmis les type of task
 //TODO rendre invisible le label jour sauf si on select quotidien
 
@@ -89,7 +89,7 @@ nomme ta tâche :
 
 
 <h3 >si hebdomadaire, choix du jour :</h3>
-<SELECT name="day" size="1">
+<SELECT name="jour" size="1">
 <option value="" disabled selected>...</option>
 <option value="Lundi">Lundi</option>
 <option value="Mardi">Mardi</option>
