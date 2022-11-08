@@ -13,6 +13,7 @@ if(isset($_POST['envoi'])){//nom du bouton
         $_SESSION['pseudo'] = $pseudo;
         $_SESSION['mdp'] = $mdp;
         $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
+        $_SESSION['email'] = $recupUser->fetch()['email'];
         header('Location: menu.php');
        } else {
         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
@@ -30,7 +31,7 @@ if(isset($_POST['envoi'])){//nom du bouton
     <title>Connexion</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/style.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
 </head>
 <img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
 

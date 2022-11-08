@@ -55,10 +55,6 @@ textarea:focus {
     text-align: center;
 }
 
-.login {
-    background-color: #2d2a59;
-}
-
 .login-wrapo {
     width: 100%;
     justify-content: left;
