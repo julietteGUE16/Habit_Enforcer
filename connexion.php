@@ -52,7 +52,6 @@ if(isset($_POST['envoi'])){//nom du bouton
         <h2>Taroutyn</h2>
         <h4>Bienvenue sur Taroutyn, le site pour prende les bonnes habitudes !</h4>
         <p>Connectez-vous pour accéder à votre espace personnel</p>
-        
     </div>
 </div>
 
