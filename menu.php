@@ -33,7 +33,7 @@
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2>
           <a>Se déconnecter</a>
-          <a>changer de pseudo</a>
+          <a href="../Habit_Enforcer/inscription.php" <?php session_destroy();?>>changer de pseudo</a>
           <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
