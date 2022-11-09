@@ -31,10 +31,10 @@
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2>
-          <a>Changer de pseudo</a>
-          <a href="../Habit_Enforcer/intermediaire.php">se déconnecter</a>
-          <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+          <h2>Mon compte</h2><br/><br/>
+          <a>Changer de pseudo</a><br/><br/>
+          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br/><br/>
+          <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
     <script>
