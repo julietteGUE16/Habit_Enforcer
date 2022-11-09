@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
 </head>
-<img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
+<img class="logo" src="https://zupimages.net/up/22/45/piq7.png">
 
 <body class="login">
 

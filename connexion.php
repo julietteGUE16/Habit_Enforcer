@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
 </head>
-<img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
+<img class="logo" src="https://zupimages.net/up/22/45/piq7.png">
 
 <body class="login">
 
@@ -37,9 +37,10 @@
                     //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
                     if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
                         $_SESSION['pseudo'] = $pseudo;
-                        $_SESSION['mdp'] = $mdp;
-                        $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
-                        $_SESSION['email'] = $recupUser->fetch()['email'];
+                        $_SESSION['mdp'] = $mdp; // On ne peux faire qu'un fetch par requête !
+                        $fetch = $recupUser->fetch();
+                        $_SESSION['email'] = $fetch['email'];
+                        $_SESSION['id_users'] = $fetch['id_users'];
                         header('Location: menu.php');
                     } else {
                         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
