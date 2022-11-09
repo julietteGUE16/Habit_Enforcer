@@ -8,13 +8,15 @@
 <head>
     <title>Menu</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="navbar">
-        <div class="profil">
+    <div class="profil">
+      <button class="open-button" onclick="openForm()">
     <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
       <div class="icon">
         <div class="nameUSER">
@@ -24,6 +26,26 @@
         <?php
         echo $_SESSION['email'];?>
       </div>
+    </button>
+    </div>
+    <div class="login-popup">
+      <div class="form-popup" id="popupForm">
+        <form action="/action_page.php" class="form-container">
+          <h2>Mon compte</h2>
+          <a>Se déconnecter</a>
+          <a>changer de pseudo</a>
+          <button type="button" class="btn cancel" onclick="closeForm()">Fermer</button>
+        </form>
+      </div>
+    <script>
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
+    </script>
       </div>
       <div class="menu">
         <ul>
@@ -37,11 +59,11 @@
         <div class="intro">
           <h1>Une plateforme pour vous guider dans le modelelage d'un quotidien qui vous ressemble <br/><span><img class = "logotaroutyn" src="https://zupimages.net/up/22/45/piq7.png" /></span></h1>
           <p class="text">
-            Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !
-            Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme collectif pour tenir tes engagements !
+            Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !<br/>
+            Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme <br/>collectif pour tenir tes engagements !
             <br>
             <br>
-            Ce site à été réalisés par 3 étudiants : Guenard Juliette, Favennec Melaine et Piauger Paul !
+            Site réalisé par 3 étudiants :<br/> Guenard Juliette, Favennec Melaine et Piauger Paul !
           </p>
         </div>
 

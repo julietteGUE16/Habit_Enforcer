@@ -1,29 +1,3 @@
-<?php
-session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-if(isset($_POST['envoi'])){//nom du bouton
-    if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
-       $pseudo = htmlspecialchars($_POST['pseudo']);
-       $mdp = sha1($_POST['mdp']);
-
-       $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
-       $recupUser->execute(array($pseudo, $mdp));
-       //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-       if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
-        $_SESSION['pseudo'] = $pseudo;
-        $_SESSION['mdp'] = $mdp;
-        $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
-        $_SESSION['email'] = $recupUser->fetch()['email'];
-        header('Location: menu.php');
-       } else {
-        echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
-       }
-    }else{
-        echo "Veuillez compléter tous les champs..";
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <html lang="en-US">
@@ -50,6 +24,27 @@ if(isset($_POST['envoi'])){//nom du bouton
             <input type="text" name="pseudo" required placeholder="pseudo">
             <br/>
             <input type="password" name="mdp" required placeholder="mot de passe">
+            <br/>
+            <?php
+            session_start();
+            $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+            if(isset($_POST['envoi'])){//nom du bouton
+                if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
+                    $pseudo = htmlspecialchars($_POST['pseudo']);
+                    $mdp = sha1($_POST['mdp']);
+                    $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
+                    $recupUser->execute(array($pseudo, $mdp));
+                    //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
+                    if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
+                        $_SESSION['pseudo'] = $pseudo;
+                        $_SESSION['mdp'] = $mdp;
+                        $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
+                        $_SESSION['email'] = $recupUser->fetch()['email'];
+                        header('Location: menu.php');
+                    } else {
+                        echo " Votre mot de passe ou nom d'utilisateur est incorrecte";
+                    }}else{echo "Veuillez compléter tous les champs..";}}
+                    ?>
             <br/><br/>
             <button type="submit" name= "envoi" class="ripple cursor"> Se connecter ! </button>
         </form>
