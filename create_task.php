@@ -6,6 +6,8 @@ session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
 
+
+
  /*
         UNE TASK :
             - id_task
@@ -26,24 +28,40 @@ if(isset($_POST['btn'])){//nom du bouton
         $type = $_POST['type'];
         $level = $_POST['level'];
         $name = htmlspecialchars($_POST['name']);
-        
+        echo "periode = ". $_POST['periode'] .'||';
         if($_POST['periode'] == "Quotidienne"){
-             $isdaily = true; 
-             $jour = $_POST['jour'];
-        } else {
-            $isdaily = false;
             $jour = NULL;
+             $isdaily = true;
+            
+        } else {
+            if(!empty($_POST['jour'])){
+            } else {
+                echo "choisi un jour";
+            }
+            $isdaily = false;
+            $jour = $_POST['jour'];
+           
         }
         //TODO : verif que cela marche
         $id_users = $_SESSION['id_users'];
         $isvalid = false;
+
+       if( $jour == null){
+        echo "jour est nul ||";
+       }
        
 
-        echo "user = " . $id_users;
+        echo "user = " . $id_users. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | level = ". $level . " | name = ". $name . " | type = ". $type;
         
         //TODO : 
-        //$insertUser = $bdd->prepare('INSERT INTO task(jour,id_users,isdaily,isvalid,niveau,nom,style)VALUES(?,?,?,?,?,?,?)');
-        //$insertUser->execute(array($jour, $id_users, $isdaily, $isvalid, $level, $name, $type));
+
+        /*$pseudo = htmlspecialchars($_POST['pseudo']);
+        $email = htmlspecialchars($_POST['email']);
+        $mdp = sha1($_POST['mdp']);
+        $insertUser = $bdd->prepare('INSERT INTO users(pseudo,email,mdp)VALUES(?,?,?)');
+        $insertUser->execute(array($pseudo,$email,$mdp));
+        $insertUser = $bdd->prepare('INSERT INTO task(jour,id_users,isdaily,isvalid,niveau,nom,style)VALUES(?,?,?,?,?,?,?)');
+        $insertUser->execute(array($jour, $id_users, $isdaily, $isvalid, $level, $name, $type));*/
 
     }else{
         echo "Veuillez compléter tous les champs..";
