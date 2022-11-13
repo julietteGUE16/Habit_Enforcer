@@ -69,7 +69,7 @@ Create your custom task !
 </h4>
 <br/><br/>
 
-<form method="POST" action="" align="center">
+<form method="POST" action="">
 <p>
 nomme ta tâche :
 </p>
