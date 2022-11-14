@@ -130,6 +130,11 @@ if(isset($_POST['btn'])){
 <div>
 <form method="POST" action="" align="center">
 <input type="text" name ="name" required="required" required placeholder="Nom de la tâche">
+<form method="POST" action="">
+<p>
+nomme ta tâche :
+</p>
+<input type="text" name ="name" required="required"  >
 <br/>
 
 
