@@ -1,12 +1,21 @@
 <?php
 
-//todo : page create task
-//vérifier si besoin /!\
 session_start();
-
-
-
-//TODO : liste de choix parmis les type of task
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8', 'root', '');
+if(isset($_POST['task_creator'])){
+    if(!empty($_POST['name']) AND !empty($_POST['hebdo']) AND !empty($_POST['period']) AND !empty($_POST['difficulte']) AND !empty($_POST['typetask'])){
+        $isvalid = false;
+        $name = htmlspecialchars($_POST['name']);
+        $type = htmlspecialchars($_POST['typetask']);
+        $level = $_POST['difficulte'];
+        $isdaily = false;
+        $day = "Mardi";
+        $insertTask = $bdd->prepare('INSERT INTO task(isvalid,`name`,`type`,`level`,isdaily,`day`,id_users)VALUES(?,?,?,?,?,?,?'); 
+        $insertTask->execute(array($isvalid,$name,$type,$level,$isdaily,$day,$_SESSION['id_users']));
+    }else{
+        echo "veuillez compléter tous les champs !";
+    }
+}
 
 ?>
 
@@ -34,7 +43,7 @@ nomme ou décrit ta tâche :
 
 <br/><br/>
 <label for="type task">périodicité de la tâche :</label>
-<SELECT name="nom" size="1">
+<SELECT name="period" size="1">
 <OPTION>...
 <OPTION>Quotidienne
 <OPTION>hebdomadaire
@@ -44,7 +53,7 @@ nomme ou décrit ta tâche :
 
 
 <label for="type task">si hebdomadaire, choix du jour :</label>
-<SELECT name="nom" size="1">
+<SELECT name="hebdo" size="1">
 <OPTION>...
 <OPTION>Lundi
 <OPTION>Mardi
@@ -57,7 +66,7 @@ nomme ou décrit ta tâche :
 <br/><br/>
 
 <label for="type task">niveau de difficulté:</label>
-<SELECT name="nom" size="1">
+<SELECT name="difficulte" size="1">
 <OPTION>...
 <OPTION>1
 <OPTION>2
@@ -65,7 +74,7 @@ nomme ou décrit ta tâche :
 </SELECT>
 <br/><br/>
 <label for="type task">fait ton choix de tâche :</label>
-<SELECT name="nom" size="1">
+<SELECT name="typetask" size="1">
 <OPTION>...
 <OPTION>sports
 <OPTION>work
