@@ -124,31 +124,9 @@ textarea:focus {
     margin-bottom: 0px;
 }
 
-.login-box input::placeholder {
-    color: #d2af5a;
-    text-transform: uppercase;
-}
 
 .login-box input::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
-    color: #d2af5a;
-    text-transform: uppercase;
-}
-
-.login-box input::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #d2af5a;
-    text-transform: uppercase;
-}
-
-.login-box input:-ms-input-placeholder {
-    /* IE 10+ */
-    color: #d2af5a;
-    text-transform: uppercase;
-}
-
-.login-box input:-moz-placeholder {
-    /* Firefox 18- */
     color: #d2af5a;
     text-transform: uppercase;
 }

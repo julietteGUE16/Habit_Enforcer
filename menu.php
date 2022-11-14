@@ -43,11 +43,12 @@ if(isset($_POST['button'])){//nom du bouton
     <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
       <div class="icon">
         <div class="nameUSER">
-        <?php session_start();
+        <?php 
         echo $_SESSION['pseudo'];?>
         </div>
         <?php
-        echo $_SESSION['email'];?>
+        echo $_SESSION['email'];
+        ?>
       </div>
     </button>
     </div>
@@ -99,11 +100,8 @@ if(isset($_POST['button'])){//nom du bouton
       <h2>Tâches</h2>
       <p>Crée et retrouve tes habitudes ici !</p>
       <div class="anat">
-        
         <img class="c" src="">
-      
         <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
-  
       </div>
     </section>
     <section class="page3" id="page3">
