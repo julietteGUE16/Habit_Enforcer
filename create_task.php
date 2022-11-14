@@ -15,8 +15,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             - id_users
             - isvalid
         */
-//TODO : do a function ???? createTask () ....
-if(isset($_POST['btn'])){//nom du bouton
+        
+if(isset($_POST['btn'])){
     
     if(!empty($_POST['name']) AND !empty($_POST['type'])AND !empty($_POST['level'])){
 
