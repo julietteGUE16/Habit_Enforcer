@@ -1,0 +1,293 @@
+* {
+    /*applique à toute la page*/
+    margin: 0;
+    /*supprime le contour blanc*/
+    font-family: "Comfortaa";
+    /*ou "Prompt", j'ai importé 2 polices qui me plaisaient via google front*/
+}
+
+/*----------------------------------profil utilisateur en haut à gauche---------------------------------*/
+
+.icon {
+    color: #2f5394;
+    font-size: 20px;
+}
+
+.nameUSER {
+    font-weight: bold;
+}
+
+.logoUSER {
+    height: 65px;
+}
+
+.profil {
+    display: flex;
+    height: 180px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3%;
+}
+
+/*-----------------------------------------pop up mon compte ----------------------------------------------*/
+
+.form-popup h2 {
+    color: #2f5394;
+}
+
+.form-popup a {
+    color: #fff;
+    font-size: 20px;
+}
+
+.open-button {
+    background-color: #d9c38f;
+    cursor: pointer;
+    height: 160px;
+    width: 300px;
+    border: none;
+}
+
+.open-button:hover {
+    background-color: #ddcda7;
+}
+
+/* Positionnez la forme Popup */
+.login-popup {
+    position: absolute;
+    text-align: center;
+}
+
+/* Masquez la forme Popup */
+.form-popup {
+    background-color: transparent;
+    display: none;
+    position: fixed;
+    height: 100px;
+    width: 300px;
+    right: 0px;
+    top: 0px;
+    z-index: 9;
+}
+
+/* Styles pour le conteneur de la forme */
+.form-container {
+    max-width: 130px;
+    padding: 20px;
+    background-color: #d9c38f;
+}
+
+.btncancel {
+    height: 30px;
+    width: 130px;
+    background-color: #fa52b49f;
+    border: none;
+    cursor: pointer;
+}
+
+/*----------------------------------------------section n°1-------------------------------------------------------*/
+
+.main {
+    padding: 0 10%;
+    /* marges éspacement des bords*/
+    background: linear-gradient(
+            /*fond de la première page dégradé*/
+            to left,
+            /* on peut aussi mettre to top, to right, to left*/
+            #fff,
+            #d2b369 100%);
+    height: 100vh;
+    /*configure pour que la première page remplisse l'écran*/
+    display: flex;
+}
+
+.menu {
+    width: 85%;
+}
+
+
+.page1 {
+    color: #fff;
+    display: flex;
+    margin: 20% 0;
+}
+
+.intro .text {
+    padding-bottom: 100px;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+.intro h1 {
+    font-size: 50px;
+    letter-spacing: 2px;
+    margin-bottom: 35px;
+}
+
+.intro span {
+    color: #2f5394;
+    font-size: 65px;
+    width: bolder;
+}
+
+.form h2 {
+    text-align: center;
+    color: #335bb1;
+    font-size: 22px;
+    padding: 8px;
+    text-transform: uppercase;
+}
+
+.photomobile {
+    height: 450px;
+    opacity: 80%;
+    z-index: 1;
+}
+
+.logotaroutyn {
+    height: 200px;
+}
+
+/*----------------------------------------------barre de navigation------------------------------------------------*/
+.navbar {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* configure un éspace entre les items*/
+    position: fixed;
+    /*pendant le scroll, la barre reste fixe*/
+    padding: 0 6%;
+    left: 0;
+    right: 0;
+    background: rgb(255, 255, 255);
+    /*J'ai ajouté de la transparence*/
+    z-index: 6;
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*aligne les items de gauche à droite et non de haut en bas -> pas de retour à la ligne*/
+
+ul li {
+    list-style: none;
+    padding: 8px 20px 0 20px;
+    font-size: 18px;
+}
+
+ul li::after {
+    content: "";
+    /*petite barre sous les items*/
+    width: 0%;
+    height: 2px;
+    background: #335bb1;
+    display: block;
+    margin: auto;
+}
+
+ul li:hover::after {
+    width: 100%;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #d2af5a;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+    font-size: 25px;
+    /*le temps de transition vers le bleu lorsque l'utilisateur passe la souris"*/
+}
+
+ul li a:hover {
+    color: #077EC3;
+}
+
+
+.form>.btn a {
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.form .link {
+    font-size: 17px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.form .link a {
+    text-decoration: none;
+    color: #2f5394;
+}
+
+
+/*--------------------------------sections suivantes---------------------------------------------------------*/
+
+.page2,
+.page4,
+.page3 {
+    border-radius: 5px;
+    padding: 10% 10%;
+}
+
+.page3 {
+    background: #00000014;
+}
+
+.page2 h2,
+.page4 h2,
+.page3 h2 {
+    margin-bottom: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #2f5394;
+    text-align: center;
+}
+
+.page2 p,
+.page4 p,
+.page3 p {
+    text-align: center;
+}
+
+/*-----------------------------------section GITHUB-------------------------------------------------------*/
+
+.git {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url(/images/5.jpg);
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    padding: 70px 0;
+}
+
+.git h1 {
+    color: #fff;
+    margin-bottom: 35px;
+    text-transform: capitalize;
+}
+
+.git h1 span {
+    color: #ddcda7;
+}
+
+.git a {
+    border: 1px solid #fff;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.git a:hover {
+    background: #2f5394;
+    color: #ddcda7;
+}
+
+.icontea {
+    height: 80px;
+}

@@ -17,10 +17,10 @@ class Groupe
             $_SESSION['description'] = $description;
             header('Location: groupe.php');
         }
-    }
-    public static function addPoint($level){
-        TODO;
-    }
+ }
+    // public static function addPoint($level){
+    //     TODO;
+    // }
 
 }
 ?>
