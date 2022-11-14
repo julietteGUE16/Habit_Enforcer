@@ -15,6 +15,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             - id_users
             - isvalid
         */
+        $date = date('d-m-y h:i:s');
+        echo $date;
         
 if(isset($_POST['btn'])){
     
