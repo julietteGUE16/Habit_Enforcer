@@ -4,10 +4,6 @@
 //vérifier si besoin /!\
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-
-
-
-
  /*
         UNE TASK :
             - id_task
@@ -19,7 +15,6 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             - id_users
             - isvalid
         */
-
 //TODO : do a function ???? createTask () ....
 if(isset($_POST['btn'])){//nom du bouton
     

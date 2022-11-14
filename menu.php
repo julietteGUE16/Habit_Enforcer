@@ -43,7 +43,7 @@ if(isset($_POST['button'])){//nom du bouton
     <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
       <div class="icon">
         <div class="nameUSER">
-        <?php session_start();
+        <?php 
         echo $_SESSION['pseudo'];?>
         </div>
         <?php

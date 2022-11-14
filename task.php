@@ -67,15 +67,26 @@ class task
     public function getData (int $id){
         //check if id exist
         //if yes get all data by the id of the task:
-        
-        //
-        
-        
-        /*
-        $recupTask = $bdd->prepare('SELECT * FROM task WHERE nom = ? ');
-        $recupTask->execute(array($nom));
-        if($recupTask->rowCount() > 0){
-        $_SESSION['nom'] = $nom;
-        $_SESSION['id_task'] = $recupTask->fetch()['id_task'];*/
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); 
+
+        $recupUser = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
+        $recupUser->execute(array($id));
+
+        //connexion line 41 voir info
+    
+        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
+            $fetch = $recupUser->fetch();
+            $name = $fetch['nom'];
+            $task = $fetch['style'];
+            $level = $fetch['niveau'];
+            $isDaily = $fetch['isdaily'];
+            $day = $fetch['jour'];
+            $idUser = $id;
+            $isvalid = $fetch['isvalid'];
+            $idTask = $fetch['id_task'];     
+        } else {
+            echo "error";
+        }
+
     }
 }
