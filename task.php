@@ -17,25 +17,30 @@ class task
     //id user qui à créé la tâche
     private int $idUser;
     
+    //bool qui permet de valider ou non le task
+    private bool $isValid;
+
+    //id task
+    private int $idTask;
+
+
+    //TODO : récurrence de la task
+    
 
     //TODO : id task ????
-    public function __construct(type_task $task, string $name, int $level, bool $isDaily, string $day, int $idUser)
-    {
-        $this->$task = $task;
-        $this->$name = $name;
-        $this->$level = $level;
-        $this->$isDaily = $isDaily;     
-        $this->$day = $day;
-        $this->$idUser = $idUser;
+    public function __construct($id)
+    {  
+        $this->$idTask = $id;
+      
     }
 
     public function getTask (): type_task{
         return $task;
     }
 
-    /*public function setTask (type_task $t){
-        $task = $t;
-    }*/
+    public function getIdTask () : int{
+        return $idTask;
+    }
 
     public function getName (): string{
         return $name;
@@ -53,5 +58,24 @@ class task
     }
     public function getIdUser (): int {
         return $idUser;
+    }
+
+    public function getIsValid () : bool {
+        return $isValid;
+    }
+
+    public function getData (int $id){
+        //check if id exist
+        //if yes get all data by the id of the task:
+        
+        //
+        
+        
+        /*
+        $recupTask = $bdd->prepare('SELECT * FROM task WHERE nom = ? ');
+        $recupTask->execute(array($nom));
+        if($recupTask->rowCount() > 0){
+        $_SESSION['nom'] = $nom;
+        $_SESSION['id_task'] = $recupTask->fetch()['id_task'];*/
     }
 }

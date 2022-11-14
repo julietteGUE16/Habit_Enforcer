@@ -11,7 +11,7 @@ if(isset($_POST['task_creator'])){
         $isdaily = false;
         $day = "Mardi";
         $insertTask = $bdd->prepare('INSERT INTO task(isvalid,`name`,`type`,`level`,isdaily,`day`,id_users)VALUES(?,?,?,?,?,?,?'); 
-        $insertTask->execute(array($isvalid,$name,$type,$level,$isdaily,$day,$_SESSION['id_users']));
+        $insertTask->execute(array($isvalid,$name,$type,$level,$isdaily,$day,$_SESSION['id_users'])); 
     }else{
         echo "veuillez compléter tous les champs !";
     }

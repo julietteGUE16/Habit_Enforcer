@@ -1,4 +1,27 @@
 <?php
+session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+
+
+if(isset($_POST['button'])){//nom du bouton
+
+    header('Location: create_task.php');
+    
+        
+    }else{
+       //TODO : error
+    }
+
+//TODO : display task with grid
+
+/*
+* 1) take list of task by id_user ( for the current user)
+* 2) creat a task objet and fill it with information in database by id_task (use a function)
+* 3) display using function of task object ! :)
+*
+*
+*/
+
 ?>
 
 
@@ -78,6 +101,9 @@
       <div class="anat">
         
         <img class="c" src="">
+      
+        <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
+  
       </div>
     </section>
     <section class="page3" id="page3">
