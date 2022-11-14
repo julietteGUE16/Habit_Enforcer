@@ -30,7 +30,7 @@
             $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
             if(isset($_POST['envoi'])){//nom du bouton
                 if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
-                    $pseudo = htmlspecialchars($_POST['pseudo']);
+                    $pseudo = htmlspecialchars($_POST['pseudo']); //éviter les attaques XSS
                     $mdp = sha1($_POST['mdp']);
                     $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
                     $recupUser->execute(array($pseudo, $mdp));

@@ -77,26 +77,63 @@ if(isset($_POST['btn'])){
 <head>
     <title>Create Task</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
 </head>
 <body>
 
-<h4>
-Create your custom task !
-</h4>
-<br/><br/>
+<div class="navbar">
+    <div class="profil">
+      <button class="open-button" onclick="openForm()">
+    <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
+      <div class="icon">
+        <div class="nameUSER">
+        <?php 
+        echo $_SESSION['pseudo'];?>
+        </div>
+        <?php
+        echo $_SESSION['email'];
+        ?>
+      </div>
+    </button>
+    </div>
+    <div class="login-popup">
+      <div class="form-popup" id="popupForm">
+        <form action="/action_page.php" class="form-container">
+          <h2>Mon compte</h2><br/><br/>
+          <a>Changer de pseudo</a><br/><br/>
+          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br/><br/>
+          <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+        </form>
+      </div>
+    <script>
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
 
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
+    </script>
+      </div>
+      <div class="menu">
+        <ul>
+          <li><a href="../Habit_Enforcer/menu.php">Retour au menu !</a></li>
+        </ul>
+      </div>
+    </div>
+<section class="createtask">
+    <section class="page1">
+<div>
 <form method="POST" action="" align="center">
-<p>
-nomme ta tâche :
-</p>
-<input type="text" name ="name" required="required"  >
+<input type="text" name ="name" required="required" required placeholder="Nom de la tâche">
 <br/>
 
 
 <br/><br/>
-<h3 >Périodicité de la tâche :</h3>
 <SELECT name="periode" size="1">
-<option value="" disabled selected>...</option>
+<option value="" disabled selected>Périodicité de la tâche</option>
 <option value="Quotidienne">Quotidienne</option>
 <option value="hebdomadaire">hebdomadaire</option>
 </SELECT>
@@ -104,9 +141,8 @@ nomme ta tâche :
 
 
 
-<h3 >si hebdomadaire, choix du jour :</h3>
 <SELECT name="jour" size="1">
-<option value="" disabled selected>...</option>
+<option value="" disabled selected>si hebdomadaire, choix du jour</option>
 <option value="Lundi">Lundi</option>
 <option value="Mardi">Mardi</option>
 <option value="Mercredi">Mercredi</option>
@@ -118,9 +154,8 @@ nomme ta tâche :
 </SELECT>
 <br/><br/>
 
-<h3>niveau de difficulté:</h3>
 <SELECT name="level" size="1">
-<option value="" disabled selected>...</option>
+<option value="" disabled selected>niveau de difficulté</option>
 <option value="1">1</option>
 <option value="2">2</option>
 <option value="3">3</option>
@@ -129,10 +164,8 @@ nomme ta tâche :
 </SELECT>
 <br/><br/>
 
-
-<h3>fait ton choix de tâche :</h3>
 <SELECT name="type" size="1">
-<option value="" disabled selected>...</option>
+<option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
 <option value="sports">sports</option>
 <option value="work">work</option>
 <option value="task">task</option>
@@ -147,9 +180,11 @@ nomme ta tâche :
 <br/><br/>
 <br/><br/>
 <br/><br/>
-<input type="submit" name="btn" value = "create task!" >
+<button type="submit" href="../Habit_Enforcer/create_task.php" name="btn">Create your task !</button>
 
 
 </form>
+    </section>
+    </section>
 </body>
 </html>
