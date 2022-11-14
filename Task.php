@@ -1,7 +1,7 @@
 <?php
 
 
-class task
+class Task
 {
     //task permet de définir la couleur par rapport au type de task selectionné
     private type_task $task;
@@ -23,14 +23,18 @@ class task
     //id task
     private int $idTask;
 
+    //TODO : stocker dans la base de donnée la date au moment ou à été céer la task et lorsque l'on veut encréer une nouvelle on compare les dates ( 24h de diff de préférence)
+
 
     //TODO : récurrence de la task
     
 
     //TODO : id task ????
-    public function __construct($id)
+    public function __construct(int $id)
     {  
+      
         $this->$idTask = $id;
+        //echo "id = ".$this->$idTask. " ||" ;
       
     }
 
@@ -89,4 +93,7 @@ class task
         }
 
     }
+
+    //TODO : delete task fonction
+    
 }

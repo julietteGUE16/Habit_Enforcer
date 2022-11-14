@@ -4,15 +4,48 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
 
 
 if(isset($_POST['button'])){//nom du bouton
-
     header('Location: create_task.php');
+}else{
+    //TODO : error
+}
+    $id = $_SESSION['id_users'];
+    echo "id = ".$id;
+    //compte le nombre de ligne pour un id user
+    $recupUser = $bdd->prepare('SELECT COUNT(*) AS COUNT FROM task WHERE id_users = ? GROUP BY id_users ' ); //
     
-        
-    }else{
-       //TODO : error
+    $recupUser->execute(array($id));
+    
+    //echo "total = [". $total. "]";
+    //echo "total = ". $recupUser->fetch()["COUNT"];
+    $total = $recupUser->fetch()["COUNT"];
+     
+    for ($i = 0; $i < $total; $i++){
+      //TODO : select : order by id_user et recup chaque ligne avec le id user
+      //TODO : get id de chaque task
+      echo "passage 0";
+      $task1 = new Task(3);
+      echo "passage 1";
+      //$task->getData();
+      echo "passage 2";
+      //echo "test = ". $task->getName();
+
+
+
+      //TODO list of task
+
+
+
+    
     }
 
-//TODO : display task with grid
+
+
+ 
+    
+
+    //TODO display color of task en fonction du type de task
+    //TODO : display task with grid
+
 
 /*
 * 1) take list of task by id_user ( for the current user)
