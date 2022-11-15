@@ -26,8 +26,6 @@ class Groupe
         $recupUser = $bdd->prepare('SELECT * FROM groupe WHERE nom = ? AND description = ?');
         $recupUser->execute(array($nom, $description));
         if ($recupUser->rowCount() > 0) {
-
-            $_SESSION['id_group'] = $recupUser->fetch()['id_group'];
             $_SESSION['score'] = $recupUser->fetch()[0];
             $_SESSION['nom'] = $nom;
             $_SESSION['description'] = $description;
@@ -92,8 +90,7 @@ class Groupe
             $recupGroupe->execute(array($search));
             if ($recupGroupe->rowCount() > 0) {
                 $fetch  = $recupGroupe->fetch();
-                $nom = $recupGroupe->fetch()['nom'];
-                
+                $nom = $fetch['nom'];
                 $description = $fetch['description'];
                 $group = $fetch['id_group'];
                 echo "<p>id du groupe : $id_group</p>";

@@ -1,26 +1,41 @@
 <?php
-// session_start();
-// $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-// if(isset($_POST['envoi'])){//nom du bouton
-//     if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
-//        $pseudo = htmlspecialchars($_POST['pseudo']);
-//        $mdp = sha1($_POST['mdp']);
+session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+if(isset($_POST['envoi'])){//nom du bouton
+    if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
+       $pseudo = htmlspecialchars($_POST['pseudo']);
+       $mdp = sha1($_POST['mdp']);
 
-//        $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
-//        $recupUser->execute(array($pseudo, $mdp));
-//        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-//        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
-//         $_SESSION['pseudo'] = $pseudo;
-//         $_SESSION['mdp'] = $mdp;
-//         $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
-//         header('Location: menu.php');
-//        } else {
-//         echo "<script>alert('Votre mot de passe ou nom d'utilisateur est incorrecte')</script>";
-//        }
-//     }else{
-//         echo "<script>alert('Veuillez compléter tous les champs')</script>";
-//     }
-// }
+       $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
+       $recupUser->execute(array($pseudo, $mdp));
+       $fetch = $recupUser->fetch();
+       //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
+       if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
+        $_SESSION['pseudo'] = $pseudo;
+        $_SESSION['mdp'] = $mdp;
+        $_SESSION['id_users'] = $fetch['id_users'];
+        $_SESSION['id_group'] = $fetch['id_group'];
+        $_SESSION['email'] = $fetch['email'];
+        $recupGroupe = $bdd->prepare('SELECT * FROM groupe WHERE id_group = ?');
+        $recupGroupe->execute(array($_SESSION['id_group']));
+        $fetchbis = $recupGroupe->fetch();
+
+        if($recupGroupe->rowCount() > 0){
+           
+            $_SESSION['nom'] = $fetchbis['nom'];
+            $_SESSION['description'] = $fetchbis['description'];
+            $_SESSION['id_group'] = $fetchbis['id_group'];
+            $_SESSION['score'] = $fetchbis['score'];
+        }
+        
+         header('Location: menu.php');
+       } else {
+        echo "<script>alert('Votre mot de passe ou nom d'utilisateur est incorrecte')</script>";
+       }
+    }else{
+        echo "<script>alert('Veuillez compléter tous les champs')</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
