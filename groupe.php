@@ -1,4 +1,15 @@
 <?php
+//TODO : 
+
+/**Chaque utilisateur peut faire partie d'un et un seul groupe d'amis à la fois. Il peut
+
+    créer un nouveau groupe,
+    le quitter,
+    inviter d'autres utilisateurs dans son groupe,
+    accepter une invitation pour rejoindre le groupe de quelqu'un d'autre.
+ */
+
+
 class Groupe
 {
     public static function createGroupe($nom, $description)

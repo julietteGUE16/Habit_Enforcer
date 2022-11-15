@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+//TODO : pb lors de la verif de l'email
+
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8', 'root', '');
 if (isset($_POST['envoi'])) {
     if (!empty($_POST['pseudo']) and !empty($_POST['mdp'] and !empty($_POST['email']))) {

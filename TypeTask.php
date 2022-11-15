@@ -3,11 +3,10 @@
 enum type_task
 {
     case sports;
-    case work;
-    case study;
-    case task;
+    case travail;
+    case important;
     case social;
     case alimentation;
-    case other;
-    case fun;
+    case loisir;
+    case autre;
 }

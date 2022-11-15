@@ -1,20 +1,18 @@
 <?php
-
-//todo : vérif type écrire (upper case, lower case ,etc...)
-//vérifier si besoin /!\
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
- /*
-        UNE TASK :
-            - id_task
-            - name
-            - type
-            - level
-            - isdaily
-            - jour
-            - id_users
-            - isvalid
-        */
+/*
+UNE TASK :
+  - id_task
+  - name
+  - type
+  - level
+  - isdaily
+  - jour
+  - id_users
+  - isvalid
+*/
+
         $date = date('d-m-y h:i:s');
         echo $date;
         
@@ -50,9 +48,9 @@ if(isset($_POST['btn'])){
 
        echo "user = " . $id_users. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | niveau = ". $niveau . " | nom = ". $nom . " | style = ". $style. "\n";
     
-       $insertTask = $bdd->prepare('INSERT INTO task(isvalid,nom,style,niveau,isdaily,jour,id_users)VALUES(?,?,?,?,?,?,?)');
+       $insertTask = $bdd->prepare('INSERT INTO task(isvalid,nom,genre,niveau,isdaily,jour,id_users)VALUES(?,?,?,?,?,?,?)');
        echo "passage : 1\n";
-       $insertTask->execute(array($isvalid?1:0,$nom,$style,$niveau,$isdaily?1:0,$jour,$id_users));
+       $insertTask->execute(array($isvalid?1:0,$nom,$genre,$niveau,$isdaily?1:0,$jour,$id_users));
        echo "passage : 2\n";
        $recupTask = $bdd->prepare('SELECT * FROM task WHERE nom = ? ');
        $recupTask->execute(array($nom));
@@ -64,6 +62,7 @@ if(isset($_POST['btn'])){
     header('Location: menu.php');
         
     }else{
+      //TODO l'afficher en pop up
         echo "Veuillez compléter tous les champs..";
     }
     
@@ -132,10 +131,7 @@ if(isset($_POST['btn'])){
 <input type="text" name ="name" required="required" required placeholder="Nom de la tâche">
 <form method="POST" action="">
 <p>
-nomme ta tâche :
-</p>
-<input type="text" name ="name" required="required"  >
-<br/>
+
 
 
 <br/><br/>
@@ -161,7 +157,7 @@ nomme ta tâche :
 </SELECT>
 <br/><br/>
 
-<SELECT name="level" size="1">
+<SELECT name="niveau" size="1">
 <option value="" disabled selected>niveau de difficulté</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -171,15 +167,15 @@ nomme ta tâche :
 </SELECT>
 <br/><br/>
 
-<SELECT name="type" size="1">
+<SELECT name="genre" size="1">
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
 <option value="sports">sports</option>
-<option value="work">work</option>
-<option value="task">task</option>
+<option value="travail">travail</option>
+<option value="important">important</option>
 <option value="social">social</option>
 <option value="alimentation">alimentation</option>
-<option value="fun">fun</option>
-<option value="other">other</option>
+<option value="loisir">loisir</option>
+<option value="autre">autre</option>
 
 
 </SELECT>
