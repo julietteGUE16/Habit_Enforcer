@@ -321,6 +321,7 @@ ul li a:hover {
 .page4 p,
 .page3 p {
     text-align: center;
+    font-weight: bold;
 }
 
 /*-----------------------------------section GITHUB-------------------------------------------------------*/
@@ -399,6 +400,11 @@ ul li a:hover {
 
 .niveau {
     margin-left: 10px;
+    margin-right: 10px;
+}
+
+.daily {
+    color: #c8398d;
 }
 
 .flex a {
@@ -415,11 +421,27 @@ ul li a:hover {
     color: #077EC3;
 }
 
-.checkbox input:checked~.w3docs {
-    background-color: orange;
-}
-
 .checkbox {
     position: absolute;
     right: 0;
+}
+
+.checkbox input {
+    cursor: pointer;
+}
+
+.iconstyle {
+    max-width: 40px;
+    max-height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.cate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    width: 40px;
+    margin-right: 200px;
 }

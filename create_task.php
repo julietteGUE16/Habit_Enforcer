@@ -132,7 +132,7 @@ if(isset($_POST['btn'])){//nom du bouton
     <section class="page1">
 <div>
 <form method="POST" action="" align="center">
-<input type="text" name ="name" required="required" required placeholder="Nom de la tâche">
+<input type="text" name ="name" required placeholder="Nom de la tâche" autocomplete="off">
 <br/>
 
 
@@ -171,15 +171,13 @@ if(isset($_POST['btn'])){//nom du bouton
 
 <SELECT name="type" size="1">
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
-<option value="sports">sports</option>
-<option value="work">work</option>
-<option value="task">task</option>
-<option value="social">social</option>
+<option value="sport">sport</option>
+<option value="travail">travail</option>
+<option value="alimentation">social</option>
 <option value="alimentation">alimentation</option>
-<option value="fun">fun</option>
-<option value="other">other</option>
-
-
+<option value="loisir">loisir</option>
+<option value="important">important</option>
+<option value="autre">autre</option>
 </SELECT>
 
 <br/><br/>

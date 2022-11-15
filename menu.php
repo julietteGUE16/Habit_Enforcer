@@ -1,27 +1,6 @@
 <?php
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-
-
-if(isset($_POST['button'])){//nom du bouton
-
-    header('Location: create_task.php');
-    
-        
-    }else{
-       //TODO : error
-    }
-
-//TODO : display task with grid
-
-/*
-* 1) take list of task by id_user ( for the current user)
-* 2) creat a task objet and fill it with information in database by id_task (use a function)
-* 3) display using function of task object ! :)
-*
-*
-*/
-
 ?>
 
 
@@ -116,15 +95,50 @@ if(isset($_POST['button'])){//nom du bouton
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
               $_SESSION['nom'] = $fetch[$i]['nom'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION[''] = $fetch[$i]['niveau'];
+              $_SESSION['isdaily'] = $fetch[$i]['isdaily'];
+              $_SESSION['jour'] = $fetch[$i]['jour'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
+              $_SESSION['style'] = $fetch[$i]['style'];
+              $_image = "https://zupimages.net/up/22/46/3wl6.png";
+              if($_SESSION['style'] == 'important'){
+                $_image = "https://zupimages.net/up/22/46/do4e.png";
+              }
+              if($_SESSION['style'] == 'sport'){
+                $_image = "https://zupimages.net/up/22/46/9dzn.png";
+              }
+              if($_SESSION['style'] == 'loisir'){
+                $_image = "https://zupimages.net/up/22/46/8b8a.png";
+              }
+              if($_SESSION['style'] == 'alimentation'){
+                $_image = "https://zupimages.net/up/22/46/tl8e.png";
+              }
+              if($_SESSION['style'] == 'social'){
+                $_image = "https://zupimages.net/up/22/46/sexb.png";
+              }
+              if($_SESSION['style'] == 'travail'){
+                $_image = "https://zupimages.net/up/22/46/pmtj.png";
+              }
               ?>
-              <div class="box"><div class="tache"><?php echo $_SESSION['nom'];?></div>
+              <div class="box">
+              <div class="tache"><?php echo $_SESSION['nom'];?></div>
               <div class= "niveau"><?php echo "niveau : ".$_SESSION['difficulté']; ?></div>
-              <div class="checkbox"><input type="checkbox"><span class="w3docs"></span></div></div> </br><?php
+              <div class= "daily"><?php if($_SESSION['jour']== NULL){echo "Quotidien";}; ?></div>
+              <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
+              <img class = "iconstyle" src="<?php echo $_image?>" />
+              <div class="checkbox"><input type="checkbox"><span class="w3docs"></span></div></div></br><?php
             }
         ?>
         </div>
+          </div>
+          <p>Légende des catégories :</p>
+          </br>
+          <div align="center">
+          <div class="cate">important<img class = "iconstyle" src="https://zupimages.net/up/22/46/do4e.png" /></div>
+          <div class="cate">sport<img class = "iconstyle" src="https://zupimages.net/up/22/46/9dzn.png" /></div>
+          <div class="cate">travail<img class = "iconstyle" src="https://zupimages.net/up/22/46/pmtj.png" /></div>
+          <div class="cate">social<img class = "iconstyle" src="https://zupimages.net/up/22/46/sexb.png" /></div>
+          <div class="cate">alimentation<img class = "iconstyle" src="https://zupimages.net/up/22/46/tl8e.png" /></div>
+          <div class="cate">loisir<img class = "iconstyle" src="https://zupimages.net/up/22/46/8b8a.png" /></div>
           </div>
     </section>
     <section class="page3" id="page3">
