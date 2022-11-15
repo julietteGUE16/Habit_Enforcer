@@ -41,6 +41,7 @@
                         $fetch = $recupUser->fetch();
                         $_SESSION['email'] = $fetch['email'];
                         $_SESSION['id_user'] = $fetch['id_user'];
+                        $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
                         header('Location: menu.php');
                     } else {
                         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";

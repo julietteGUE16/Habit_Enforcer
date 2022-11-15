@@ -22,33 +22,27 @@ if(isset($_POST['button'])){//nom du bouton
     $total = $recupUser->fetch()["COUNT"];
     //echo "total = " . $total ;
 
-    $recupTask = $bdd->prepare('SELECT INTO tasks WHERE id_user = ? GROUP BY id_user ' );
-    $recupTask->execute(array($id));
-
-
+    $recupTask = $bdd->prepare('SELECT id_task INTO tasks WHERE id_user = ? GROUP BY id_user ' );
+    //$recupTask->execute(array($id));
     
-      //TODO : select : order by id_user et recup chaque ligne avec le id user
-      //TODO : get id de chaque task
-      echo "passage 0";
-      //$task1 = new Task(3);
-      //echo "passage 1";
-      //$task->getData();
-      //echo "passage 2";
-      //echo "test = ". $task->getName();
 
 
+  //TODO : liste de id de tache
+/*
+    //list de task
+    $TaskArray=array();
 
-      //TODO list of task
+    for($i =0; $i < $total ; $i++){
+      $task = new Task();
+
+      $task->getData();
+
+        
+      // Push elements to the array
+      array_push($emptyArray, $task);
 
 
-
-    
-  
-
-
-
- 
-    
+    }   */
 
     //TODO display color of task en fonction du type de task
     //TODO : display task with grid

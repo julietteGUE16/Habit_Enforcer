@@ -2,8 +2,23 @@
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
-     
+    
 if(isset($_POST['btn'])){    
+  
+  $currentDate = date("Y-m-d H:i:s"); 
+  //$testDate = date("22-12-15 01:15:47");
+
+  //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
+
+if($_SESSION['last_task_creation'] != null){
+  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;//strtotime($testDate))/86400; //
+ // echo "test date = " . $diff;
+} else {
+  $diff = 1;
+}
+//echo "diff = " . $diff;
+
+    if($diff >= 1){
 
     //TODO : bloquer si jour est vide quand on choisi hebdomadaire
     if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
@@ -35,11 +50,17 @@ if(isset($_POST['btn'])){
         
           $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
          
-          $date = date('d-m-y h:i:s');
+          
 
           //TODO : insert dans notre current user la date de last creat task
         
-          //$recupUser = $bdd->prepare(' UPDATE users SET last_task_creation=$date  WHERE id_user = ? ');
+          $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
+        
+          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+
+          $_SESSION['last_task_creation'] = $currentDate;
+
+      
       
           //$recupUser->execute(array($_SESSION['user_id']));
         header('Location: menu.php');
@@ -48,6 +69,10 @@ if(isset($_POST['btn'])){
       //TODO l'afficher en pop up SANS TOUT PERDRE !!!
       echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }
+  }else {
+   
+    echo "il n'y a pas eu 24h entre 2 créations de tâche !";
+  }
     
 }
 
