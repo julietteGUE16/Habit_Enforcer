@@ -13,7 +13,7 @@
 --> si groupe dissout message lors de la prochaine connexion (on met -1 dans id group de chaque user du groupe) et lors de la prochaine connexion
 on  affiche un message et id_group repasse à null et on peut rejoindre ou créer un groupe
 --> table pour les demandes de join groupe ???
---> MODIF TASK FOR POO and create function (create task) (Mélaine)
+(--> MODIF TASK FOR POO and create function (create task) (Mélaine))
 --> changement du score lorsque l'on valide une TASK
 --> changement du score lors de la connexion si des taches n'on pas été validé (+ ajouter à l'historique)
 
@@ -23,5 +23,6 @@ on  affiche un message et id_group repasse à null et on peut rejoindre ou crée
 
 
 --> ne pouvoir créer une tache que toute les 24h 
+--> devoir choisir un jour si hebdomadaire
 
 

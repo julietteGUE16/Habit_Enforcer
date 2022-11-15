@@ -140,8 +140,39 @@ if(isset($_POST['button'])){//nom du bouton
     </section>
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>
-      <p>Rejoins un groupe ou suis l'actité de ton groupe ici !</p>
+      <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
       <br/>
+      <?php
+      if($_SESSION['id_group'] == null){
+        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> créer ou rejoindre un groupe ! </a> </p> <?php
+      } else {
+        //TODO : afficher le groupe
+        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
+
+      <button onclick="leaveGroup()">quitter le groupe</button> 
+
+
+        <?php 
+
+      }
+
+      function leaveGroup() {
+        //TODO : are you sure ?????
+        echo "passage ici ?";
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); 
+        $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
+        $UpdateUser->execute(array(NULL, $_SESSION['id_user']));
+        header('Location: menu.php');
+      }
+      
+      ?>
+
+      
+
+      
+      
+      <br/>
+    
     </section>
     <section class="git" id="git">
       <h1>Jetez un coup d'oeil à notre code !<br /><span

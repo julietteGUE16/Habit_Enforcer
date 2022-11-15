@@ -1,4 +1,7 @@
 <?php
+
+
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
 //TODO : 
 
 /**Chaque utilisateur peut faire partie d'un et un seul groupe d'amis à la fois. Il peut
@@ -14,24 +17,42 @@ class Groupe
 {
     public static function createGroupe($nom, $description)
     {
-        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
+        
         $nom = htmlspecialchars($nom);
         $description = htmlspecialchars($description);
   
-        $recupUser = $bdd->prepare('INSERT INTO groupes(name_group,description)VALUES (?, ?)');
-        $recupUser->execute(array($nom, $description));
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
+      
+        $inserGroup = $bdd->prepare('INSERT INTO groupes(name_group,description)VALUES (?, ?)');
+        $inserGroup->execute(array($nom, $description));
        
-        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-        if ($recupUser->rowCount() > 0) { // on peut connecter l'utilisateur
 
-            $fetch = $recupUser->fetch();
+
+        $recupGroup = $bdd->prepare('SELECT * FROM groupes WHERE name_group = ? AND description = ?');
+        $recupGroup->execute(array($nom, $description));
+
+        $fetch = $recupGroup->fetch();
+        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
+        if ($recupGroup->rowCount() > 0) { // on peut connecter l'utilisateur
             $_SESSION['id_group'] = $fetch['id_group'];
             $_SESSION['last_score'] =  $fetch[0];
             $_SESSION['previous_score'] =  $fetch[0];
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
-            header('Location: groupe.php');
+
+            $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
+       
+            $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
+
+          
+
+            
+
+            //header('Location: groupe.php');
         }
+
+
+        
  }
     // public static function addPoint($level){
     //     TODO;
@@ -52,16 +73,42 @@ class Groupe
 <body>
 
     <form method="POST" action="">
+    <p>Créer ton groupe : </p>
+    <br/>
+
         <input type="text" name="nom" placeholder="Nom du groupe" required="required" autocomplete="off">
         <br />
         <input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
         <br /><br />
         <input type="submit" name="envoi">
 
-        <?php
+        <br/>
+        <br/>
+        <br/>    
+        <p>rejoint une invitation : </p>
+    
+ 
 
-if (!empty($_POST['nom']) and !empty($_POST['description'])) {
-    Groupe::createGroupe($_POST['nom'], $_POST['description']);
+        <?php
+     
+       
+      
+        session_start();
+if(isset($_POST['envoi'])){//nom du bouton)
+  
+    if( $_SESSION['id_group'] == null){
+      
+        if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
+          
+    
+        Groupe::createGroupe($_POST['nom'], $_POST['description']);
+       
+        } else {
+            echo "Veuillez compléter tous les champs..";
+        }
+    } else {
+        echo "vous êtes déjà dans un groupe";
+    }
 }
 ?>
     </form>

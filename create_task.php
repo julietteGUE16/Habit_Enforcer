@@ -140,7 +140,7 @@ if($_SESSION['last_task_creation'] != null){
     <section class="page1">
 <div>
 <form method="POST" action="" align="center">
-<input type="text" name ="name" required="required" required placeholder="Nom de la tâche">
+<input type="text" name ="name" required="required" required placeholder="Nom de la tâche" maxlength="30" autocomplete="off">
 <form method="POST" action="">
 <p>
 

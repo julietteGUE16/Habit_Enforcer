@@ -41,6 +41,7 @@
                         $fetch = $recupUser->fetch();
                         $_SESSION['email'] = $fetch['email'];
                         $_SESSION['id_user'] = $fetch['id_user'];
+                        $_SESSION['id_group'] = $fetch['id_group'];
                         $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
                         header('Location: menu.php');
                     } else {
