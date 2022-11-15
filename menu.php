@@ -15,18 +15,23 @@ if(isset($_POST['button'])){//nom du bouton
     //compte le nombre de ligne pour un id user
     $recupUser = $bdd->prepare('SELECT COUNT(*) AS COUNT FROM tasks WHERE id_user = ? GROUP BY id_user ' ); //
     
-    //$recupUser->execute(array($id));
+    $recupUser->execute(array($id));
     
-    //echo "total = [". $total. "]";
-    //echo "total = ". $recupUser->fetch()["COUNT"];
-    //$total = $recupUser->fetch()["COUNT"];
-     
-    for ($i = 0; $i < $total; $i++){
+   
+  
+    $total = $recupUser->fetch()["COUNT"];
+    //echo "total = " . $total ;
+
+    $recupTask = $bdd->prepare('SELECT INTO tasks WHERE id_user = ? GROUP BY id_user ' );
+    $recupTask->execute(array($id));
+
+
+    
       //TODO : select : order by id_user et recup chaque ligne avec le id user
       //TODO : get id de chaque task
       echo "passage 0";
       //$task1 = new Task(3);
-     // echo "passage 1";
+      //echo "passage 1";
       //$task->getData();
       //echo "passage 2";
       //echo "test = ". $task->getName();
@@ -38,7 +43,7 @@ if(isset($_POST['button'])){//nom du bouton
 
 
     
-    }
+  
 
 
 

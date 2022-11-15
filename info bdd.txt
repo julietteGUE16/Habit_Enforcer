@@ -28,5 +28,20 @@ USERS :
      - email
      - pwd
      - last_task_creation
-     - last_connexion (date) //peut etre utile
+     - last_connexion (date) //utile pour comparé avec l'historique des pertes de points pour afficher ceux qu'ils n'a pas vu
+
+HISTORY : 
+     - id_hist
+     - id_group
+     - id_user
+     - nb_point
+     - date
+     - (isGain) --> pas au début
+
+(à modifer :)
+INVIT :
+     - id_invit
+     - id_group
+     - id_user
+     - accept
 

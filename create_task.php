@@ -37,7 +37,7 @@ if(isset($_POST['btn'])){
          
           $date = date('d-m-y h:i:s');
 
-          //TODO : insert dans notre current user la date 
+          //TODO : insert dans notre current user la date de last creat task
         
           //$recupUser = $bdd->prepare(' UPDATE users SET last_task_creation=$date  WHERE id_user = ? ');
       
