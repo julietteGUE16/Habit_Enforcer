@@ -19,11 +19,10 @@ if($_SESSION['last_task_creation'] != null){
 //echo "diff = " . $diff;
 
     if($diff >= 1){
-
-    //TODO : bloquer si jour est vide quand on choisi hebdomadaire
     if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
         $category = $_POST['category'];
         $difficulty = $_POST['difficulty'];
+        $daySelect = false;
         $name = htmlspecialchars($_POST['name']);
         $id_user = $_SESSION['id_user'];
         $isvalid = false;     
@@ -33,37 +32,43 @@ if($_SESSION['last_task_creation'] != null){
         } else {
           $isdaily = false;
           if(!empty($_POST['jour'])){
-            
-          $jour = $_POST['jour'];
+            $jour = $_POST['jour'];
+            $daySelect = true;
           } else {
-            //TODO : faire un pop up SANS TOUT PERDRE
-            echo "<script>alert('attention il faut choisir un jour')</script>";
-          }
-               
-              
+            $daySelect = false;
+          }   
         }
             
 
-         //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
-        
-          $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
-        
-          $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
-         
+        if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
+
+          echo "il faut selectionner un jour !";
+
+        } else {
           
 
-          //TODO : insert dans notre current user la date de last creat task
-        
-          $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
-        
-          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
 
-          $_SESSION['last_task_creation'] = $currentDate;
+         //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
+        
+         $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
+        
+         $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
+        
+         
 
-      
-      
-          //$recupUser->execute(array($_SESSION['user_id']));
-        header('Location: menu.php');
+         //TODO : insert dans notre current user la date de last creat task
+       
+         $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
+       
+         $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+
+         $_SESSION['last_task_creation'] = $currentDate;
+
+     
+     
+         //$recupUser->execute(array($_SESSION['user_id']));
+       header('Location: menu.php');
+        }
         
     }else{
       //TODO l'afficher en pop up SANS TOUT PERDRE !!!
