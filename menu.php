@@ -83,6 +83,12 @@
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>
       <p>Rejoins un groupe ou suis l'actité de ton groupe ici !</p>
+      <!-- afficher le groupe -->
+      <?php
+      Groupe::selectGroupe($_SESSION['nom'], $_SESSION['description']);
+      echo $_SESSION['nom'];
+
+      ?>
       <br/>
     </section>
     <section class="git" id="git">

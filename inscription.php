@@ -7,7 +7,7 @@ if (isset($_POST['envoi'])) {
         $email = htmlspecialchars($_POST['email']);
         $mdp = sha1($_POST['mdp']);
         $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,mdp) VALUES (?,?,?)');
-        $resul = $insertUser->execute(array($pseudo, $email, $mdp));
+        $insertUser->execute(array($pseudo, $email, $mdp));
 
         //recupérer l'utilisateur grâce à une requête
         $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
@@ -105,7 +105,6 @@ if (isset($_POST['envoi'])) {
         </div>
 
     </div>
-    <p> <?php echo $resul; ?> </p>
 
 </body>
 
