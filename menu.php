@@ -23,10 +23,10 @@ if(isset($_POST['button'])){//nom du bouton
       //TODO : select : order by id_user et recup chaque ligne avec le id user
       //TODO : get id de chaque task
       echo "passage 0";
-      $task1 = new Task(3);
-      echo "passage 1";
+      //$task1 = new Task(3);
+     // echo "passage 1";
       //$task->getData();
-      echo "passage 2";
+      //echo "passage 2";
       //echo "test = ". $task->getName();
 
 

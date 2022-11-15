@@ -29,35 +29,13 @@ if (isset($_POST['envoi'])) {
 <html>
 
 <head>
-    <title>Connexion</title>
+    <title>Inscription</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
 
 </head>
-<!-- <body>
-<img class="logo" src="https://zupimages.net/up/22/45/piq7.png">
 
-<div class="content-total">
-    <div class="signindiv">
-        <h2>Connectez vous</h2>
-        <form method="POST" action="">
-            <input type="text" class="pseudo" name="pseudo" placeholder="Nom d'utilisateur" autocomplete="off">
-            <br/>
-            <input type="password" class="mdp" name="mdp" placeholder="Mot de Passe" autocomplete="off">
-            <br/><br/>
-            <input type="submit" class="envoi" name="envoi" value="Validé">
-        </form>
-        <p>Deja un compte ? <a href="connexion.php">Connectez vous ici </a></p>
-    </div>
-     peut etre mettre une email et une verif de mdp vu que c'est une creation de compte comme ca en plus on pourrais
-     essayé d'envoyé un mail au user pour validé son compte donc que des mail valide donc plus secur 
-    <div class="welcomediv">
-        <h2>Taroutyn</h2>
-        <h4>Bienvenue sur Taroutyn, le site pour prende les bonnes habitudes !</h4>
-        <p>Connectez-vous pour accéder à votre espace personnel</p>
-    </div>
-</div> -->
 
 
 <img class="logo" src="https://zupimages.net/up/22/44/pbyf.png">
