@@ -1,8 +1,8 @@
 <?php
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-$date = date('d-m-y h:i:s');
-echo $date;      
+
+     
 if(isset($_POST['btn'])){    
 
     //TODO : bloquer si jour est vide quand on choisi hebdomadaire
@@ -32,15 +32,16 @@ if(isset($_POST['btn'])){
          //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
         
           $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
-         // echo "passage : 1\n";
+        
           $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
-         // echo "passage : 2\n";
+         
+          $date = date('d-m-y h:i:s');
+
+          //TODO : insert dans notre current user la date 
         
-         /* if($recupTask->rowCount() > 0){
-            $_SESSION['name_task'] = $name;
-            $_SESSION['id_task'] = $recupTask->fetch()['id_task'];
-        }*/
-        
+          //$recupUser = $bdd->prepare(' UPDATE users SET last_task_creation=$date  WHERE id_user = ? ');
+      
+          //$recupUser->execute(array($_SESSION['user_id']));
         header('Location: menu.php');
         
     }else{
@@ -49,8 +50,7 @@ if(isset($_POST['btn'])){
     }
     
 }
-//TODO : liste de choix parmis les type of task
-//TODO rendre invisible le label jour sauf si on select quotidien
+
 
 ?>
 
