@@ -101,6 +101,9 @@ if(isset($_POST['button'])){//nom du bouton
       <p>Crée et retrouve tes habitudes ici !</p>
           </br>
         <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
+        <div class= "taches">
+        <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
+        <div class = "listetaches">
         <?php 
         $recupCount = $bdd->prepare('SELECT COUNT(*) FROM task WHERE id_users = ?');
         $recupCount->execute(array($_SESSION['id_users']));
@@ -116,9 +119,13 @@ if(isset($_POST['button'])){//nom du bouton
               $_SESSION[''] = $fetch[$i]['niveau'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
               ?>
-              <div class="box"><div class="tache"><?php echo $_SESSION['nom'];?></div><div class= "niveau"><?php echo "niveau : ".$_SESSION['difficulté']; ?></div></div> </br><?php
+              <div class="box"><div class="tache"><?php echo $_SESSION['nom'];?></div>
+              <div class= "niveau"><?php echo "niveau : ".$_SESSION['difficulté']; ?></div>
+              <div class="checkbox"><input type="checkbox"><span class="w3docs"></span></div></div> </br><?php
             }
         ?>
+        </div>
+          </div>
     </section>
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>
