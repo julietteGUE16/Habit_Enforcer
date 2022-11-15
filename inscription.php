@@ -9,19 +9,20 @@ if (isset($_POST['envoi'])) {
         $pseudo = htmlspecialchars($_POST['pseudo']);
         $email = htmlspecialchars($_POST['email']);
         $mdp = sha1($_POST['mdp']);
-        $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,mdp) VALUES (?,?,?)');
+        $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,pwd) VALUES (?,?,?)');
         $resul = $insertUser->execute(array($pseudo, $email, $mdp));
 
         //recupérer l'utilisateur grâce à une requête
-        $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
+        $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
         $recupUser->execute(array($pseudo, $mdp));
         if ($recupUser->rowCount() > 0) {
             $_SESSION['pseudo'] = $pseudo;
-            $_SESSION['mdp'] = $mdp;
+            $_SESSION['pwd'] = $mdp;
             $_SESSION['email'] = $email;
-            $_SESSION['id_users'] = $recupUser->fetch()['id_users'];
+            $_SESSION['id_user'] = $recupUser->fetch()['id_user'];
         }
-        echo $_SESSION['id_users'];
+        //echo $_SESSION['id_user'];
+        header('Location: menu.php');
     } else {
         echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }

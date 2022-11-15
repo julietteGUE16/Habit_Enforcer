@@ -1,69 +1,51 @@
 <?php
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-/*
-UNE TASK :
-  - id_task
-  - name
-  - type
-  - level
-  - isdaily
-  - jour
-  - id_users
-  - isvalid
-*/
+$date = date('d-m-y h:i:s');
+echo $date;      
+if(isset($_POST['btn'])){    
 
-        $date = date('d-m-y h:i:s');
-        echo $date;
-        
-if(isset($_POST['btn'])){
-    
-    if(!empty($_POST['name']) AND !empty($_POST['type'])AND !empty($_POST['level'])){
-
-        $style = $_POST['type'];
-        $niveau = $_POST['level'];
-        $nom = htmlspecialchars($_POST['name']);
-        //echo "periode = ". $_POST['periode'] .'||';
+    //TODO : bloquer si jour est vide quand on choisi hebdomadaire
+    if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
+        $category = $_POST['category'];
+        $difficulty = $_POST['difficulty'];
+        $name = htmlspecialchars($_POST['name']);
+        $id_user = $_SESSION['id_user'];
+        $isvalid = false;     
         if($_POST['periode'] == "Quotidienne"){
             $jour = NULL;
-             $isdaily = true;
-            
+            $isdaily = true;
         } else {
-            if(!empty($_POST['jour'])){
-            } else {
-                echo "choisi un jour";
-            }
-            $isdaily = false;
-            $jour = $_POST['jour'];
-           
+          $isdaily = false;
+          if(!empty($_POST['jour'])){
+            
+          $jour = $_POST['jour'];
+          } else {
+            //TODO : faire un pop up SANS TOUT PERDRE
+            echo "<script>alert('attention il faut choisir un jour')</script>";
+          }
+               
+              
         }
-       
+            
 
-        $id_users = $_SESSION['id_users'];
-        $isvalid = false;
-
-       if( $jour == null){
-        //echo "jour est nul ||";
-       }
-
-       echo "user = " . $id_users. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | niveau = ". $niveau . " | nom = ". $nom . " | style = ". $style. "\n";
-    
-       $insertTask = $bdd->prepare('INSERT INTO task(isvalid,nom,genre,niveau,isdaily,jour,id_users)VALUES(?,?,?,?,?,?,?)');
-       echo "passage : 1\n";
-       $insertTask->execute(array($isvalid?1:0,$nom,$genre,$niveau,$isdaily?1:0,$jour,$id_users));
-       echo "passage : 2\n";
-       $recupTask = $bdd->prepare('SELECT * FROM task WHERE nom = ? ');
-       $recupTask->execute(array($nom));
-       if($recupTask->rowCount() > 0){
-        $_SESSION['nom'] = $nom;
-        $_SESSION['id_task'] = $recupTask->fetch()['id_task'];
-    }
-    
-    header('Location: menu.php');
+         //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
+        
+          $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
+         // echo "passage : 1\n";
+          $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
+         // echo "passage : 2\n";
+        
+         /* if($recupTask->rowCount() > 0){
+            $_SESSION['name_task'] = $name;
+            $_SESSION['id_task'] = $recupTask->fetch()['id_task'];
+        }*/
+        
+        header('Location: menu.php');
         
     }else{
-      //TODO l'afficher en pop up
-        echo "Veuillez compléter tous les champs..";
+      //TODO l'afficher en pop up SANS TOUT PERDRE !!!
+      echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }
     
 }
@@ -157,7 +139,7 @@ if(isset($_POST['btn'])){
 </SELECT>
 <br/><br/>
 
-<SELECT name="niveau" size="1">
+<SELECT name="difficulty" size="1">
 <option value="" disabled selected>niveau de difficulté</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -167,7 +149,7 @@ if(isset($_POST['btn'])){
 </SELECT>
 <br/><br/>
 
-<SELECT name="genre" size="1">
+<SELECT name="category" size="1">
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
 <option value="sports">sports</option>
 <option value="travail">travail</option>

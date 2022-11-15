@@ -32,15 +32,15 @@
                 if(!empty($_POST['pseudo']) AND !empty($_POST['mdp'])){
                     $pseudo = htmlspecialchars($_POST['pseudo']); //éviter les attaques XSS
                     $mdp = sha1($_POST['mdp']);
-                    $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND mdp = ?');
+                    $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
                     $recupUser->execute(array($pseudo, $mdp));
                     //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
                     if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
                         $_SESSION['pseudo'] = $pseudo;
-                        $_SESSION['mdp'] = $mdp; // On ne peux faire qu'un fetch par requête !
+                        $_SESSION['pwd'] = $mdp; // On ne peux faire qu'un fetch par requête !
                         $fetch = $recupUser->fetch();
                         $_SESSION['email'] = $fetch['email'];
-                        $_SESSION['id_users'] = $fetch['id_users'];
+                        $_SESSION['id_user'] = $fetch['id_user'];
                         header('Location: menu.php');
                     } else {
                         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";

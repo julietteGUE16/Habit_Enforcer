@@ -12,8 +12,9 @@ class user
  //email
  private string $email;
  //last date task 
- private string $lastTask;
-
+ private date $lastTaskCreat;
+//UTILE ????,
+ private date $lastConnexion;
 
  //TODO : créer une tâche toute les 24h
  public function __construct(int $id, string $pseudo, int $idGroup)

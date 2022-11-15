@@ -8,16 +8,18 @@ if(isset($_POST['button'])){//nom du bouton
 }else{
     //TODO : error
 }
-    $id = $_SESSION['id_users'];
+
+    //TODO : mettre le last score dans le previous et le recalculer
+    $id = $_SESSION['id_user'];
     echo "id = ".$id;
     //compte le nombre de ligne pour un id user
-    $recupUser = $bdd->prepare('SELECT COUNT(*) AS COUNT FROM task WHERE id_users = ? GROUP BY id_users ' ); //
+    $recupUser = $bdd->prepare('SELECT COUNT(*) AS COUNT FROM tasks WHERE id_user = ? GROUP BY id_user ' ); //
     
-    $recupUser->execute(array($id));
+    //$recupUser->execute(array($id));
     
     //echo "total = [". $total. "]";
     //echo "total = ". $recupUser->fetch()["COUNT"];
-    $total = $recupUser->fetch()["COUNT"];
+    //$total = $recupUser->fetch()["COUNT"];
      
     for ($i = 0; $i < $total; $i++){
       //TODO : select : order by id_user et recup chaque ligne avec le id user

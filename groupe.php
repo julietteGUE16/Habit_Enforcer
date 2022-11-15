@@ -17,14 +17,18 @@ class Groupe
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
         $nom = htmlspecialchars($nom);
         $description = htmlspecialchars($description);
-        echo $nom;
-        $recupUser = $bdd->prepare('INSERT INTO groupe(nom,description)VALUES (?, ?)');
+  
+        $recupUser = $bdd->prepare('INSERT INTO groupes(name_group,description)VALUES (?, ?)');
         $recupUser->execute(array($nom, $description));
+       
         //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
         if ($recupUser->rowCount() > 0) { // on peut connecter l'utilisateur
-            $_SESSION['id_group'] = $recupUser->fetch()['id_group'];
-            $_SESSION['score'] = $recupUser->fetch()[0];
-            $_SESSION['nom'] = $nom;
+
+            $fetch = $recupUser->fetch();
+            $_SESSION['id_group'] = $fetch['id_group'];
+            $_SESSION['last_score'] =  $fetch[0];
+            $_SESSION['previous_score'] =  $fetch[0];
+            $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
             header('Location: groupe.php');
         }
