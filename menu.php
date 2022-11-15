@@ -99,10 +99,26 @@ if(isset($_POST['button'])){//nom du bouton
     <section class="page2" id="page2">
       <h2>Tâches</h2>
       <p>Crée et retrouve tes habitudes ici !</p>
-      <div class="anat">
-        <img class="c" src="">
+          </br>
         <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
-      </div>
+        <?php 
+        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM task WHERE id_users = ?');
+        $recupCount->execute(array($_SESSION['id_users']));
+        $fetchC = $recupCount->fetch();
+        $_SESSION['nombreTaches'] = $fetchC[0];
+
+        $recupTask = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
+        $recupTask->execute(array($_SESSION['id_users']));
+        $fetch = $recupTask->fetchAll();
+            for($i=0; $i < $_SESSION['nombreTaches']; $i++){
+              $_SESSION['nom'] = $fetch[$i]['nom'];
+              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
+              $_SESSION[''] = $fetch[$i]['niveau'];
+              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
+              ?>
+              <div class="box"><div class="tache"><?php echo $_SESSION['nom'];?></div><div class= "niveau"><?php echo "niveau : ".$_SESSION['difficulté']; ?></div></div> </br><?php
+            }
+        ?>
     </section>
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>

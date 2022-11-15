@@ -359,3 +359,49 @@ ul li a:hover {
 .icontea {
     height: 80px;
 }
+
+
+/*----------------------------------taches-----------------------------------------*/
+
+
+.box {
+    background: #b0c0d46c;
+    color: #2f5394;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px #9f9fa2;
+    width: 300px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.box:hover {
+    box-shadow: none;
+    transition: 0.5s;
+}
+
+.tache {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.niveau {
+    margin-left: 10px;
+}
+
+.flex a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #d2af5a;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+    font-size: 25px;
+}
+
+.flex a:hover {
+    color: #077EC3;
+}
