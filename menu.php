@@ -91,7 +91,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
 
         $recupTask = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
         $recupTask->execute(array($_SESSION['id_users']));
-        $fetch = $recupTask->fetchAll();
+        $fetch = $recupTask->fetchAll();?>
+        <form action="menu.php" method="POST" ><?php
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
               $_SESSION['nom'] = $fetch[$i]['nom'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
@@ -99,6 +100,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               $_SESSION['jour'] = $fetch[$i]['jour'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['style'] = $fetch[$i]['style'];
+              $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_image = "https://zupimages.net/up/22/46/3wl6.png";
               if($_SESSION['style'] == 'important'){
                 $_image = "https://zupimages.net/up/22/46/do4e.png";
@@ -125,8 +127,27 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               <div class= "daily"><?php if($_SESSION['jour']== NULL){echo "Quotidien";}; ?></div>
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
-              <div class="checkbox"><input type="checkbox"><span class="w3docs"></span></div></div></br><?php
-            }
+              <div class="checkbox" >
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" value = "on">
+              </div>
+              </div></br><?php
+            }?>
+            <input type="submit">
+                </form><?php
+            $n = 100; 
+            $countvalid = 0;
+            $countinvalid = 0;
+    for ($i = 0 ; $i < $n ; $i++) 
+    { 
+        if (isset($_POST["$i"])) 
+        { 
+          $countvalid = $countvalid + 1;
+          $valid = 1;
+          $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+          $updateValid->execute(array(1,$i));
+        } 
+    } 
+
         ?>
         </div>
           </div>

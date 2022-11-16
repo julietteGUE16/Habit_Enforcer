@@ -84,7 +84,7 @@ if(isset($_POST['btn'])){//nom du bouton
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Habit_Enforcer/Assets/task.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -173,7 +173,7 @@ if(isset($_POST['btn'])){//nom du bouton
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
 <option value="sport">sport</option>
 <option value="travail">travail</option>
-<option value="alimentation">social</option>
+<option value="social">social</option>
 <option value="alimentation">alimentation</option>
 <option value="loisir">loisir</option>
 <option value="important">important</option>
