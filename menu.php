@@ -24,6 +24,9 @@ if(isset($_POST['button'])){//nom du bouton
 
     $recupTask = $bdd->prepare('SELECT id_task INTO tasks WHERE id_user = ? GROUP BY id_user ' );
     //$recupTask->execute(array($id));
+
+
+    
     
 
 
@@ -146,28 +149,22 @@ if(isset($_POST['button'])){//nom du bouton
       if($_SESSION['id_group'] == null){
         ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
+        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> inviter des users ! </a> </p> <?php
         //TODO : afficher le groupe
         ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
-
-      <button onclick="leaveGroup()">quitter le groupe</button> 
-
+          
+              <form action = "leaveGroup.php" name="post">
+                
+                  <input type="submit"  onclick="leaveGroup()" value="quitter groupe">
+              </form>
+      
 
         <?php 
 
       }
-
-      function leaveGroup() {
-        //TODO : are you sure ?????
-        echo "passage ici ?";
-        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); 
-        $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
-        $UpdateUser->execute(array(NULL, $_SESSION['id_user']));
-        header('Location: menu.php');
-      }
       
       ?>
 
-      
 
       
       

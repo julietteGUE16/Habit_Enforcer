@@ -40,6 +40,7 @@ class Groupe
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
 
+
             $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
        
             $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
@@ -48,7 +49,7 @@ class Groupe
 
             
 
-            //header('Location: groupe.php');
+            header('Location: menu.php');
         }
 
 
@@ -72,6 +73,17 @@ class Groupe
 
 <body>
 
+<p class="flex"> <a href="../Habit_Enforcer/menu.php"> retour au menu ? </a> </p>
+
+<?php
+      
+
+       
+      
+        session_start();
+        if($_SESSION['id_group'] == null){
+
+            ?>
     <form method="POST" action="">
     <p>Créer ton groupe : </p>
     <br/>
@@ -88,12 +100,43 @@ class Groupe
         <p>rejoint une invitation : </p>
     
  
-
+        </form>
         <?php
      
-       
+        
+      } else {
+        //TODO : afficher le groupe
+        ?><p>vous êtes déjà dans un groupe, id =  <?php echo  $_SESSION['id_group']; ?> </p> 
+
+
+              <form action = "leaveGroup.php" name="post">
+                
+              <input type="submit"  onclick="leaveGroup()" value= "quitter groupe">
+              </form>
+
+     
+
+        </br>
+        <form method="POST" action="">
+        <p>Rentrer un pseudo de user pour l'inviter : </p>
+
+        <input type="text" name="pseudoInvit" placeholder="pseudoInvit" required="required" autocomplete="off">
+        <br /><br />
+        <input type="submit" name="invit">
+      </form>
+        <?php
+        
+
       
-        session_start();
+
+      }
+
+      
+      
+      
+
+
+
 if(isset($_POST['envoi'])){//nom du bouton)
   
     if( $_SESSION['id_group'] == null){
@@ -107,9 +150,28 @@ if(isset($_POST['envoi'])){//nom du bouton)
             echo "Veuillez compléter tous les champs..";
         }
     } else {
-        echo "vous êtes déjà dans un groupe";
+      //?????
     }
+    //users invitation
+}  else if (isset($_POST['invit'])){
+    if(!empty($_POST['pseudoInvit'])){
+        $recupUser = $bdd->prepare('SELECT pseudo FROM users ');
+        $recupUser->execute();
+        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
+        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
+            
+        }
+
+
+    }else {
+        echo "Veuillez écrire un nom de user.";
+    }
+
+
+
+
 }
+
 ?>
     </form>
 
