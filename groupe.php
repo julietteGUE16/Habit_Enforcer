@@ -155,11 +155,29 @@ if(isset($_POST['envoi'])){//nom du bouton)
     //users invitation
 }  else if (isset($_POST['invit'])){
     if(!empty($_POST['pseudoInvit'])){
+        $userExist = false;
         $recupUser = $bdd->prepare('SELECT pseudo FROM users ');
         $recupUser->execute();
-        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
+        
+        if($recupUser->rowCount() > 0){ 
+           $pseudo =  $recupUser->fetchAll();
+        
+       // echo "count = ". count($pseudo);
+           for($i=0 ; $i<count($pseudo); $i++){
+            //echo $pseudo[$i]['pseudo'];
+
             
+            if($pseudo[$i]['pseudo'] == $_POST['pseudoInvit'] && $_POST['pseudoInvit'] != $_SESSION['pseudo']){
+               $userExist = true; 
+            }
+            
+            
+           }
+           if($userExist){
+            //todo : envoyer une invitation (la créer dans la base de donnée)
+           } else {
+            echo "l'utilisateur n'existe pas, veuillez réitérer votre demande ...";
+           }
         }
 
 
