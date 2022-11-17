@@ -131,11 +131,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
               <div class="checkbox" >
-                <?php if($_SESSION['idvalid'] == 0){?>
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>">
-                  <?php }else{?>
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" checked>
-                  <?php } ?>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if($_SESSION['idvalid'] == 1){?>checked<?php }?>>
               </div>
               </div></br><?php
             }?>
