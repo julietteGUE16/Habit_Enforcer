@@ -110,6 +110,7 @@
     <br />
     <a href="https://github.com/julietteGUE16/Habit_Enforcer">Lien vers notre dépôt !</a>
   </section>
+
 </body>
 
 </html>
