@@ -43,6 +43,20 @@
                         $_SESSION['id_user'] = $fetch['id_user'];
                         $_SESSION['id_group'] = $fetch['id_group'];
                         $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
+
+                        $recupGroupe = $bdd->prepare('SELECT * FROM groupes WHERE id_group = ?');
+                        $recupGroupe->execute(array($_SESSION['id_group']));
+                        $fetchbis = $recupGroupe->fetch();
+                
+                        if($recupGroupe->rowCount() > 0){
+                           
+                            $_SESSION['name_group'] = $fetchbis['name_group'];
+                            $_SESSION['description'] = $fetchbis['description'];
+                            $_SESSION['id_group'] = $fetchbis['id_group'];
+                            $_SESSION['last_score'] = $fetchbis['last_score'];
+                            $_SESSION['previous_score'] = $fetchbis['previous_score'];
+                        }
+
                         header('Location: menu.php');
                     } else {
                         echo " Votre mot de passe ou nom d'utilisateur est incorrecte";

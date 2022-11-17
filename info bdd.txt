@@ -30,7 +30,7 @@ USERS :
      - last_task_creation
      - last_connexion (date) //utile pour comparé avec l'historique des pertes de points pour afficher ceux qu'ils n'a pas vu
 
-HISTORY : 
+HISTORICAL : 
      - id_hist
      - id_group
      - id_user
@@ -42,6 +42,9 @@ HISTORY :
 INVIT :
      - id_invit
      - id_group
-     - id_user
-     - accept
+     - pseudo
+     - name_group
+     - id_user (personne qui invite l'autre user)
+     - id_user_invited
+     
 

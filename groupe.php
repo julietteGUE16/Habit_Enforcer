@@ -2,15 +2,7 @@
 
 
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
-//TODO : 
 
-/**Chaque utilisateur peut faire partie d'un et un seul groupe d'amis à la fois. Il peut
-
-    créer un nouveau groupe,
-    le quitter,
-    inviter d'autres utilisateurs dans son groupe,
-    accepter une invitation pour rejoindre le groupe de quelqu'un d'autre.
- */
 
 
 class Groupe
@@ -74,6 +66,7 @@ class Groupe
 <body>
 
 <p class="flex"> <a href="../Habit_Enforcer/menu.php"> retour au menu ? </a> </p>
+<br> </br> 
 
 <?php
       
@@ -92,12 +85,14 @@ class Groupe
         <br />
         <input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
         <br /><br />
-        <input type="submit" name="envoi">
+        <input type="submit" name="envoi" value="créer groupe">
 
         <br/>
         <br/>
         <br/>    
         <p>rejoint une invitation : </p>
+
+      
     
  
         </form>
@@ -105,35 +100,26 @@ class Groupe
      
         
       } else {
-        //TODO : afficher le groupe
-        ?><p>vous êtes déjà dans un groupe, id =  <?php echo  $_SESSION['id_group']; ?> </p> 
+       
+        ?><p>vous êtes déjà dans le groupe qui se nomme : <?php echo  $_SESSION['name_group']; ?> </p> 
 
 
               <form action = "leaveGroup.php" name="post">
                 
-              <input type="submit"  onclick="leaveGroup()" value= "quitter groupe">
+              <input type="submit"  onclick="leaveGroup()" value= "quitter <?= $_SESSION['name_group'];  ?>"  >
               </form>
 
      
 
         </br>
+        <br> </br> 
+<br> </br> 
         <form method="POST" action="">
         <p>Rentrer un pseudo de user pour l'inviter : </p>
 
-        <input type="text" name="pseudoInvit" placeholder="pseudoInvit" required="required" autocomplete="off">
+        <input type="text" name="pseudoInvit"  placeholder="pseudo de l'utilisateur..." required="required" autocomplete="off">
         <br /><br />
-        <input type="submit" name="invit">
-      </form>
         <?php
-        
-
-      
-
-      }
-
-      
-      
-      
 
 
 
@@ -153,44 +139,145 @@ if(isset($_POST['envoi'])){//nom du bouton)
       //?????
     }
     //users invitation
-}  else if (isset($_POST['invit'])){
-    if(!empty($_POST['pseudoInvit'])){
-        $userExist = false;
-        $recupUser = $bdd->prepare('SELECT pseudo FROM users ');
-        $recupUser->execute();
-        
-        if($recupUser->rowCount() > 0){ 
-           $pseudo =  $recupUser->fetchAll();
+} 
+
+
+$userExist = false;
+$recupUser = $bdd->prepare('SELECT id_user ,pseudo FROM users ');
+$recupUser->execute();
+
+if($recupUser->rowCount() > 0){ 
+   $users =  $recupUser->fetchAll();
+
+   echo "liste des pseudos : ";
+   //afficher la liste des users avant de cliquer sur le pseudo 
+
+   for($i=0 ; $i<count($users); $i++){
+    if($users[$i]['pseudo'] != $_SESSION['pseudo']){
+    echo $users[$i]['pseudo'] . ", ";
+    }
+}
+
+?>
+<br /><br />
+           
+<input type="submit" name="invit" value="inviter dans <?= $_SESSION['name_group'];  ?>">
+<br /><br />
+           
+<?php
+
+    if (isset($_POST['invit'])){
+        if(!empty($_POST['pseudoInvit'])){
+       
         
        // echo "count = ". count($pseudo);
-           for($i=0 ; $i<count($pseudo); $i++){
-            //echo $pseudo[$i]['pseudo'];
-
-            
-            if($pseudo[$i]['pseudo'] == $_POST['pseudoInvit'] && $_POST['pseudoInvit'] != $_SESSION['pseudo']){
+       
+           for($i=0 ; $i<count($users); $i++){
+                     
+            if($users[$i]['pseudo'] == $_POST['pseudoInvit'] && $_POST['pseudoInvit'] != $_SESSION['pseudo']){
                $userExist = true; 
-            }
-            
-            
+               $userInvitedId = $users[$i]['id_user'];
+               $userInvited = htmlspecialchars($_POST['pseudoInvit']);
+            }  
            }
-           if($userExist){
-            //todo : envoyer une invitation (la créer dans la base de donnée)
-           } else {
-            echo "l'utilisateur n'existe pas, veuillez réitérer votre demande ...";
-           }
-        }
 
+       
+
+
+           if(!$userExist){
+          
+            ?>  <br> </br> <?php
+            //TODO : pb de " ' " entre l et utilisateur
+
+
+           echo '<span style="color:#FF0000;text-align:center;">l utilisateur n existe pas ou vous essayez de vous inviter, veuillez réitérer votre demande ...</span>';
+           
+           } else {
+            ?>
+           
+         <?php
+           
+          
+            //eviter les doublons d'invit
+            $recupInvit = $bdd->prepare('SELECT * FROM invit WHERE id_group = ? AND id_user = ? AND id_user_invited = ? AND  host_pseudo = ? AND  name_group= ? AND invited = ? ');
+            $recupInvit->execute(array($_SESSION['id_group'], $_SESSION['id_user'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'], $userInvited));
+
+        $fetch = $recupInvit->fetch();
+        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
+        if ($recupInvit->rowCount() > 0) { // on peut connecter l'utilisateur
+           
+            echo "l'invitation à déjà été envoyée à " . $_POST['pseudoInvit'];
+
+        } else{
+            echo $_POST['pseudoInvit'] . " est invité(e) !";
+            $inserInvit = $bdd->prepare('INSERT INTO invit(id_group,id_user,id_user_invited, host_pseudo, name_group, invited)VALUES (?,?,?,?,?,?)');
+            $inserInvit->execute(array($_SESSION['id_group'], $_SESSION['id_user'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'],$userInvited));
+    
+        }    
+           }
 
     }else {
-        echo "Veuillez écrire un nom de user.";
+        echo "Veuillez écrire un nom d'utilisateur.";
     }
-
-
 
 
 }
 
+}
+
+
 ?>
+ <form method="POST" action="">
+ <br> </br> 
+ <br> </br> 
+ <br> </br> 
+
+        <h2>Liste des invitations en attentes : </h2>
+        <br> </br> 
+
+<?php
+
+  //todo : afficher les demandes envoyé par le user ??? pour pouvoir les annuler ?
+
+
+        $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
+        $allInvit->execute(array($_SESSION['id_user']));
+
+       
+        
+        
+        if ($allInvit->rowCount() > 0) { 
+            
+            $invits = $allInvit->fetchAll();          
+           // echo "le nombre = ". count($invits);
+
+            for($i =0; $i < count($invits); $i++){
+
+                ?>
+                <br /><br />
+                <?php
+
+
+                echo "" . $invits[$i]['invited'] . " | STATUS : demande en cours... ";
+
+                ?>
+              <input type="button" name="delete" value="cancel">
+
+                <?php
+              
+            }
+  
+
+      }
+
+      
+      
+    }      
+
+
+      ?> <br /><br />
+
+
     </form>
 
 </body>
