@@ -139,7 +139,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               </div>
               </div></br><?php
             }?>
-            <input type="submit">
+            <div class="submitTask"><input type="submit" value="Click pour valider !"></div>
             </form>
             <?php
             $countvalid = 0;

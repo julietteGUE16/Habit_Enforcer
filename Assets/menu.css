@@ -381,3 +381,19 @@ ul li a:hover {
     width: 40px;
     margin-right: 200px;
 }
+
+.submitTask input {
+    height: 40px;
+    width: 190px;
+    color: #fff;
+    font-size: large;
+    font-weight: bold;
+    background-color: #fa52b49f;
+    border: none;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px #9f9fa2;
+}
+
+.submitTask input:hover {
+    box-shadow: none;
+}
