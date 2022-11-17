@@ -92,15 +92,18 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
         $recupTask = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
         $recupTask->execute(array($_SESSION['id_users']));
         $fetch = $recupTask->fetchAll();?>
-        <form action="menu.php" method="POST" ><?php
+        <form action="menu.php" method="POST" >
+          <?php
+          $listid = array();
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
               $_SESSION['nom'] = $fetch[$i]['nom'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['isdaily'] = $fetch[$i]['isdaily'];
               $_SESSION['jour'] = $fetch[$i]['jour'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['style'] = $fetch[$i]['style'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
+              $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
+              $listid[$i] =$_SESSION['idtask'];
               $_image = "https://zupimages.net/up/22/46/3wl6.png";
               if($_SESSION['style'] == 'important'){
                 $_image = "https://zupimages.net/up/22/46/do4e.png";
@@ -128,26 +131,35 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
               <div class="checkbox" >
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" value = "on">
+                <?php if($_SESSION['idvalid'] == 0){?>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>">
+                  <?php }else{?>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" checked>
+                  <?php } ?>
               </div>
               </div></br><?php
             }?>
             <input type="submit">
-                </form><?php
-            $n = 100; 
+            </form>
+            <?php
             $countvalid = 0;
             $countinvalid = 0;
-    for ($i = 0 ; $i < $n ; $i++) 
-    { 
-        if (isset($_POST["$i"])) 
-        { 
-          $countvalid = $countvalid + 1;
-          $valid = 1;
-          $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
-          $updateValid->execute(array(1,$i));
-        } 
-    } 
-
+            foreach ($listid as $value) 
+            { 
+              if (isset($_POST["$value"])) 
+              { 
+                $countvalid = $countvalid + 1;
+                $valid = 1;
+                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid->execute(array(1,$value));
+              } 
+              else {
+                $countinvalid = $countvalid + 1;
+                $valid = 0;
+                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid->execute(array(0,$value));
+              }
+            } 
         ?>
         </div>
           </div>
