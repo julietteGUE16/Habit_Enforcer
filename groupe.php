@@ -3,7 +3,8 @@
 
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
 
-
+//TODO : display point
+//TODO : lors de la suppreision de groupe en cas de défaite delete all tâche + all invit
 
 class Groupe
 {
@@ -15,10 +16,11 @@ class Groupe
   
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
       
+        
         $inserGroup = $bdd->prepare('INSERT INTO groupes(name_group,description)VALUES (?, ?)');
         $inserGroup->execute(array($nom, $description));
        
-
+      
 
         $recupGroup = $bdd->prepare('SELECT * FROM groupes WHERE name_group = ? AND description = ?');
         $recupGroup->execute(array($nom, $description));
@@ -41,7 +43,7 @@ class Groupe
 
             
 
-            header('Location: menu.php');
+            header('Location: groupe.php');
         }
 
 
@@ -54,13 +56,23 @@ class Groupe
 }
 ?>
 
+<!--<html>
+<head>
+    <title>Create Task</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+</head>
+<body>-->
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Groupe</title>
     <link rel="stylesheet" type="text/css" href="groupe.css">
-    <meta charset="utf-8">
+    
 </head>
 
 <body>
@@ -74,6 +86,8 @@ class Groupe
        
       
         session_start();
+
+
         if($_SESSION['id_group'] == null){
 
             ?>
@@ -87,16 +101,97 @@ class Groupe
         <br /><br />
         <input type="submit" name="envoi" value="créer groupe">
 
+        </form>
+
         <br/>
         <br/>
         <br/>    
-        <p>rejoint une invitation : </p>
+        
+
+        <?php 
+
+            //afficher liste d'invitation
+        $myInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user_invited = ? ');
+        $myInvit->execute(array($_SESSION['id_user']));
+
+       
+        
+        
+        if ($myInvit->rowCount() > 0) { 
+            
+            $myInvits = $myInvit->fetchAll();
+            
+            ?> <p>Vous avez  <?php  echo   count($myInvits)  ?> invitation(s) : </p>
+            
+            
+            <?php
+            
+            
+           // echo "le nombre = ". count($invits);
+
+            for($i =0; $i < count($myInvits); $i++){
+
+                ?>
+                  <form method="POST" action="">
+                <br /><br />
+                <?php
+
+
+                echo "" . $myInvits[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $myInvits[$i]['name_group'] . " | ";
+
+                ?>
+               
+              <input type="button" name="<?php echo $i?>" value="accepter">
+
+              <input type="button" name="<?php /*TODO : !!!!!*/ ?>" value="refuser">
+                 </form>
+
+                <?php
+
+               // echo "ok = " . $_POST['$i'];
+
+                if (isset($_POST['$i'])) 
+                {
+                    echo "le i = " . $i;
+                   //TODO : rejoindre le groupe et delete l'invit 
+                } 
+              
+            }
+  
+
+      } else {
+        ?> <p>vous avez 0 invitation : </p>
+            
+            
+            <?php
+      }
+
+        
+        ?>
 
       
     
  
-        </form>
+    
         <?php
+
+if(isset($_POST['envoi'])){//nom du bouton)
+    echo "passage1";  
+  if( $_SESSION['id_group'] == null){
+      echo "passage2";  
+      if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
+          echo "passage3";  
+  
+      Groupe::createGroupe($_POST['nom'], $_POST['description']);
+     
+      } else {
+          echo "Veuillez compléter tous les champs..";
+      }
+  } else {
+    //?????
+  }
+  //users invitation
+} 
      
         
       } else {
@@ -123,23 +218,7 @@ class Groupe
 
 
 
-if(isset($_POST['envoi'])){//nom du bouton)
-  
-    if( $_SESSION['id_group'] == null){
-      
-        if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
-          
-    
-        Groupe::createGroupe($_POST['nom'], $_POST['description']);
-       
-        } else {
-            echo "Veuillez compléter tous les champs..";
-        }
-    } else {
-      //?????
-    }
-    //users invitation
-} 
+
 
 
 $userExist = false;
@@ -237,9 +316,9 @@ if($recupUser->rowCount() > 0){
 
 <?php
 
-  //todo : afficher les demandes envoyé par le user ??? pour pouvoir les annuler ?
 
 
+          // afficher les demandes envoyé par le user, pour pouvoir les annuler
         $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
         $allInvit->execute(array($_SESSION['id_user']));
 
@@ -254,16 +333,28 @@ if($recupUser->rowCount() > 0){
             for($i =0; $i < count($invits); $i++){
 
                 ?>
+                  <form method="POST" action="">
                 <br /><br />
                 <?php
 
 
-                echo "" . $invits[$i]['invited'] . " | STATUS : demande en cours... ";
+                echo "" . $invits[$i]['invited'] . "(". $invits[$i]['id_invit'].")" . " | STATUS : demande en cours... ";
 
                 ?>
-              <input type="button" name="delete" value="cancel">
+               
+              <input type="button" name="<?php echo $i?>" value="annuler">
+                 </form>
 
                 <?php
+
+                echo "ok = " . $_POST['$i'];
+
+                if (isset($_POST['$i'])) 
+                {
+                    echo "le i = " . $i;
+                    $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                    $deleteInvit->execute(array($invits[$i]['id_invit']));
+                } 
               
             }
   

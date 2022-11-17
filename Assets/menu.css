@@ -101,6 +101,21 @@
     display: flex;
 }
 
+
+.groupe {
+    padding: 0 10%;
+    /* marges éspacement des bords*/
+    background: linear-gradient(
+            /*fond de la première page dégradé*/
+            to left,
+            /* on peut aussi mettre to top, to right, to left*/
+            #fff,
+            #c38bbb 100%);
+    height: 100vh;
+    /*configure pour que la première page remplisse l'écran*/
+    display: flex;
+}
+
 .createtask {
     padding: 0 10%;
     /* marges éspacement des bords*/
