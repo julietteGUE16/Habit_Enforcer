@@ -1,0 +1,50 @@
+LA BASE DE DONNÉE : 
+
+//TODO : il faut afficher les pertes et par qui de point dans un groupe
+//Nouvelle table? ou une simple liste ?
+
+GROUPES : 
+     - id_group
+     - name_group
+     - last_score 
+     - description
+     - previous_score //permet de le comparer avec le dernier score 
+
+TASKS : 
+     - id_task
+     - isvalid //on utilise last valid date pour comparer avec la date de maintenant et si c'est une daily task et on verif qu'elle est validé//--> pb 
+     - name_task
+     - category
+     - difficulty
+     - isdaily
+     - chosen_day
+     - id_user
+     - last_valid_date
+
+USERS :
+     - id_user
+     - id_group
+     - pseudo
+     - email
+     - pwd
+     - last_task_creation
+     - last_connexion (date) //utile pour comparé avec l'historique des pertes de points pour afficher ceux qu'ils n'a pas vu
+
+HISTORICAL : 
+     - id_hist
+     - id_group
+     - id_user
+     - nb_point
+     - date
+     - (isGain) --> pas au début
+
+(à modifer :)
+INVIT :
+     - id_invit
+     - id_group
+     - pseudo
+     - name_group
+     - id_user (personne qui invite l'autre user)
+     - id_user_invited
+     
+

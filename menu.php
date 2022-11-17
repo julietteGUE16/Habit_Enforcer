@@ -1,4 +1,64 @@
 <?php
+session_start();
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+
+
+if(isset($_POST['button'])){//nom du bouton
+    header('Location: create_task.php');
+}else{
+    //TODO : error
+}
+
+    //TODO : mettre le last score dans le previous et le recalculer
+    $id = $_SESSION['id_user'];
+    echo "id = ".$id;
+    //compte le nombre de ligne pour un id user
+    $recupUser = $bdd->prepare('SELECT COUNT(*) AS COUNT FROM tasks WHERE id_user = ? GROUP BY id_user ' ); //
+    
+    $recupUser->execute(array($id));
+    
+   
+  
+    $total = $recupUser->fetch()["COUNT"];
+    //echo "total = " . $total ;
+
+    $recupTask = $bdd->prepare('SELECT id_task INTO tasks WHERE id_user = ? GROUP BY id_user ' );
+    //$recupTask->execute(array($id));
+
+
+    
+    
+
+
+  //TODO : liste de id de tache
+/*
+    //list de task
+    $TaskArray=array();
+
+    for($i =0; $i < $total ; $i++){
+      $task = new Task();
+
+      $task->getData();
+
+        
+      // Push elements to the array
+      array_push($emptyArray, $task);
+
+
+    }   */
+
+    //TODO display color of task en fonction du type de task
+    //TODO : display task with grid
+
+
+/*
+* 1) take list of task by id_user ( for the current user)
+* 2) creat a task objet and fill it with information in database by id_task (use a function)
+* 3) display using function of task object ! :)
+*
+*
+*/
+
 ?>
 
 
@@ -17,16 +77,17 @@
   <div class="navbar">
     <div class="profil">
       <button class="open-button" onclick="openForm()">
-        <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
-        <div class="icon">
-          <div class="nameUSER">
-            <?php session_start();
-            echo $_SESSION['pseudo']; ?>
-          </div>
-          <?php
-          echo $_SESSION['email']; ?>
+    <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
+      <div class="icon">
+        <div class="nameUSER">
+        <?php 
+        echo $_SESSION['pseudo'];?>
         </div>
-      </button>
+        <?php
+        echo $_SESSION['email'];
+        ?>
+      </div>
+    </button>
     </div>
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
@@ -69,48 +130,59 @@
         </p>
       </div>
 
-      <div>
-        <img class="photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
+        <div>
+            <img class = "photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
+        </div>
+      </section>
+    </section>
+    <section class="page2" id="page2">
+      <h2>Tâches</h2>
+      <p>Crée et retrouve tes habitudes ici !</p>
+      <div class="anat">
+        <img class="c" src="">
+        <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
       </div>
     </section>
-  </section>
-  <section class="page2" id="page2">
-    <h2>Tâches</h2>
-    <p>Crée et retrouve tes habitudes ici !</p>
-    <div class="anat">
+    <section class="page3" id="page3">
+      <h2>Mon Groupe</h2>
+      <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
+      <br/>
+      <?php
+      if($_SESSION['id_group'] == null){
+        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> créer ou rejoindre un groupe ! </a> </p> <?php
+      } else {
+        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> inviter des users ! </a> </p> <?php
+        //TODO : afficher le groupe
+        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
+          
+              <form action = "leaveGroup.php" name="post">
+                
+                  <input type="submit"  onclick="leaveGroup()" value="quitter groupe">
+              </form>
+      
 
-      <img class="c" src="">
-    </div>
-  </section>
-  <section class="page3" id="page3">
-    <h2>Mon Groupe</h2>
-    <p>Rejoins un groupe ou suis l'actité de ton groupe ici !</p>
-    <!-- afficher le groupe -->
-    <!-- CSS A FAIRE  -->
-    <div class="contentgroupe">
-      <div class="namegroupe">
-        <?php echo $_SESSION['nom']; ?>
-      </div>
-      <div class="descrgroupe">
-        <?php echo $_SESSION['description']; ?>
-      </div>
-      <div class="scoregroupe">
-        <?php echo $_SESSION['score']; ?>
-      </div>
-    </div>
-    <!-- jusque la  -->
-    <br />
-  </section>
-  <section class="git" id="git">
-    <h1>Jetez un coup d'oeil à notre code !<br /><span>habit_enforcer</span>
-    </h1>
-    <p>
-      <img class="icontea" src="https://logosmarcas.net/wp-content/uploads/2020/12/GitHub-Logo.png" />
-    </p>
-    <br />
-    <a href="https://github.com/julietteGUE16/Habit_Enforcer">Lien vers notre dépôt !</a>
-  </section>
+        <?php 
 
-</body>
+      }
+      
+      ?>
 
+
+      
+      
+      <br/>
+    
+    </section>
+    <section class="git" id="git">
+      <h1>Jetez un coup d'oeil à notre code !<br /><span
+          >habit_enforcer</span
+        >
+      </h1>
+      <p>
+        <img class= "icontea" src="https://logosmarcas.net/wp-content/uploads/2020/12/GitHub-Logo.png" />
+      </p>
+      <br/>
+      <a href = "https://github.com/julietteGUE16/Habit_Enforcer">Lien vers notre dépôt !</a>
+    </section>
+  </body>
 </html>
