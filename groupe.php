@@ -330,6 +330,7 @@ if($recupUser->rowCount() > 0){
             $invits = $allInvit->fetchAll();          
            // echo "le nombre = ". count($invits);
 
+
             for($i =0; $i < count($invits); $i++){
 
                 ?>
@@ -342,13 +343,13 @@ if($recupUser->rowCount() > 0){
 
                 ?>
                
-              <input type="button" name="<?php echo $i?>" value="annuler">
+              <input type="submit" name="<?php echo $i?>" value="annuler">
                  </form>
 
                 <?php
 
-                echo "ok = " . $_POST['$i'];
-
+               
+                //TODO
                 if (isset($_POST['$i'])) 
                 {
                     echo "le i = " . $i;

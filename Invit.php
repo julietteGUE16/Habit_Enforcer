@@ -1,20 +1,21 @@
 <?php
 
-class user
+class Invit
 {
 
- //id of the user
- private int $idUser;
- //name of the user
- private string $pseudo;
- //id group
- private int $idGroup;
- //email
- private string $email;
- //last date task 
- private date $lastTaskCreat;
+//id of the user
+private int $idInvit;
+//user who send the invitation
+private int $idUser;
+//id user invited
+private int $idUserInvited;
+//id group
+private int $idGroup;
+//pseudo of user who send the invitation
+private string $host_pseudo;
 
- private date $lastConnexion;
+
+
 
  
  public function __construct(int $idUser, string $pseudo, int $idGroup, int $email)
