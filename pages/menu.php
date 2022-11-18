@@ -12,7 +12,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anon  ymous">
 </head>
 
 <body>
@@ -86,13 +86,13 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
         <div class = "listetaches">
         <?php 
-        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM task WHERE id_users = ?');
-        $recupCount->execute(array($_SESSION['id_users']));
+        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM tasks WHERE id_user = ?');
+        $recupCount->execute(array($_SESSION['id_user']));
         $fetchC = $recupCount->fetch();
         $_SESSION['nombreTaches'] = $fetchC[0];
 
-        $recupTask = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
-        $recupTask->execute(array($_SESSION['id_users']));
+        $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
+        $recupTask->execute(array($_SESSION['id_user']));
         $fetch = $recupTask->fetchAll();?>
         <form action="menu.php" method="POST" >
           <?php
@@ -101,7 +101,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               $_SESSION['nom'] = $fetch[$i]['nom'];
               $_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['jour'] = $fetch[$i]['jour'];
-              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
+              //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['style'] = $fetch[$i]['style'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
@@ -148,13 +148,13 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
               { 
                 $countvalid = $countvalid + 1;
                 $valid = 1;
-                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
                 $updateValid->execute(array(1,$value));
               } 
               else {
                 $countinvalid = $countvalid + 1;
                 $valid = 0;
-                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
                 $updateValid->execute(array(0,$value));
               }
             } 

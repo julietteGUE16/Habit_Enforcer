@@ -1,0 +1,13 @@
+$_SESSION['pseudo'] 
+$_SESSION['pwd']                
+$_SESSION['email'] 
+$_SESSION['id_user'] 
+$_SESSION['id_group']
+$_SESSION['last_task_creation']
+
+$_SESSION['name_group']
+$_SESSION['description']
+$_SESSION['id_group']
+$_SESSION['last_score']
+$_SESSION['previous_score']
+

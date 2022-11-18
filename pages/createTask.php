@@ -6,17 +6,19 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
 if(isset($_POST['btn'])){    
   
   $currentDate = date("Y-m-d H:i:s"); 
-  //$testDate = date("22-12-15 01:15:47");
 
+  //pour faire les test
+  //$testDate = date("22-12-15 01:15:47");
+  //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
   //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
 
 if($_SESSION['last_task_creation'] != null){
-  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;//strtotime($testDate))/86400; //
- // echo "test date = " . $diff;
+  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
+  //echo "current date = " . $currentDate . " || l'autre date : ". $_SESSION['last_task_creation'];
 } else {
   $diff = 1;
 }
-//echo "diff = " . $diff;
+
 
     if($diff >= 1){
     if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
@@ -38,6 +40,8 @@ if($_SESSION['last_task_creation'] != null){
             $daySelect = false;
           }   
         }
+
+      
             
 
         if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
@@ -48,11 +52,12 @@ if($_SESSION['last_task_creation'] != null){
           
          //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
         
+       
          $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
         
          $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
         
-         
+       
 
          //TODO : insert dans notre current user la date de last creat task
        
@@ -72,6 +77,7 @@ if($_SESSION['last_task_creation'] != null){
       //TODO l'afficher en pop up SANS TOUT PERDRE !!!
       echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }
+    
   }else {
    
     echo "il n'y a pas eu 24h entre 2 créations de tâche !";
@@ -90,7 +96,7 @@ if($_SESSION['last_task_creation'] != null){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Assets/task.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Assets/task.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -114,7 +120,7 @@ if($_SESSION['last_task_creation'] != null){
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br/><br/>
           <a>Changer de pseudo</a><br/><br/>
-          <a href="pages/deconnexion.php">se déconnecter</a><br/><br/>
+          <a href="../pages/deconnexion.php">se déconnecter</a><br/><br/>
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
@@ -130,7 +136,7 @@ if($_SESSION['last_task_creation'] != null){
       </div>
       <div class="menu">
         <ul>
-          <li><a href="pages/menu.php">Retour au menu !</a></li>
+          <li><a href="../pages/menu.php">Retour au menu !</a></li>
         </ul>
       </div>
     </div>
@@ -189,7 +195,7 @@ if($_SESSION['last_task_creation'] != null){
 <br/><br/>
 <br/><br/>
 <br/><br/>
-<button type="submit" href="pages/create_task.php" name="btn">Create your task !</button>
+<button type="submit" href="../pages/createTask.php" name="btn">Create your task !</button>
 
 
 </form>

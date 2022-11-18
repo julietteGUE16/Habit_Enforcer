@@ -96,7 +96,7 @@ class Groupe
 
 <body>
 
-<p class="flex"> <a href="pages/menu.php"> retour au menu ? </a> </p>
+<p class="flex"> <a href="../pages/menu.php"> retour au menu ? </a> </p>
 <br> </br> 
 
 <?php
