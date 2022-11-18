@@ -1,6 +1,6 @@
 <?php
 
-class user
+class User
 {
 
  //id of the user
@@ -52,5 +52,8 @@ public function addUserToDataBase () {
 public function RemoveUserToDataBase () {
     //todo
 }
+//todo : function list of user
+//todo : list of user depend of id group or other ?? meme function ???? et -1 si on veut pas mettre d'id group??
 
+//todo set in database for last connexion & last task create 
 }

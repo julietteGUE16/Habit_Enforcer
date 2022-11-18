@@ -61,6 +61,11 @@ class Task
         return $isValid;
     }
     
+
+    //todo : get list of task depend of id in entry
+
+    //todo : set data base for task : set for isValid
+
     public function getValidDate () : date {
         return $validDate;
     }

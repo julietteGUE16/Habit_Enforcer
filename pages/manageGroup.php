@@ -1,6 +1,11 @@
 <?php
 
 
+//TODO : check lequel marche :
+include '../model/Group';
+include 'Group';
+
+
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
 
 //TODO : display point
