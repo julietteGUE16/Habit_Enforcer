@@ -1,12 +1,12 @@
 <?php
 
-enum type_task
+enum TypeTask
 {
-    case sport;
+    case sports;
     case travail;
+    case important;
     case social;
     case alimentation;
     case loisir;
-    case important;
     case autre;
 }

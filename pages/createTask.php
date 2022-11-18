@@ -90,7 +90,7 @@ if($_SESSION['last_task_creation'] != null){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/task.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="Assets/task.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -114,7 +114,7 @@ if($_SESSION['last_task_creation'] != null){
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br/><br/>
           <a>Changer de pseudo</a><br/><br/>
-          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br/><br/>
+          <a href="pages/deconnexion.php">se déconnecter</a><br/><br/>
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
@@ -130,7 +130,7 @@ if($_SESSION['last_task_creation'] != null){
       </div>
       <div class="menu">
         <ul>
-          <li><a href="../Habit_Enforcer/menu.php">Retour au menu !</a></li>
+          <li><a href="pages/menu.php">Retour au menu !</a></li>
         </ul>
       </div>
     </div>
@@ -138,15 +138,8 @@ if($_SESSION['last_task_creation'] != null){
     <section class="page1">
 <div>
 <form method="POST" action="" align="center">
-<<<<<<< HEAD
-<input type="text" name ="name" required="required" required placeholder="Nom de la tâche" maxlength="30" autocomplete="off">
-<form method="POST" action="">
-<p>
-
-=======
 <input type="text" name ="name" required placeholder="Nom de la tâche" autocomplete="off">
 <br/>
->>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
 
 
 <br/><br/>
@@ -184,17 +177,6 @@ if($_SESSION['last_task_creation'] != null){
 
 <SELECT name="category" size="1">
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
-<<<<<<< HEAD
-<option value="sports">sports</option>
-<option value="travail">travail</option>
-<option value="important">important</option>
-<option value="social">social</option>
-<option value="alimentation">alimentation</option>
-<option value="loisir">loisir</option>
-<option value="autre">autre</option>
-
-
-=======
 <option value="sport">sport</option>
 <option value="travail">travail</option>
 <option value="social">social</option>
@@ -202,13 +184,12 @@ if($_SESSION['last_task_creation'] != null){
 <option value="loisir">loisir</option>
 <option value="important">important</option>
 <option value="autre">autre</option>
->>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
 </SELECT>
 
 <br/><br/>
 <br/><br/>
 <br/><br/>
-<button type="submit" href="../Habit_Enforcer/create_task.php" name="btn">Create your task !</button>
+<button type="submit" href="pages/create_task.php" name="btn">Create your task !</button>
 
 
 </form>

@@ -75,7 +75,7 @@ class Groupe
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="Assets/menu.css" crossorigin="anonymous">
 </head>
 <body>-->
 
@@ -84,13 +84,14 @@ class Groupe
 
 <head>
     <title>Groupe</title>
-    <link rel="stylesheet" type="text/css" href="groupe.css">
+    //todo : look
+   <!-- <link rel="stylesheet" type="text/css" href="groupe.css">-->
     
 </head>
 
 <body>
 
-<p class="flex"> <a href="../Habit_Enforcer/menu.php"> retour au menu ? </a> </p>
+<p class="flex"> <a href="pages/menu.php"> retour au menu ? </a> </p>
 <br> </br> 
 
 <?php
@@ -386,14 +387,13 @@ if($recupUser->rowCount() > 0){
     </form>
 
     <form action="" method="POST">
-        <input type="search" id="searchBar" name="searchBar">
-        <input type="submit" name="search" value="Rechercher">
+        
     
 
     <div id="result">
         <!-- si le groupe existe ajouté le user au groupe si il n'est pas deja dans un groupe -->
         <?php
-        if (isset($_POST['search'])) {
+      /*  if (isset($_POST['search'])) {
             $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
             $search = htmlspecialchars($_POST['searchBar']);
             $recupGroupe = $bdd->prepare('SELECT * FROM groupe WHERE nom = ?');
@@ -414,7 +414,7 @@ if($recupUser->rowCount() > 0){
             } else {
                 echo "<p>Le groupe n'existe pas</p>";
             }
-        }
+        }*/
         ?>
     </div>
     </form>

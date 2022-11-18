@@ -36,7 +36,7 @@ if (isset($_POST['envoi'])) {
     <title>Inscription</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="Assets/style.css" crossorigin="anonymous">
 
 </head>
 
@@ -80,7 +80,7 @@ if (isset($_POST['envoi'])) {
                     <button type="submit" name="envoi" class="ripple cursor" onclick="validate()"> S'inscrire ! </button>
                 </form>
 
-                <p class="flex"> <a href="../Habit_Enforcer/connexion.php"> Déjà inscrit ? </a> </p>
+                <p class="flex"> <a href="pages/connexion.php"> Déjà inscrit ? </a> </p>
 
             </div>
 

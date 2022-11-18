@@ -12,7 +12,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anonymous">
 </head>
 
 <body>
@@ -36,7 +36,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br /><br />
           <a>Changer de pseudo</a><br /><br />
-          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br /><br />
+          <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
@@ -81,7 +81,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
       <h2>Tâches</h2>
       <p>Crée et retrouve tes habitudes ici !</p>
           </br>
-        <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
+        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
         <div class= "taches">
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
         <div class = "listetaches">
@@ -178,9 +178,9 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
       <br/>
       <?php
       if($_SESSION['id_group'] == null){
-        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> créer ou rejoindre un groupe ! </a> </p> <?php
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
-        ?> <p class="flex"> <a href="../Habit_Enforcer/groupe.php"> inviter des users ! </a> </p> <?php
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
         //TODO : afficher le groupe
         ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
           

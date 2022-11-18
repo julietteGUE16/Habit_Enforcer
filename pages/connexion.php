@@ -4,8 +4,8 @@
 <head>
     <title>Connexion</title>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/style.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/cs s2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Assets/style.css" crossorigin="anonymous">
 </head>
 <img class="logo" src="https://zupimages.net/up/22/45/piq7.png">
 
@@ -66,7 +66,7 @@
             <button type="submit" name= "envoi" class="ripple cursor"> Se connecter ! </button>
         </form>
 
-        <p class="flex"> <a href="../Habit_Enforcer/inscription.php"> Nouvel utilisateur ? </a> </p>
+        <p class="flex"> <a href="pages/inscription.php"> Nouvel utilisateur ? </a> </p>
 
       </div>
 
