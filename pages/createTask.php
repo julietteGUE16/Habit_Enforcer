@@ -1,27 +1,30 @@
 <?php
+//todo :
+/*
+- pouvoir suppr une tâche 
+....
+
+*/
+//include '../model/Group';
+include 'Task';
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-
-    
-if(isset($_POST['btn'])){    
-  
+if(isset($_POST['btn'])){  
   $currentDate = date("Y-m-d H:i:s"); 
-
   //pour faire les test
   //$testDate = date("22-12-15 01:15:47");
   //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
-  //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
-
-if($_SESSION['last_task_creation'] != null){
-  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
-  //echo "current date = " . $currentDate . " || l'autre date : ". $_SESSION['last_task_creation'];
-} else {
-  $diff = 1;
-}
-
-
+  if($_SESSION['last_task_creation'] != null){
+    //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
+    $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
+    } else {
+      $diff = 1;
+    }
     if($diff >= 1){
-    if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
+      if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
+        //todo mise en place poo
+
+
         $category = $_POST['category'];
         $difficulty = $_POST['difficulty'];
         $daySelect = false;

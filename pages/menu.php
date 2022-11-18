@@ -1,4 +1,12 @@
 <?php
+//todo :
+/*
+- pouvoir suppr une tâche 
+....
+
+*/
+
+
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 ?>
@@ -81,6 +89,10 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
       <h2>Tâches</h2>
       <p>Crée et retrouve tes habitudes ici !</p>
           </br>
+        <?php
+          if($_SESSION['id_group'] != null){
+
+        ?>
         <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
         <div class= "taches">
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
@@ -94,15 +106,15 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
         $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
         $recupTask->execute(array($_SESSION['id_user']));
         $fetch = $recupTask->fetchAll();?>
-        <form action="menu.php" method="POST" >
+        <form action="../pages/menu.php" method="POST" >
           <?php
           $listid = array();
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
-              $_SESSION['nom'] = $fetch[$i]['nom'];
-              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['jour'] = $fetch[$i]['jour'];
+              $_SESSION['nom'] = $fetch[$i]['name_task'];
+              $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
+              $_SESSION['jour'] = $fetch[$i]['chosen_day'];
               //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['style'] = $fetch[$i]['style'];
+              $_SESSION['style'] = $fetch[$i]['category'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
               $listid[$i] =$_SESSION['idtask'];
@@ -158,7 +170,23 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
                 $updateValid->execute(array(0,$value));
               }
             } 
+        
+        
+          } else {
+           ?> 
+           <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
+           <br>
+           <p>Scroll vers le bas :)</p>
+           </br>
+           </br>
+           </br>
+           <?php
+          }
         ?>
+
+        
+
+
         </div>
           </div>
           <p>Légende des catégories :</p>

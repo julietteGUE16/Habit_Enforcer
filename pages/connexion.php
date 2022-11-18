@@ -66,7 +66,7 @@
             <button type="submit" name= "envoi" class="ripple cursor"> Se connecter ! </button>
         </form>
 
-        <p class="flex"> <a href="pages/inscription.php"> Nouvel utilisateur ? </a> </p>
+        <p class="flex"> <a href="../pages/inscription.php"> Nouvel utilisateur ? </a> </p>
 
       </div>
 

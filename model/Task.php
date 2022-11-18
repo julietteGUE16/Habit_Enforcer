@@ -66,6 +66,8 @@ class Task
 
     //todo : set data base for task : set for isValid
 
+    //todo delete task
+
     public function getValidDate () : date {
         return $validDate;
     }

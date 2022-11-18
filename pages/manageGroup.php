@@ -48,7 +48,7 @@ class Groupe
 
             
 
-            header('Location: groupe.php');
+            header('Location: manageGroup.php');
         }
 
 

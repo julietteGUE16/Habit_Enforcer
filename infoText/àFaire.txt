@@ -17,7 +17,7 @@ on  affiche un message et id_group repasse à null et on peut rejoindre ou crée
 --> changement du score lorsque l'on valide une TASK
 --> changement du score lors de la connexion si des taches n'on pas été validé (+ ajouter à l'historique)
 
-
+-->changer de pseudo??
 
 //FINI : 
 

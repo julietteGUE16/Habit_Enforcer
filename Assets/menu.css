@@ -294,25 +294,6 @@ ul li a:hover {
 }
 
 
-<<<<<<< HEAD
-.contentgroupe{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 auto;
-    background: fuchsia;
-    height: 25rem;
-}
-
-.namegroupe {
-    font-size: 3em;
-    font-weight: 500;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-=======
 /*----------------------------------taches-----------------------------------------*/
 
 .box {
@@ -416,4 +397,3 @@ ul li a:hover {
 .submitTask input:hover {
     box-shadow: none;
 }
->>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337

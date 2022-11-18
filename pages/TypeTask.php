@@ -2,11 +2,11 @@
 
 enum TypeTask
 {
-    case sports;
+    case sport;
     case travail;
-    case important;
     case social;
     case alimentation;
     case loisir;
+    case important;
     case autre;
 }
