@@ -87,7 +87,6 @@ if (isset($_POST['envoi'])) {
         </div>
 
     </div>
-    <p> <?php echo $resul; ?> </p>
 
 </body>
 

@@ -66,15 +66,15 @@ if(isset($_POST['button'])){//nom du bouton
 <html>
 
 <head>
-    <title>Menu</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+  <title>Menu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="navbar">
+  <div class="navbar">
     <div class="profil">
       <button class="open-button" onclick="openForm()">
     <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
@@ -92,41 +92,43 @@ if(isset($_POST['button'])){//nom du bouton
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2><br/><br/>
-          <a>Changer de pseudo</a><br/><br/>
-          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br/><br/>
+          <h2>Mon compte</h2><br /><br />
+          <a>Changer de pseudo</a><br /><br />
+          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br /><br />
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
-    <script>
-      function openForm() {
-        document.getElementById("popupForm").style.display = "block";
-      }
+      <script>
+        function openForm() {
+          document.getElementById("popupForm").style.display = "block";
+        }
 
-      function closeForm() {
-        document.getElementById("popupForm").style.display = "none";
-      }
-    </script>
-      </div>
-      <div class="menu">
-        <ul>
-          <li><a href="#page2">Tâches</a></li>
-          <li><a href="#page3">Mon Groupe</a></li>
-        </ul>
-      </div>
+        function closeForm() {
+          document.getElementById("popupForm").style.display = "none";
+        }
+      </script>
     </div>
-    <section class="main">
-      <section class="page1" id="page1">
-        <div class="intro">
-          <h1>Une plateforme pour vous guider dans le modelelage d'un quotidien qui vous ressemble <br/><span><img class = "logotaroutyn" src="https://zupimages.net/up/22/45/piq7.png" /></span></h1>
-          <p class="text">
-            Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !<br/>
-            Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme <br/>collectif pour tenir tes engagements !
-            <br>
-            <br>
-            Site réalisé par 3 étudiants :<br/> Guenard Juliette, Favennec Melaine et Piauger Paul !
-          </p>
-        </div>
+    <div class="menu">
+      <ul>
+        <li><a href="#page2">Tâches</a></li>
+        <li><a href="#page3">Mon Groupe</a></li>
+      </ul>
+    </div>
+  </div>
+  <section class="main">
+    <section class="page1" id="page1">
+      <div class="intro">
+        <h1>Une plateforme pour vous guider dans le modelelage d'un quotidien qui vous ressemble <br /><span><img
+              class="logotaroutyn" src="https://zupimages.net/up/22/45/piq7.png" /></span></h1>
+        <p class="text">
+          Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !<br />
+          Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme <br />collectif pour tenir tes
+          engagements !
+          <br>
+          <br>
+          Site réalisé par 3 étudiants :<br /> Guenard Juliette, Favennec Melaine et Piauger Paul !
+        </p>
+      </div>
 
         <div>
             <img class = "photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
