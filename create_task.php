@@ -90,7 +90,7 @@ if($_SESSION['last_task_creation'] != null){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Habit_Enforcer/Assets/task.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -138,10 +138,15 @@ if($_SESSION['last_task_creation'] != null){
     <section class="page1">
 <div>
 <form method="POST" action="" align="center">
+<<<<<<< HEAD
 <input type="text" name ="name" required="required" required placeholder="Nom de la tâche" maxlength="30" autocomplete="off">
 <form method="POST" action="">
 <p>
 
+=======
+<input type="text" name ="name" required placeholder="Nom de la tâche" autocomplete="off">
+<br/>
+>>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
 
 
 <br/><br/>
@@ -179,6 +184,7 @@ if($_SESSION['last_task_creation'] != null){
 
 <SELECT name="category" size="1">
 <option value="" disabled selected>Dans quelle catégorie ajouterais-tu cette tâche ?</option>
+<<<<<<< HEAD
 <option value="sports">sports</option>
 <option value="travail">travail</option>
 <option value="important">important</option>
@@ -188,6 +194,15 @@ if($_SESSION['last_task_creation'] != null){
 <option value="autre">autre</option>
 
 
+=======
+<option value="sport">sport</option>
+<option value="travail">travail</option>
+<option value="social">social</option>
+<option value="alimentation">alimentation</option>
+<option value="loisir">loisir</option>
+<option value="important">important</option>
+<option value="autre">autre</option>
+>>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
 </SELECT>
 
 <br/><br/>

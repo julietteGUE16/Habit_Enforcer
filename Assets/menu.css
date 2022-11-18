@@ -49,7 +49,7 @@
 }
 
 .open-button:hover {
-    background-color: #ddcda7;
+    background-color: #ff5f8f3d;
 }
 
 /* Positionnez la forme Popup */
@@ -101,6 +101,7 @@
     display: flex;
 }
 
+<<<<<<< HEAD
 
 .groupe {
     padding: 0 10%;
@@ -184,6 +185,8 @@ textarea:focus {
     box-shadow: none;
 }
 
+=======
+>>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
 .menu {
     width: 85%;
 }
@@ -336,6 +339,7 @@ ul li a:hover {
 .page4 p,
 .page3 p {
     text-align: center;
+    font-weight: bold;
 }
 
 /*-----------------------------------section GITHUB-------------------------------------------------------*/
@@ -376,6 +380,7 @@ ul li a:hover {
 }
 
 
+<<<<<<< HEAD
 .contentgroupe{
     display: flex;
     flex-direction: column;
@@ -393,3 +398,108 @@ ul li a:hover {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+=======
+/*----------------------------------taches-----------------------------------------*/
+
+.box {
+    background: #b0c0d46c;
+    color: #2f5394;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px #9f9fa2;
+    width: 600px;
+    height: 60px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.box:hover {
+    box-shadow: none;
+    transition: 0.5s;
+}
+
+.listetaches {
+    margin-left: 400px;
+}
+
+.taches {
+    /*configure pour que la première page remplisse l'écran*/
+    display: flex;
+}
+
+.tache {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.niveau {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.daily {
+    color: #c8398d;
+}
+
+.flex a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #d2af5a;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+    font-size: 25px;
+}
+
+.flex a:hover {
+    color: #077EC3;
+}
+
+.checkbox {
+    float: right;
+}
+
+.checkbox input {
+    margin-right: 0px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    float: right;
+    margin-right: 5px;
+}
+
+.iconstyle {
+    max-width: 40px;
+    max-height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.cate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    width: 40px;
+    margin-right: 200px;
+}
+
+.submitTask input {
+    height: 40px;
+    width: 190px;
+    color: #fff;
+    font-size: large;
+    font-weight: bold;
+    background-color: #fa52b49f;
+    border: none;
+    cursor: pointer;
+    box-shadow: 5px 5px 5px #9f9fa2;
+}
+
+.submitTask input:hover {
+    box-shadow: none;
+}
+>>>>>>> ae558b525c1f82c89aa703d3054e68e0ffeb1337
