@@ -8,29 +8,35 @@
 //include '../model/Group';
 
 require ('../model/Task.php');
-require 'TypeTask.php';
+require ('../model/User.php');
+
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-//$currentUser = new User();
+//echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
+//TODO : current user
+//$currentUser = new User($_SESSION['id_user'],$_SESSION['pseudo'],$_SESSION['id_group'],$_SESSION['email'],$_SESSION['pwd'],$_SESSION['last_task_creation'],$_SESSION['last_connexion']);
 
-if(isset($_POST['btn'])){  
-  $currentDate = date("Y-m-d H:i:s");
+//$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
+
+ 
   //pour faire les test
   //$testDate = date("22-12-15 01:15:47");
-  //TODO : get from database last task creation for session
-  //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
-  if($_SESSION['last_task_creation'] != null){
-    //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
-    $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
-    } else {
-      $diff = 1;
-    }
-    if($diff >= 1){
-      if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){    
+if($_SESSION['last_task_creation'] != null){
+  $currentDate = date("Y-m-d H:i:s");
+  //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
+  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
+  } else {
+    $diff = 1;
+  }
+if(isset($_POST['btn'])){  
+    if(abs($diff) >= 1){
+      if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){   
+       
         $category = $_POST['category'];
         $difficulty = $_POST['difficulty'];
         $daySelect = false;
         $name = htmlspecialchars($_POST['name']);
+        //$id_user = $currentUser.getIdUser();
         $id_user = $_SESSION['id_user'];
         $isvalid = false;     
         if($_POST['periode'] == "Quotidienne"){
@@ -52,12 +58,11 @@ if(isset($_POST['btn'])){
           echo "il faut selectionner un jour !";
 
         } else {
-          
+          echo "testmarche pas";
           //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
-          $task = new Task($isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour);
+          $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
           $task->addTaskToDataBase();
-          //$task->setIdTaskFromDatabase();      
-   
+         
 
          //TODO : insert dans notre current user la date de last creat task
        
@@ -138,6 +143,11 @@ if(isset($_POST['btn'])){
     <section class="page1">
 <div>
 <form method="POST" action="" align="center">
+
+<?php 
+
+   if(abs($diff) >= 1){
+?>
 <input type="text" name ="name" required placeholder="Nom de la tâche" autocomplete="off">
 <br/>
 
@@ -189,8 +199,14 @@ if(isset($_POST['btn'])){
 <br/><br/>
 <br/><br/>
 <br/><br/>
-<button type="submit" href="../pages/createTask.php" name="btn">Create your task !</button>
 
+<button type="submit" href="../pages/createTask.php" name="btn">Créer votre Tâche !</button>
+<?php
+   } else {
+    ?><h3>Vous devez attendre 24h entre la création de 2 tâches !</h3>
+   <?php
+   }
+?>
 
 </form>
     </section>

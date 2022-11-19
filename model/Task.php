@@ -18,25 +18,23 @@ class Task
     //bool qui permet de valider ou non le task
     private bool $isValid;
     //id task (?int permet d'initialiser à null)
-    private ?int $idTask= null;
+    private ?int $idTask;
     //date de la dernière validité
-    private ?date $LastvalidDate= null;
+    private ?date $LastvalidDate;
 
     
-    public function __construct(bool $isValid, string $nameTask,string $category,string $difficulty, int $idUser, bool $isDaily, ?string $day)
+    public function __construct(?int $idTask, bool $isValid, string $nameTask,string $category,string $difficulty, int $idUser, bool $isDaily, ?string $day, ?date $LastvalidDate)
     {  
         //Attention a ne pas mettre de $ après le $this->
-     
         $this->isValid = $isValid;
         $this->nameTask = $nameTask;
         $this->category = $category;
         $this->difficulty = $difficulty;
         $this->isDaily = $isDaily;
         $this->day = $day;
-        $this->idUser = $idUser;
-     
-        
-       
+        $this->idUser = $idUser;  
+        $this->idTask = $idTask;  
+        $this->LastvalidDate = $LastvalidDate;      
       
     }
 
@@ -44,7 +42,7 @@ class Task
         return $this->category;
     }
 
-    public function getIdTask () : int{
+    public function getIdTask () : ?int{
         return $this->idTask;
     }
 
@@ -59,7 +57,7 @@ class Task
     public function getIsDaily (): bool{
         return $this->isDaily;
     }
-    public function getDay (): string{
+    public function getDay (): ?string{
         return $this->day;
     }
     public function getIdUser (): int {
@@ -70,7 +68,7 @@ class Task
         return $this->isValid;
     }
 
-    public function getValidDate () : date {
+    public function getValidDate () : ?date {
         return $this->lastValidDate;
     }
 
@@ -107,6 +105,7 @@ class Task
         }
      
     }
+
 
     //todo : get list of task depend of id in entry
 

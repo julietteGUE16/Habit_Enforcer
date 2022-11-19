@@ -43,6 +43,7 @@
                         $_SESSION['id_user'] = $fetch['id_user'];
                         $_SESSION['id_group'] = $fetch['id_group'];
                         $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
+                        $_SESSION['last_connexion'] = $fetch['last_connexion'];
 
                         $recupGroupe = $bdd->prepare('SELECT * FROM groupes WHERE id_group = ?');
                         $recupGroupe->execute(array($_SESSION['id_group']));
@@ -56,6 +57,12 @@
                             $_SESSION['last_score'] = $fetchbis['last_score'];
                             $_SESSION['previous_score'] = $fetchbis['previous_score'];
                         }
+
+                        //on a enregistré dans la session la dernière connexion donc on peut actualisé la la base de donnée user
+                        $updateUser = $bdd->prepare('UPDATE users SET last_connexion = ?  WHERE id_user = ? ');
+                        $updateUser->execute(array(date("Y-m-d H:i:s"),$_SESSION['id_user']));
+
+                    
 
                         header('Location: menu.php');
                     } else {
