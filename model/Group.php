@@ -48,11 +48,19 @@ class Group
 
     public function RemoveGroupToDataBase()
     {
-        //todo
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
+        $deleteGroup = $bdd->prepare('DELETE FROM groups WHERE id_group = ?');
+        $deleteGroup->execute(array($this->idGroup));
     }
 
-    public function addScore()
+    public function addScore($vallue)
     {
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
+        $total = $this->last_score + $vallue;
+        $updateScore = $bdd->prepare('UPDATE groups SET last_score = ? WHERE id_group = ?');
+        $updateScore->execute(array($total,$this->idGroup));
+
+
         //todo
     }
 
