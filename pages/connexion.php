@@ -5,7 +5,7 @@
     <title>Connexion</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/cs s2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Assets/style.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Assets/style.css" crossorigin="anonymous">
 </head>
 <img class="logo" src="https://zupimages.net/up/22/45/piq7.png">
 
@@ -21,7 +21,7 @@
         <h2>Connexion</h2>
 
         <form id="loginForm"  method="POST" action="" align="center">
-            <input type="text" name="pseudo" required placeholder="pseudo">
+            <input type="text" name="pseudo" required placeholder="pseudo" autocomplete="off">
             <br/>
             <input type="password" name="mdp" required placeholder="mot de passe">
             <br/>

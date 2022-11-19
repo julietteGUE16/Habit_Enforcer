@@ -57,7 +57,7 @@ if (isset($_POST['envoi'])) {
                 <form id="loginForm" method="POST" action="">
                     <input type="text" name="pseudo" required placeholder="pseudo" autocomplete="off">
                     <br />
-                    <input type="text" name="email" id="email"  required placeholder="email" autocomplete="off">
+                    <input type="text" name="email" id="email" required placeholder="email" autocomplete="off">
                     <script>
                         console.log("test")
                         function checkEmail(email) {
@@ -71,12 +71,14 @@ if (isset($_POST['envoi'])) {
                                 alert("Invalid email address!");
                             }
                             return false;
-                            }
+                        }
                     </script>
                     <br />
                     <input type="password" name="mdp" required placeholder="mot de passe" autocomplete="off">
                     <br /><br />
-                    <button type="submit" name="envoi" class="ripple cursor" onclick="validate()"> S'inscrire ! </button>
+                    <button type="submit" name="envoi" class="ripple cursor" onclick="validate()"> S'inscrire !
+                    </button>
+
                 </form>
 
                 <p class="flex"> <a href="pages/connexion.php"> Déjà inscrit ? </a> </p>

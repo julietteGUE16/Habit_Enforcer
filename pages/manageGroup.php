@@ -2,8 +2,7 @@
 
 
 //TODO : check lequel marche :
-include '../model/Group';
-include 'Group';
+include '../model/Group.php';
 
 
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
@@ -128,7 +127,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
                     echo "passage3";  
             
-                Groupe::createGroupe($_POST['nom'], $_POST['description']);
+                createGroupe($_POST['nom'], $_POST['description']);
                 
                 } else {
                     echo "Veuillez compléter tous les champs..";
