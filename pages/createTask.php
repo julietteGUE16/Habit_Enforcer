@@ -1,26 +1,23 @@
 <?php
-//todo :
-/*
-- pouvoir suppr une tâche 
-....
 
-*/
-//include '../model/Group';
+//todo : pouvoir delete une tâche ??
 
 require ('../model/Task.php');
 require ('../model/User.php');
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-//echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
+
+/*------------------------------*/
+echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
 //TODO : current user
 //$currentUser = new User($_SESSION['id_user'],$_SESSION['pseudo'],$_SESSION['id_group'],$_SESSION['email'],$_SESSION['pwd'],$_SESSION['last_task_creation'],$_SESSION['last_connexion']);
+/*------------------------------*/
 
-//$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 
  
-  //pour faire les test
-  //$testDate = date("22-12-15 01:15:47");
+//pour faire les test et créer plusieurs tâche à la suite
+//$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 if($_SESSION['last_task_creation'] != null){
   $currentDate = date("Y-m-d H:i:s");
   //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
@@ -54,26 +51,30 @@ if(isset($_POST['btn'])){
             
 
         if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
-          //TODO : le replacer correctement
-          echo "il faut selectionner un jour !";
+          //TODO : le replacer correctement 
+          ?>
+          <h3> il faut selectionner un jour ! </h3>
+          <?php
 
         } else {
-          echo "testmarche pas";
-          //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
           $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
-          $task->addTaskToDataBase();
-         
+          $task->addTaskToDataBase();        
 
+
+
+          /*------------------------------*/
          //TODO : insert dans notre current user la date de last creat task
-       
          $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+         /*------------------------------*/
+
+
+
          $_SESSION['last_task_creation'] = $currentDate;
          header('Location: menu.php');
         }
         
     }else{
-      //TODO l'afficher en pop up SANS TOUT PERDRE !!!
       echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }
     
@@ -203,7 +204,9 @@ if(isset($_POST['btn'])){
 <button type="submit" href="../pages/createTask.php" name="btn">Créer votre Tâche !</button>
 <?php
    } else {
-    ?><h3>Vous devez attendre 24h entre la création de 2 tâches !</h3>
+    ?><p>Vous devez attendre 24h entre la création de 2 tâches !</p>
+
+    
    <?php
    }
 ?>

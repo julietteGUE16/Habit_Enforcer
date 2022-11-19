@@ -113,6 +113,8 @@ class Task
 
     //todo delete task
 
+    //todo : function : taskIsCompleted? : bool
+
    
   
     

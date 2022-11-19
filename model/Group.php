@@ -4,13 +4,9 @@ class Group
 {
 
 //id of the user
-//TOdo : !!!
+//todo : !!!
 
-
-
-
- 
- public function __construct( int $idGroup)
+public function __construct( int $idGroup)
  {
 
      $this->idGroup = $idGroup;
@@ -36,3 +32,5 @@ public function RemoveGroupToDataBase () {
 }
 
 }//todo : delete : group
+//todo : add score 
+//todo : remove score

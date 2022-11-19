@@ -11,7 +11,6 @@ if (isset($_POST['envoi'])) {
         $mdp = sha1($_POST['mdp']);
         $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,pwd) VALUES (?,?,?)');
         $resul = $insertUser->execute(array($pseudo, $email, $mdp));
-
         //recupérer l'utilisateur grâce à une requête
         $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
         $recupUser->execute(array($pseudo, $mdp));

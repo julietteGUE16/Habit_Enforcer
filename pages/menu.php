@@ -9,6 +9,37 @@
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+
+
+
+/**
+ * 
+ * 
+ *  $_SESSION['last_score'] --> DERNIER SCORE APRES CALCUL SI PERTE DE POINT
+*   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
+ * 
+ * */ 
+if($_SESSION['id_group'] == -1 ){
+  //todo : afficher pop up : votre groupe à été supprimé 
+  //todo : changer id groupe de l'user par null et reload page menu
+} else if($_SESSION['id_group'] != null ){
+
+  //todo : calcul de $_SESSION['last_score']
+  //todo : check chaque task si faite ou non (add or remove point)
+  //todo : si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
+
+  //todo : afficher toute les personnes qui on fait perdre des points depuis ma dernière connexion (on compare la date de derniere co et les dates sur chaque élément de l'historique  )
+  //a chaque remove de point on vérifie que le score ne passe pas en dessous de 0
+
+
+  if($_SESSION['last_score']< 0){
+    //todo : pop-up : votre score de groupes est < 0
+    //todo changer all id du groupe par -1
+    //todo : supprimer toute les tâches et invitations par rapport au groupe et l'historiques
+    //todo : reload la page menu pour qu'il est le message groupe supprimé
+  } 
+}
+
 ?>
 
 
@@ -43,6 +74,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br /><br />
+          //TODO : changer de pseudo?? sinon à enlever
           <a>Changer de pseudo</a><br /><br />
           <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
@@ -203,6 +235,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
     </section>
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>
+    
       <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
       <br/>
       <?php
@@ -210,7 +243,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
-        //TODO : afficher le groupe
+        //TODO : afficher le groupe : correctement
         ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
           
               <form action = "leaveGroup.php" name="post">

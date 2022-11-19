@@ -14,7 +14,7 @@ private int $idGroup;
 //pseudo of user who send the invitation
 private string $host_pseudo;
 
-
+//todo
 
 
  
