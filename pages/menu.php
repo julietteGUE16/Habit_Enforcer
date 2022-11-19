@@ -8,7 +8,7 @@
 
 
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
 
 
@@ -16,13 +16,13 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
  * 
  * 
  *  $_SESSION['last_score'] --> DERNIER SCORE APRES CALCUL SI PERTE DE POINT
-*   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
+ *   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
  * 
- * */ 
-if($_SESSION['id_group'] == -1 ){
+ * */
+if ($_SESSION['id_group'] == -1) {
   //todo : afficher pop up : votre groupe à été supprimé 
   //todo : changer id groupe de l'user par null et reload page menu
-} else if($_SESSION['id_group'] != null ){
+} else if ($_SESSION['id_group'] != null) {
 
   //todo : calcul de $_SESSION['last_score']
   //todo : check chaque task si faite ou non (add or remove point)
@@ -32,12 +32,12 @@ if($_SESSION['id_group'] == -1 ){
   //a chaque remove de point on vérifie que le score ne passe pas en dessous de 0
 
 
-  if($_SESSION['last_score']< 0){
+  if ($_SESSION['last_score'] < 0) {
     //todo : pop-up : votre score de groupes est < 0
     //todo changer all id du groupe par -1
     //todo : supprimer toute les tâches et invitations par rapport au groupe et l'historiques
     //todo : reload la page menu pour qu'il est le message groupe supprimé
-  } 
+  }
 }
 
 ?>
@@ -58,26 +58,31 @@ if($_SESSION['id_group'] == -1 ){
   <div class="navbar">
     <div class="profil">
       <button class="open-button" onclick="openForm()">
-    <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
-      <div class="icon">
-        <div class="nameUSER">
-        <?php 
-        echo $_SESSION['pseudo'];?>
+        <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
+        <div class="icon">
+          <div class="nameUSER">
+            <?php
+            echo $_SESSION['pseudo']; ?>
+          </div>
+          <?php
+          echo $_SESSION['email'];
+          ?>
         </div>
-        <?php
-        echo $_SESSION['email'];
-        ?>
-      </div>
-    </button>
+      </button>
     </div>
     <div class="login-popup">
-      <div class="form-popup" id="popupForm">
-        <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2><br /><br />
-          //TODO : changer de pseudo?? sinon à enlever
-          <a>Changer de pseudo</a><br /><br />
-          <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
-          <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+      <div class="form-popup" id="popupForm" onclick="closeForm()">
+        <div class="contentPopUp">
+          <form action="/action_page.php" class="form-container">
+
+            <h2>Mon compte</h2>
+            <?php
+            echo "<p class=\"pseudoPopUP\"> Pseudo :  " . $_SESSION['pseudo'] . "</p>";
+            echo "<p class=\"emailPopUp\"> Email :  " . $_SESSION['email'] . "</p>";
+            ?>
+            <a href="../pages/deconnexion.php" class="btnDeco">Se déconnecter</a>
+            <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+        </div>
         </form>
       </div>
       <script>
@@ -112,168 +117,186 @@ if($_SESSION['id_group'] == -1 ){
         </p>
       </div>
 
-        <div>
-            <img class = "photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
-        </div>
-      </section>
+      <div>
+        <img class="photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
+      </div>
     </section>
-    <section class="page2" id="page2">
-      <h2>Tâches</h2>
-      <p>Crée et retrouve tes habitudes ici !</p>
-          </br>
+  </section>
+  <section class="page2" id="page2">
+    <h2>Tâches</h2>
+    <p>Crée et retrouve tes habitudes ici !</p>
+    </br>
+    <?php
+    if ($_SESSION['id_group'] != null) {
+
+    ?>
+    <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
+    <div class="taches">
+      <div><img class="photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
+      <div class="listetaches">
         <?php
-          if($_SESSION['id_group'] != null){
+      $recupCount = $bdd->prepare('SELECT COUNT(*) FROM tasks WHERE id_user = ?');
+      $recupCount->execute(array($_SESSION['id_user']));
+      $fetchC = $recupCount->fetch();
+      $_SESSION['nombreTaches'] = $fetchC[0];
 
-        ?>
-        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
-        <div class= "taches">
-        <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
-        <div class = "listetaches">
-        <?php 
-        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM tasks WHERE id_user = ?');
-        $recupCount->execute(array($_SESSION['id_user']));
-        $fetchC = $recupCount->fetch();
-        $_SESSION['nombreTaches'] = $fetchC[0];
-
-        $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
-        $recupTask->execute(array($_SESSION['id_user']));
-        $fetch = $recupTask->fetchAll();?>
-        <form action="../pages/menu.php" method="POST" >
+      $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
+      $recupTask->execute(array($_SESSION['id_user']));
+      $fetch = $recupTask->fetchAll(); ?>
+        <form action="../pages/menu.php" method="POST">
           <?php
-          $listid = array();
-            for($i=0; $i < $_SESSION['nombreTaches']; $i++){
-              $_SESSION['nom'] = $fetch[$i]['name_task'];
-              $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
-              $_SESSION['jour'] = $fetch[$i]['chosen_day'];
-              //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['style'] = $fetch[$i]['category'];
-              $_SESSION['idtask'] = $fetch[$i]['id_task'];
-              $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
-              $listid[$i] =$_SESSION['idtask'];
-              $_image = "https://zupimages.net/up/22/46/3wl6.png";
-              if($_SESSION['style'] == 'important'){
-                $_image = "https://zupimages.net/up/22/46/do4e.png";
-              }
-              if($_SESSION['style'] == 'sport'){
-                $_image = "https://zupimages.net/up/22/46/9dzn.png";
-              }
-              if($_SESSION['style'] == 'loisir'){
-                $_image = "https://zupimages.net/up/22/46/8b8a.png";
-              }
-              if($_SESSION['style'] == 'alimentation'){
-                $_image = "https://zupimages.net/up/22/46/tl8e.png";
-              }
-              if($_SESSION['style'] == 'social'){
-                $_image = "https://zupimages.net/up/22/46/sexb.png";
-              }
-              if($_SESSION['style'] == 'travail'){
-                $_image = "https://zupimages.net/up/22/46/pmtj.png";
-              }
-              ?>
-              <div class="box">
-              <div class="tache"><?php echo $_SESSION['nom'];?></div>
-              <div class= "niveau"><?php echo "niveau : ".$_SESSION['difficulté']; ?></div>
-              <div class= "daily"><?php if($_SESSION['jour']== NULL){echo "Quotidien";}; ?></div>
-              <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
-              <img class = "iconstyle" src="<?php echo $_image?>" />
-              <div class="checkbox" >
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if($_SESSION['idvalid'] == 1){?>checked<?php }?>>
-              </div>
-              </div></br><?php
-            }?>
-            <div class="submitTask"><input type="submit" value="Click pour valider !"></div>
-            </form>
-            <?php
-            $countvalid = 0;
-            $countinvalid = 0;
-            foreach ($listid as $value) 
-            { 
-              if (isset($_POST["$value"])) 
-              { 
-                //TODO : modif trop de repetition
-                $countvalid = $countvalid + 1;
-                $valid = 1;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(1,$value));
-              } 
-              else {
-                $countinvalid = $countvalid + 1;
-                $valid = 0;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(0,$value));
-              }
-            } 
-        
-        
-          } else {
-           ?> 
-           <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
-           <br>
-           <p>Scroll vers le bas :)</p>
-           </br>
-           </br>
-           </br>
-           <?php
-          }
+      $listid = array();
+      for ($i = 0; $i < $_SESSION['nombreTaches']; $i++) {
+        $_SESSION['nom'] = $fetch[$i]['name_task'];
+        $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
+        $_SESSION['jour'] = $fetch[$i]['chosen_day'];
+        //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
+        $_SESSION['style'] = $fetch[$i]['category'];
+        $_SESSION['idtask'] = $fetch[$i]['id_task'];
+        $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
+        $listid[$i] = $_SESSION['idtask'];
+        $_image = "https://zupimages.net/up/22/46/3wl6.png";
+        if ($_SESSION['style'] == 'important') {
+          $_image = "https://zupimages.net/up/22/46/do4e.png";
+        }
+        if ($_SESSION['style'] == 'sport') {
+          $_image = "https://zupimages.net/up/22/46/9dzn.png";
+        }
+        if ($_SESSION['style'] == 'loisir') {
+          $_image = "https://zupimages.net/up/22/46/8b8a.png";
+        }
+        if ($_SESSION['style'] == 'alimentation') {
+          $_image = "https://zupimages.net/up/22/46/tl8e.png";
+        }
+        if ($_SESSION['style'] == 'social') {
+          $_image = "https://zupimages.net/up/22/46/sexb.png";
+        }
+        if ($_SESSION['style'] == 'travail') {
+          $_image = "https://zupimages.net/up/22/46/pmtj.png";
+        }
+          ?>
+          <div class="box">
+            <div class="tache">
+              <?php echo $_SESSION['nom']; ?>
+            </div>
+            <div class="niveau">
+              <?php echo "niveau : " . $_SESSION['difficulté']; ?>
+            </div>
+            <div class="daily">
+              <?php if ($_SESSION['jour'] == NULL) {
+          echo "Quotidien";
+        }
+        ; ?>
+            </div>
+            <div class="daily">
+              <?php echo $_SESSION['jour']; ?>
+            </div>
+            <img class="iconstyle" src="<?php echo $_image ?>" />
+            <div class="checkbox">
+              <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php
+        if ($_SESSION['idvalid'] == 1) {
+                ?>checked
+              <?php } ?>>
+            </div>
+          </div></br>
+          <?php
+      } ?>
+          <div class="submitTask"><input type="submit" value="Click pour valider !"></div>
+        </form>
+        <?php
+      $countvalid = 0;
+      $countinvalid = 0;
+      foreach ($listid as $value) {
+        if (isset($_POST["$value"])) {
+          //TODO : modif trop de repetition
+          $countvalid = $countvalid + 1;
+          $valid = 1;
+          $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
+          $updateValid->execute(array(1, $value));
+        } else {
+          $countinvalid = $countvalid + 1;
+          $valid = 0;
+          $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
+          $updateValid->execute(array(0, $value));
+        }
+      }
+
+
+    } else {
+        ?>
+        <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
+        <br>
+        <p>Scroll vers le bas :)</p>
+        </br>
+        </br>
+        </br>
+        <?php
+    }
         ?>
 
-        
 
 
-        </div>
-          </div>
-          <p>Légende des catégories :</p>
-          </br>
-          <div align="center">
-          <div class="cate">important<img class = "iconstyle" src="https://zupimages.net/up/22/46/do4e.png" /></div>
-          <div class="cate">sport<img class = "iconstyle" src="https://zupimages.net/up/22/46/9dzn.png" /></div>
-          <div class="cate">travail<img class = "iconstyle" src="https://zupimages.net/up/22/46/pmtj.png" /></div>
-          <div class="cate">social<img class = "iconstyle" src="https://zupimages.net/up/22/46/sexb.png" /></div>
-          <div class="cate">alimentation<img class = "iconstyle" src="https://zupimages.net/up/22/46/tl8e.png" /></div>
-          <div class="cate">loisir<img class = "iconstyle" src="https://zupimages.net/up/22/46/8b8a.png" /></div>
-          </div>
-    </section>
-    <section class="page3" id="page3">
-      <h2>Mon Groupe</h2>
-    
-      <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
-      <br/>
-      <?php
-      if($_SESSION['id_group'] == null){
-        ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
-      } else {
-        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
-        //TODO : afficher le groupe : correctement
-        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
-          
-              <form action = "leaveGroup.php" name="post">
-                
-                  <input type="submit"  onclick="leaveGroup()" value="quitter groupe">
-              </form>
-      
 
-        <?php 
+      </div>
+    </div>
+    <p>Légende des catégories :</p>
+    </br>
+    <div align="center">
+      <div class="cate">important<img class="iconstyle" src="https://zupimages.net/up/22/46/do4e.png" /></div>
+      <div class="cate">sport<img class="iconstyle" src="https://zupimages.net/up/22/46/9dzn.png" /></div>
+      <div class="cate">travail<img class="iconstyle" src="https://zupimages.net/up/22/46/pmtj.png" /></div>
+      <div class="cate">social<img class="iconstyle" src="https://zupimages.net/up/22/46/sexb.png" /></div>
+      <div class="cate">alimentation<img class="iconstyle" src="https://zupimages.net/up/22/46/tl8e.png" /></div>
+      <div class="cate">loisir<img class="iconstyle" src="https://zupimages.net/up/22/46/8b8a.png" /></div>
+    </div>
+  </section>
+  <section class="page3" id="page3">
+    <h2>Mon Groupe</h2>
 
-      }
-      
-      ?>
+    <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
+    <br />
+    <?php
+    if ($_SESSION['id_group'] == null) {
+    ?>
+    <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p>
+    <?php
+    } else {
+    ?>
+    <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p>
+    <?php
+      //TODO : afficher le groupe : correctement
+    ?>
+    <p>votre id groupe est :
+      <?php echo $_SESSION['id_group']; ?>
+    </p>
+
+    <form action="leaveGroup.php" name="post">
+
+      <input type="submit" onclick="leaveGroup()" value="quitter groupe">
+    </form>
 
 
-      
-      
-      <br/>
-    
-    </section>
-    <section class="git" id="git">
-      <h1>Jetez un coup d'oeil à notre code !<br /><span
-          >habit_enforcer</span
-        >
-      </h1>
-      <p>
-        <img class= "icontea" src="https://logosmarcas.net/wp-content/uploads/2020/12/GitHub-Logo.png" />
-      </p>
-      <br/>
-      <a href = "https://github.com/julietteGUE16/Habit_Enforcer">Lien vers notre dépôt !</a>
-    </section>
-  </body>
+    <?php
+
+    }
+
+    ?>
+
+
+
+
+    <br />
+
+  </section>
+  <section class="git" id="git">
+    <h1>Jetez un coup d'oeil à notre code !<br /><span>habit_enforcer</span>
+    </h1>
+    <p>
+      <img class="icontea" src="https://logosmarcas.net/wp-content/uploads/2020/12/GitHub-Logo.png" />
+    </p>
+    <br />
+    <a href="https://github.com/julietteGUE16/Habit_Enforcer">Lien vers notre dépôt !</a>
+  </section>
+</body>
+
 </html>
