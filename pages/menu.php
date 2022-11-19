@@ -1,6 +1,45 @@
 <?php
+//todo :
+/*
+- pouvoir suppr une tâche 
+....
+
+*/
+
+
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+
+
+
+/**
+ * 
+ * 
+ *  $_SESSION['last_score'] --> DERNIER SCORE APRES CALCUL SI PERTE DE POINT
+*   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
+ * 
+ * */ 
+if($_SESSION['id_group'] == -1 ){
+  //todo : afficher pop up : votre groupe à été supprimé 
+  //todo : changer id groupe de l'user par null et reload page menu
+} else if($_SESSION['id_group'] != null ){
+
+  //todo : calcul de $_SESSION['last_score']
+  //todo : check chaque task si faite ou non (add or remove point)
+  //todo : si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
+
+  //todo : afficher toute les personnes qui on fait perdre des points depuis ma dernière connexion (on compare la date de derniere co et les dates sur chaque élément de l'historique  )
+  //a chaque remove de point on vérifie que le score ne passe pas en dessous de 0
+
+
+  if($_SESSION['last_score']< 0){
+    //todo : pop-up : votre score de groupes est < 0
+    //todo changer all id du groupe par -1
+    //todo : supprimer toute les tâches et invitations par rapport au groupe et l'historiques
+    //todo : reload la page menu pour qu'il est le message groupe supprimé
+  } 
+}
+
 ?>
 
 
@@ -8,15 +47,15 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
 <html>
 
 <head>
-    <title>Menu</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Habit_Enforcer/Assets/menu.css" crossorigin="anonymous">
+  <title>Menu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anon  ymous">
 </head>
 
 <body>
-    <div class="navbar">
+  <div class="navbar">
     <div class="profil">
       <button class="open-button" onclick="openForm()">
     <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
@@ -34,41 +73,44 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2><br/><br/>
-          <a>Changer de pseudo</a><br/><br/>
-          <a href="../Habit_Enforcer/deconnexion.php">se déconnecter</a><br/><br/>
+          <h2>Mon compte</h2><br /><br />
+          //TODO : changer de pseudo?? sinon à enlever
+          <a>Changer de pseudo</a><br /><br />
+          <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
       </div>
-    <script>
-      function openForm() {
-        document.getElementById("popupForm").style.display = "block";
-      }
+      <script>
+        function openForm() {
+          document.getElementById("popupForm").style.display = "block";
+        }
 
-      function closeForm() {
-        document.getElementById("popupForm").style.display = "none";
-      }
-    </script>
-      </div>
-      <div class="menu">
-        <ul>
-          <li><a href="#page2">Tâches</a></li>
-          <li><a href="#page3">Mon Groupe</a></li>
-        </ul>
-      </div>
+        function closeForm() {
+          document.getElementById("popupForm").style.display = "none";
+        }
+      </script>
     </div>
-    <section class="main">
-      <section class="page1" id="page1">
-        <div class="intro">
-          <h1>Une plateforme pour vous guider dans le modelelage d'un quotidien qui vous ressemble <br/><span><img class = "logotaroutyn" src="https://zupimages.net/up/22/45/piq7.png" /></span></h1>
-          <p class="text">
-            Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !<br/>
-            Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme <br/>collectif pour tenir tes engagements !
-            <br>
-            <br>
-            Site réalisé par 3 étudiants :<br/> Guenard Juliette, Favennec Melaine et Piauger Paul !
-          </p>
-        </div>
+    <div class="menu">
+      <ul>
+        <li><a href="#page2">Tâches</a></li>
+        <li><a href="#page3">Mon Groupe</a></li>
+      </ul>
+    </div>
+  </div>
+  <section class="main">
+    <section class="page1" id="page1">
+      <div class="intro">
+        <h1>Une plateforme pour vous guider dans le modelelage d'un quotidien qui vous ressemble <br /><span><img
+              class="logotaroutyn" src="https://zupimages.net/up/22/45/piq7.png" /></span></h1>
+        <p class="text">
+          Tu trouveras en page "TACHES", des habitudes à créer puis à cocher régulierement !<br />
+          Rejoins vite un groupe en page "MON GROUPE" et utilise l'enthousiasme <br />collectif pour tenir tes
+          engagements !
+          <br>
+          <br>
+          Site réalisé par 3 étudiants :<br /> Guenard Juliette, Favennec Melaine et Piauger Paul !
+        </p>
+      </div>
 
         <div>
             <img class = "photomobile" src="https://zupimages.net/up/22/45/kxzp.png" />
@@ -79,28 +121,32 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
       <h2>Tâches</h2>
       <p>Crée et retrouve tes habitudes ici !</p>
           </br>
-        <p class="flex"> <a href="../Habit_Enforcer/create_task.php"> nouvelle tâche ? </a> </p>
+        <?php
+          if($_SESSION['id_group'] != null){
+
+        ?>
+        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
         <div class= "taches">
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
         <div class = "listetaches">
         <?php 
-        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM task WHERE id_users = ?');
-        $recupCount->execute(array($_SESSION['id_users']));
+        $recupCount = $bdd->prepare('SELECT COUNT(*) FROM tasks WHERE id_user = ?');
+        $recupCount->execute(array($_SESSION['id_user']));
         $fetchC = $recupCount->fetch();
         $_SESSION['nombreTaches'] = $fetchC[0];
 
-        $recupTask = $bdd->prepare('SELECT * FROM task WHERE id_users = ?');
-        $recupTask->execute(array($_SESSION['id_users']));
+        $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
+        $recupTask->execute(array($_SESSION['id_user']));
         $fetch = $recupTask->fetchAll();?>
-        <form action="menu.php" method="POST" >
+        <form action="../pages/menu.php" method="POST" >
           <?php
           $listid = array();
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
-              $_SESSION['nom'] = $fetch[$i]['nom'];
-              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['jour'] = $fetch[$i]['jour'];
-              $_SESSION['difficulté'] = $fetch[$i]['niveau'];
-              $_SESSION['style'] = $fetch[$i]['style'];
+              $_SESSION['nom'] = $fetch[$i]['name_task'];
+              $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
+              $_SESSION['jour'] = $fetch[$i]['chosen_day'];
+              //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
+              $_SESSION['style'] = $fetch[$i]['category'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
               $listid[$i] =$_SESSION['idtask'];
@@ -144,19 +190,36 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             { 
               if (isset($_POST["$value"])) 
               { 
+                //TODO : modif trop de repetition
                 $countvalid = $countvalid + 1;
                 $valid = 1;
-                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
                 $updateValid->execute(array(1,$value));
               } 
               else {
                 $countinvalid = $countvalid + 1;
                 $valid = 0;
-                $updateValid = $bdd->prepare('UPDATE task SET isvalid=? WHERE id_task = ?');
+                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
                 $updateValid->execute(array(0,$value));
               }
             } 
+        
+        
+          } else {
+           ?> 
+           <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
+           <br>
+           <p>Scroll vers le bas :)</p>
+           </br>
+           </br>
+           </br>
+           <?php
+          }
         ?>
+
+        
+
+
         </div>
           </div>
           <p>Légende des catégories :</p>
@@ -172,8 +235,35 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
     </section>
     <section class="page3" id="page3">
       <h2>Mon Groupe</h2>
-      <p>Rejoins un groupe ou suis l'actité de ton groupe ici !</p>
+    
+      <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
       <br/>
+      <?php
+      if($_SESSION['id_group'] == null){
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
+      } else {
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
+        //TODO : afficher le groupe : correctement
+        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
+          
+              <form action = "leaveGroup.php" name="post">
+                
+               
+                  <button type="submit" onclick="leaveGroup()" name="btnLeave">Quittez groupe</button>
+              </form>
+      
+
+        <?php 
+
+      }
+      
+      ?>
+
+
+      
+      
+      <br/>
+    
     </section>
     <section class="git" id="git">
       <h1>Jetez un coup d'oeil à notre code !<br /><span
