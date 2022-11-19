@@ -107,12 +107,30 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 <input type="button" name="<?php /*TODO : !!!!!*/ ?>" value="refuser">
                 </form>
                 <?php
+
+                //TODO
                // echo "ok = " . $_POST['$i'];
-                if (isset($_POST['$i'])) 
+                /*  <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
+                 </form>
+                <?php
+                //TODO
+
+            
+            foreach ($listid as $value) 
+            { 
+                if (isset($_POST["$value"])) 
                 {
-                    echo "le i = " . $i;
-                   //TODO : rejoindre le groupe et delete l'invit 
+                    //echo "value = " . $value;
+                    //todo delete dans invit
+                    $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                    $deleteInvit->execute(array($invits[$i]['id_invit']));
+
+                    echo"here";
+                    header('Location: manageGroup.php');
                 } 
+              
+            }
+        }*/ 
             }
 
         } else {
@@ -242,7 +260,9 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 <?php
          // afficher les demandes envoyé par le user, pour pouvoir les annuler
         $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
-        $allInvit->execute(array($_SESSION['id_user']));         
+        $allInvit->execute(array($_SESSION['id_user'])); 
+        $listid = array();  
+        //todo : poo with invit     
         if ($allInvit->rowCount() > 0) { 
             $invits = $allInvit->fetchAll();          
            // echo "le nombre = ". count($invits);
@@ -251,23 +271,31 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                   <form method="POST" action="">
                 <br /><br />
                 <?php
+                
+                $listid[$i] = $invits[$i]['id_invit'];
                 echo "" . $invits[$i]['invited'] . "(". $invits[$i]['id_invit'].")" . " | STATUS : demande en cours... ";
                 ?>
-              <input type="submit" name="<?php echo $i?>" value="annuler">
+              <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
                  </form>
                 <?php
                 //TODO
 
-            }
-            for($i =0; $i < count($invits); $i++){
-                if (isset($_POST['$i'])) 
+            
+            foreach ($listid as $value) 
+            { 
+                if (isset($_POST["$value"])) 
                 {
-                    echo "le i = " . $i;
+                    //echo "value = " . $value;
+                    //todo delete dans invit
                     $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
                     $deleteInvit->execute(array($invits[$i]['id_invit']));
+
+                    echo"here";
+                    header('Location: manageGroup.php');
                 } 
               
             }
+        }
       }
     }      
       ?> <br /><br />
