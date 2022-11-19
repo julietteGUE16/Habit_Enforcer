@@ -36,6 +36,7 @@
     font-size: 2rem;
     font-weight: bold;
 }
+
 .open-button {
     background-color: #d9c38f;
     cursor: pointer;
@@ -68,7 +69,7 @@
 }
 
 
-.contentPopUp{
+.contentPopUp {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -81,7 +82,8 @@
     transform: translate(-50%, -50%);
 }
 
-.pseudoPopUP, .emailPopUp {
+.pseudoPopUP,
+.emailPopUp {
     font-size: 1.4rem;
     font-weight: bold;
 }
