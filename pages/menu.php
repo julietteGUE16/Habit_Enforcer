@@ -6,6 +6,8 @@
 
 */
 
+include 'C:\xampp\htdocs\Habit_Enforcer\model\Task.php';
+
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
@@ -177,33 +179,13 @@ if($_SESSION['id_group'] == -1 ){
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
               <div class="checkbox" >
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if($_SESSION['idvalid'] == 1){?>checked<?php }?>>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if(isset($_POST[$_SESSION['idtask']])) echo "checked" ; ?>>
               </div>
               </div></br><?php
             }?>
-            <div class="submitTask"><input type="submit" value="Click pour valider !"></div>
+            <div class="submitTask"><input type="submit" onclick="<?php Task::setvalidtask($listid); ?>"  value="Click pour valider !"></div>
             </form>
             <?php
-            $countvalid = 0;
-            $countinvalid = 0;
-            foreach ($listid as $value) 
-            { 
-              if (isset($_POST["$value"])) 
-              { 
-                //TODO : modif trop de repetition
-                $countvalid = $countvalid + 1;
-                $valid = 1;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(1,$value));
-              } 
-              else {
-                $countinvalid = $countvalid + 1;
-                $valid = 0;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(0,$value));
-              }
-            } 
-        
         
           } else {
            ?> 

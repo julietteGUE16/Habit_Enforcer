@@ -21,7 +21,7 @@
         <h2>Connexion</h2>
 
         <form id="loginForm"  method="POST" action="" align="center">
-            <input type="text" name="pseudo" required placeholder="pseudo">
+            <input type="text" name="pseudo" required placeholder="pseudo" autocomplete="off">
             <br/>
             <input type="password" name="mdp" required placeholder="mot de passe">
             <br/>

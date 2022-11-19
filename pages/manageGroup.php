@@ -106,30 +106,12 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 <input type="button" name="<?php /*TODO : !!!!!*/ ?>" value="refuser">
                 </form>
                 <?php
-
-                //TODO
                // echo "ok = " . $_POST['$i'];
-                /*  <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
-                 </form>
-                <?php
-                //TODO
-
-            
-            foreach ($listid as $value) 
-            { 
-                if (isset($_POST["$value"])) 
+                if (isset($_POST['$i'])) 
                 {
-                    //echo "value = " . $value;
-                    //todo delete dans invit
-                    $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
-                    $deleteInvit->execute(array($invits[$i]['id_invit']));
-
-                    echo"here";
-                    header('Location: manageGroup.php');
+                    echo "le i = " . $i;
+                   //TODO : rejoindre le groupe et delete l'invit 
                 } 
-              
-            }
-        }*/ 
             }
 
         } else {
@@ -139,11 +121,11 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         ?>    
         <?php
         if(isset($_POST['envoi'])){//nom du bouton)
-          
+            echo "passage1";  
             if( $_SESSION['id_group'] == null){
-              
+                echo "passage2";  
                 if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
-                    
+                    echo "passage3";  
             
                 createGroupe($_POST['nom'], $_POST['description']);
                 
@@ -185,7 +167,6 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <br /><br />
            
         <input type="submit" name="invit" value="inviter dans <?= $_SESSION['name_group'];  ?>">
-        </form>
         <br /><br />    
         <?php
         if (isset($_POST['invit'])){
@@ -259,9 +240,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 <?php
          // afficher les demandes envoyé par le user, pour pouvoir les annuler
         $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
-        $allInvit->execute(array($_SESSION['id_user'])); 
-        $listid = array();  
-        //todo : poo with invit     
+        $allInvit->execute(array($_SESSION['id_user']));         
         if ($allInvit->rowCount() > 0) { 
             $invits = $allInvit->fetchAll();          
            // echo "le nombre = ". count($invits);
@@ -270,35 +249,24 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                   <form method="POST" action="">
                 <br /><br />
                 <?php
-                
-                $listid[$i] = $invits[$i]['id_invit'];
                 echo "" . $invits[$i]['invited'] . "(". $invits[$i]['id_invit'].")" . " | STATUS : demande en cours... ";
                 ?>
-              <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
+              <input type="submit" name="<?php echo $i?>" value="annuler">
                  </form>
                 <?php
                 //TODO
-
-            
-            foreach ($listid as $value) 
-            { 
-                if (isset($_POST["$value"])) 
+                if (isset($_POST['$i'])) 
                 {
-                    //echo "value = " . $value;
-                    //todo delete dans invit
+                    echo "le i = " . $i;
                     $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
                     $deleteInvit->execute(array($invits[$i]['id_invit']));
-
-                    echo"here";
-                    header('Location: manageGroup.php');
                 } 
               
             }
-        }
       }
     }      
       ?> <br /><br />
-   
+    </form>
     <form action="" method="POST">
     <div id="result">
         <?php

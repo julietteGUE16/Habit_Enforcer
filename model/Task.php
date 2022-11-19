@@ -107,6 +107,27 @@ class Task
     }
 
 
+
+    public static function setvalidtask($listid){
+    foreach ($listid as $value) 
+    { 
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
+        $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
+      if (isset($_POST["$value"])) 
+      { 
+        $valid = 1;
+        $updateValid->execute(array(1,$value));
+      } 
+      else {
+        $valid = 0;
+        $updateValid->execute(array(0,$value));
+      }
+    }
+    } 
+
+
+
+
     //todo : get list of task depend of id in entry
 
     //todo : set data base for task : set for isValid

@@ -46,12 +46,12 @@ public function getIdGroup (): string {
 //todo : voir si utile
 
 
-public function addInvitToDataBase () {
+public function addUserToDataBase () {
     //todo
 }
 
-public function RemoveInvitToDataBase () {
+public function RemoveUserToDataBase () {
     //todo
 }
 
-}//todo : delete : invit 
+}//todo : delete : invit
