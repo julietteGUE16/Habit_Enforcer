@@ -1,6 +1,8 @@
 <?php
 
-enum TypeTask
+
+//todo : useless ?
+/*
 {
     case sport;
     case travail;
@@ -9,4 +11,4 @@ enum TypeTask
     case loisir;
     case important;
     case autre;
-}
+}*/

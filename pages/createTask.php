@@ -6,13 +6,18 @@
 
 */
 //include '../model/Group';
-include 'Task';
+
+require ('../model/Task.php');
+require 'TypeTask.php';
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
+//$currentUser = new User();
+
 if(isset($_POST['btn'])){  
-  $currentDate = date("Y-m-d H:i:s"); 
+  $currentDate = date("Y-m-d H:i:s");
   //pour faire les test
   //$testDate = date("22-12-15 01:15:47");
+  //TODO : get from database last task creation for session
   //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
   if($_SESSION['last_task_creation'] != null){
     //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
@@ -21,10 +26,7 @@ if(isset($_POST['btn'])){
       $diff = 1;
     }
     if($diff >= 1){
-      if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){
-        //todo mise en place poo
-
-
+      if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){    
         $category = $_POST['category'];
         $difficulty = $_POST['difficulty'];
         $daySelect = false;
@@ -42,38 +44,27 @@ if(isset($_POST['btn'])){
           } else {
             $daySelect = false;
           }   
-        }
-
-      
+        }    
             
 
         if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
-
+          //TODO : le replacer correctement
           echo "il faut selectionner un jour !";
 
         } else {
           
-         //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
-        
-       
-         $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
-        
-         $insertTask->execute(array($isvalid?1:0,$name,$category,$difficulty,$isdaily?1:0,$jour,$id_user));
-        
-       
+          //echo "user = " . $id_user. " | jour = ". $jour . " | isdaily = ". $isdaily . " | isvalid = ". $isvalid . " | difficulty = ". $difficulty . " | name = ". $name . " | category = ". $category. "\n";
+          $task = new Task($isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour);
+          $task->addTaskToDataBase();
+          //$task->setIdTaskFromDatabase();      
+   
 
          //TODO : insert dans notre current user la date de last creat task
        
          $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
-       
          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
-
          $_SESSION['last_task_creation'] = $currentDate;
-
-     
-     
-         //$recupUser->execute(array($_SESSION['user_id']));
-       header('Location: menu.php');
+         header('Location: menu.php');
         }
         
     }else{

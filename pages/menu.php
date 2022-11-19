@@ -158,6 +158,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
             { 
               if (isset($_POST["$value"])) 
               { 
+                //TODO : modif trop de repetition
                 $countvalid = $countvalid + 1;
                 $valid = 1;
                 $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');

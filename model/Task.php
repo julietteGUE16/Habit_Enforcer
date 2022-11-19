@@ -1,66 +1,112 @@
-<?php
-
+<?php 
 
 class Task
 {
+   
     //task permet de définir la couleur par rapport au type de task selectionné
-    private type_task $category;
+    private string $category;
     //text qui défini la tâche
-    private  string $name;
+    private  string $nameTask;
     //level de difficulté de la tâche
-    private int $difficulty;
+    private string $difficulty;
     //si true alors c'est quotidien sinon si false c'est hebdomadaire (weekly)
     private bool $isDaily;
     //si c'est hebdomadaire il faut choisir le jour de la semaine qui va revenir
-    private string $day;
+    private ?string $day;
     //id user qui à créé la tâche
     private int $idUser;
     //bool qui permet de valider ou non le task
     private bool $isValid;
-    //id task
-    private int $idTask;
+    //id task (?int permet d'initialiser à null)
+    private ?int $idTask= null;
     //date de la dernière validité
-    private date $validDate;
+    private ?date $LastvalidDate= null;
 
     
-    public function __construct(int $id)
+    public function __construct(bool $isValid, string $nameTask,string $category,string $difficulty, int $idUser, bool $isDaily, ?string $day)
     {  
-      
-        $this->$idTask = $id;
-        //echo "id = ".$this->$idTask. " ||" ;
+        //Attention a ne pas mettre de $ après le $this->
+     
+        $this->isValid = $isValid;
+        $this->nameTask = $nameTask;
+        $this->category = $category;
+        $this->difficulty = $difficulty;
+        $this->isDaily = $isDaily;
+        $this->day = $day;
+        $this->idUser = $idUser;
+     
+        
+       
       
     }
 
-    public function getCategory (): type_task{
-        return $category;
+    public function getCategory (): string{
+        return $this->category;
     }
 
     public function getIdTask () : int{
-        return $idTask;
+        return $this->idTask;
     }
 
-    public function getName (): string{
-        return $name;
+    public function getNameTask (): string{
+        return $this->nameTask;
     }
 
     public function getDifficulty (): int{
-        return $difficulty;
+        return $this->difficulty;
     }
 
     public function getIsDaily (): bool{
-        return $isDaily;
+        return $this->isDaily;
     }
     public function getDay (): string{
-        return $day;
+        return $this->day;
     }
     public function getIdUser (): int {
-        return $idUser;
+        return $this->idUser;
     }
 
     public function getIsValid () : bool {
-        return $isValid;
+        return $this->isValid;
     }
-    
+
+    public function getValidDate () : date {
+        return $this->lastValidDate;
+    }
+
+
+    //todo : pour les set possible faire un set de la velur et un set dans la database  ici par exemple pour is valid
+    public function setIsValid ($b)  {
+        $this->isValid = $b;
+        //todo : bien?
+        setIsValidInDatabase();
+    }
+
+    public function setIsValidInDatabase ()  {
+        //TODO
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); 
+        $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
+        $updateValid->execute(array($this->isValid?1:0,$this->idTask));
+    }
+
+    public function addTaskToDataBase () { 
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
+        $insertTask = $bdd->prepare('INSERT INTO tasks(isvalid,name_task,category,difficulty,isdaily,chosen_day,id_user)VALUES(?,?,?,?,?,?,?)');
+        $insertTask->execute(array($this->isvalid?1:0,$this->nameTask,$this->category,$this->difficulty,$this->isdaily?1:0,$this->day,$this->idUser));
+    }
+
+    public function setIdTaskFromDatabase ()  {
+        //TODO
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');    
+        $getTask = $bdd->prepare('SELECT id_task WHERE isvalid=? AND name_task=? AND category=? AND difficulty=? AND isdaily=? AND chosen_day=? AND id_user =?');
+        $getTask->execute(array($this->isvalid?1:0,$this->nameTask,$this->category,$this->difficulty,$this->isdaily?1:0,$this->day,$this->id_user));
+        $fetch = $getTask->fetch();
+     
+        if ($getTask->rowCount() > 0) {
+            $this->idTask = $fetch['id_task'];
+        }
+     
+    }
 
     //todo : get list of task depend of id in entry
 
@@ -68,35 +114,7 @@ class Task
 
     //todo delete task
 
-    public function getValidDate () : date {
-        return $validDate;
-    }
-
-    public function getData (int $id){
-        //check if id exist
-        //if yes get all data by the id of the task:
-        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); 
-
-        $recupUser = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
-        $recupUser->execute(array($id));
-
-        //connexion line 41 voir info
-    
-        if($recupUser->rowCount() > 0){ // on peut connecter l'utilisateur
-            $fetch = $recupUser->fetch();
-            $name = $fetch['name_task'];
-            $task = $fetch['category'];
-            $level = $fetch['difficulty'];
-            $isDaily = $fetch['isdaily'];
-            $day = $fetch['chosen_day'];
-            $idUser = $id;
-            $isvalid = $fetch['isvalid'];
-            $idTask = $fetch['id_task'];   
-            $validDate = $fetch['last_valid_date'];     
-        } else {
-            echo "error";
-        }
-
-    }
+   
+  
     
 }
