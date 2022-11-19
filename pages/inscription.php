@@ -17,7 +17,9 @@ session_start();
                 $_SESSION['pseudo'] = $pseudo;
                 $_SESSION['pwd'] = $mdp;
                 $_SESSION['email'] = $email;
-                $_SESSION['id_user'] = $recupUser->fetch()['id_user'];
+                $fetch = $recupUser->fetch();
+                $_SESSION['id_user'] = $fetch['id_user'];
+                $_SESSION['id_group'] = $fetch['id_group'];
             }
             //echo $_SESSION['id_user'];
             header('Location: menu.php');
