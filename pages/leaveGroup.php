@@ -13,6 +13,9 @@ $deleteInvit->execute(array($_SESSION['id_user']));
 $getSizeGroup = $bdd->prepare('SELECT * FROM users WHERE id_group = ?');
 $getSizeGroup->execute(array($idGroupTemp));
 
+//todo : si groupe delete on change last_tast_creation dans user ??
+
+
 //todo : changer
 if ($getSizeGroup->rowCount() < 0) { 
     

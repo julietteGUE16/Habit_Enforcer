@@ -248,7 +248,8 @@ if($_SESSION['id_group'] == -1 ){
           
               <form action = "leaveGroup.php" name="post">
                 
-                  <input type="submit"  onclick="leaveGroup()" value="quitter groupe">
+               
+                  <button type="submit" onclick="leaveGroup()" name="btnLeave">Quittez groupe</button>
               </form>
       
 

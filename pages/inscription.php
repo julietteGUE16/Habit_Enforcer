@@ -19,7 +19,10 @@ if (isset($_POST['envoi'])) {
             $_SESSION['pwd'] = $mdp;
             $_SESSION['email'] = $email;
             $_SESSION['id_user'] = $recupUser->fetch()['id_user'];
+
         }
+
+        //TODO : afficher $_SESSION du group (tous)
         //echo $_SESSION['id_user'];
         header('Location: menu.php');
     } else {
@@ -35,7 +38,7 @@ if (isset($_POST['envoi'])) {
     <title>Inscription</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Assets/style.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Assets/style.css" crossorigin="anonymous">
 
 </head>
 
@@ -79,7 +82,7 @@ if (isset($_POST['envoi'])) {
                     <button type="submit" name="envoi" class="ripple cursor" onclick="validate()"> S'inscrire ! </button>
                 </form>
 
-                <p class="flex"> <a href="pages/connexion.php"> Déjà inscrit ? </a> </p>
+                <p class="flex"> <a href="../pages/connexion.php"> Déjà inscrit ? </a> </p>
 
             </div>
 

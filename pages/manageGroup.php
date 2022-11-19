@@ -122,13 +122,13 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         ?>    
         <?php
         if(isset($_POST['envoi'])){//nom du bouton)
-            echo "passage1";  
+          
             if( $_SESSION['id_group'] == null){
-                echo "passage2";  
+              
                 if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
-                    echo "passage3";  
+                    
             
-                Groupe::createGroupe($_POST['nom'], $_POST['description']);
+                createGroupe($_POST['nom'], $_POST['description']);
                 
                 } else {
                     echo "Veuillez compléter tous les champs..";
@@ -149,6 +149,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <form method="POST" action="">
         <p>Rentrer un pseudo de user pour l'inviter : </p>
         <input type="text" name="pseudoInvit"  placeholder="pseudo de l'utilisateur..." required="required" autocomplete="off">
+     
         <br /><br />
         <?php
         $userExist = false;
@@ -167,6 +168,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <br /><br />
            
         <input type="submit" name="invit" value="inviter dans <?= $_SESSION['name_group'];  ?>">
+        </form>
         <br /><br />    
         <?php
         if (isset($_POST['invit'])){
@@ -255,6 +257,9 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                  </form>
                 <?php
                 //TODO
+
+            }
+            for($i =0; $i < count($invits); $i++){
                 if (isset($_POST['$i'])) 
                 {
                     echo "le i = " . $i;
@@ -266,7 +271,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
       }
     }      
       ?> <br /><br />
-    </form>
+   
     <form action="" method="POST">
     <div id="result">
         <?php
