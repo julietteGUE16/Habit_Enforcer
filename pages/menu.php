@@ -53,7 +53,7 @@ if($_SESSION['id_group'] == -1 ){
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anon  ymous">
+  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anonymous">
 </head>
 
 <body>
@@ -95,7 +95,7 @@ if($_SESSION['id_group'] == -1 ){
     <div class="menu">
       <ul>
         <li><a href="#page2">Tâches</a></li>
-        <li><a href="#page3">Mon Groupe</a></li>
+        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : LES ".$_SESSION['name_group'];} ?></a></li>
       </ul>
     </div>
   </div>
@@ -188,7 +188,7 @@ if($_SESSION['id_group'] == -1 ){
               </div></br><?php
             }?>
             <div class="submitTask">
-                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif, $_SESSION['id_group']); ?>"  value="Click pour valider !"></div>
+                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif); ?>"  value="Click pour valider !"></div>
             </form>
             <div class= "score">SCORE : <?php
             echo $_SESSION['last_score'];
@@ -228,26 +228,22 @@ if($_SESSION['id_group'] == -1 ){
       if($_SESSION['id_group'] == null){
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
-        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p></br> <?php
         //TODO : afficher le groupe : correctement
-        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
-          
+        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p>
+        </br> 
+        <div class= "scoregroup" >SCORE DE GROUPE : <?php echo  $_SESSION['last_score']; ?>
+        <div class="quitgroup">
               <form action = "leaveGroup.php" name="post">
                 
                
-                  <button type="submit" onclick="leaveGroup()" name="btnLeave">Quittez groupe</button>
+                  <input type="submit" onclick="leaveGroup()" name="btnLeave" value="Quitter mon groupe !">
               </form>
-      
-
-        <?php 
-
+        </div>
+        <?php
       }
-      
       ?>
 
-
-      
-      
       <br/>
     
     </section>

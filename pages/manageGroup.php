@@ -40,14 +40,10 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
 
-
             $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
        
             $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
 
-          
-
-            
 
             header('Location: manageGroup.php');
         }

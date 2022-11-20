@@ -1,4 +1,5 @@
 <?php 
+require 'C:\xampp\htdocs\Habit_Enforcer\model\Group.php';
 
 class Task
 {
@@ -108,14 +109,13 @@ class Task
 
 
 
-    public static function setvalidtask($listid, $listdif, $groupid){
+    public static function setvalidtask($listid, $listdif){ //valid/retire validation une fois submit et met à jour le last_score
     $i = 0;
     $calcul = 0;
     foreach ($listid as $value) 
     { 
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
         $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-        $updateScore = $bdd->prepare('UPDATE groupes SET last_score=? WHERE id_group= ?');
       if (isset($_POST["$value"])) 
       { 
         $valid = 1;
@@ -129,22 +129,9 @@ class Task
       ++$i;
     }
     $calcul += $_SESSION['previous_score'];
-    $updateScore->execute(array($calcul,$groupid));
+    $_SESSION['group'] = new Group($_SESSION['id_group'], $_SESSION['name_group'], $_SESSION['last_score'], $_SESSION['description'], $_SESSION['previous_score']);
+    $_SESSION['group']->addScore($calcul);
     $_SESSION['last_score'] = $calcul;
     } 
 
-
-
-
-    //todo : get list of task depend of id in entry
-
-    //todo : set data base for task : set for isValid
-
-    //todo delete task
-
-    //todo : function : taskIsCompleted? : bool
-
-   
-  
-    
 }

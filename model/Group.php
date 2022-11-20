@@ -16,6 +16,7 @@ class Group
 
     private int $previous_score = 0;
 
+
     public function __construct(?int $idGroup, string $nameGroup, int $last_score, string $description, int $previous_score)
     {
 
@@ -58,15 +59,12 @@ class Group
         $deleteGroup->execute(array($this->idGroup));
     }
 
-    public function addScore($vallue)
+    public function addScore($value)
     {
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
-        $total = $this->last_score + $vallue;
-        $updateScore = $bdd->prepare('UPDATE groups SET last_score = ? WHERE id_group = ?');
+        $total = $this->last_score + $value;
+        $updateScore = $bdd->prepare('UPDATE groupes SET last_score = ? WHERE id_group = ?');
         $updateScore->execute(array($total,$this->idGroup));
-
-
-        //todo
     }
 
 } //todo : delete : group

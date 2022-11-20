@@ -321,15 +321,18 @@ ul li a:hover {
 }
 
 .git a {
-    border: 1px solid #fff;
+    background-color: #2f529452;
     padding: 10px 30px;
     text-decoration: none;
-    color: #fff;
+    color: #ddcda7;
+    transition: 0.5s;
 }
 
 .git a:hover {
     background: #2f5394;
-    color: #ddcda7;
+    color: #fff;
+    transition: 0.5s;
+    border: none;
 }
 
 .icontea {
@@ -425,7 +428,8 @@ ul li a:hover {
     margin-right: 200px;
 }
 
-.submitTask input {
+.submitTask input,
+.quitgroup input {
     height: 40px;
     width: 190px;
     color: #fff;
@@ -435,10 +439,18 @@ ul li a:hover {
     border: none;
     cursor: pointer;
     box-shadow: 5px 5px 5px #9f9fa2;
+    transition: 0.5s;
 }
 
-.submitTask input:hover {
+.submitTask input:hover,
+.quitgroup input:hover {
     box-shadow: none;
+    transition: 0.5s;
+}
+
+.quitgroup input {
+    margin-top: 30px;
+    width: 250px;
 }
 
 .score {
@@ -446,4 +458,12 @@ ul li a:hover {
     font-size: large;
     font-weight: 800;
     color: #2f5394;
+}
+
+.scoregroup {
+    margin-top: 20px;
+    font-size: large;
+    font-weight: 800;
+    color: #2f5394;
+    text-align: center;
 }
