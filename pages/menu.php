@@ -96,6 +96,9 @@ if($_SESSION['id_group'] == -1 ){
       <ul>
         <li><a href="#page2">Tâches</a></li>
         <li><a href="#page3">Mon Groupe</a></li>
+        <li><a href="#page3">SCORE : <?php 
+
+            echo $_SESSION['last_score']; ?></a></li>
       </ul>
     </div>
   </div>
@@ -147,11 +150,11 @@ if($_SESSION['id_group'] == -1 ){
               $_SESSION['nom'] = $fetch[$i]['name_task'];
               $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
               $_SESSION['jour'] = $fetch[$i]['chosen_day'];
-              //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['style'] = $fetch[$i]['category'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
               $listid[$i] =$_SESSION['idtask'];
+              $listdif[$i] = $_SESSION['difficulté'];
               $_image = "https://zupimages.net/up/22/46/3wl6.png";
               if($_SESSION['style'] == 'important'){
                 $_image = "https://zupimages.net/up/22/46/do4e.png";
@@ -183,10 +186,15 @@ if($_SESSION['id_group'] == -1 ){
               </div>
               </div></br><?php
             }?>
-            <div class="submitTask"><input type="submit" onclick="<?php Task::setvalidtask($listid); ?>"  value="Click pour valider !"></div>
+            <div class="submitTask"><input type="submit" onclick="<?php Task::setvalidtask($listid,$listdif, $_SESSION['id_group']); ?>"  value="Click pour valider !"></div>
+            <?php 
+            $recupScore = $bdd->prepare('SELECT last_score FROM groupes WHERE id_group = ?');
+            $recupScore->execute(array($_SESSION['id_group']));
+            $fetchS = $recupScore->fetch();
+            $_SESSION['last_score'] = $fetchS['last_score'];
+            ?>
             </form>
             <?php
-        
           } else {
            ?> 
            <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>

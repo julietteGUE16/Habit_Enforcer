@@ -108,7 +108,8 @@ class Task
 
 
 
-    public static function setvalidtask($listid){
+    public static function setvalidtask($listid, $listdif, $groupid){
+    $i = 0;
     foreach ($listid as $value) 
     { 
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
@@ -117,12 +118,19 @@ class Task
       { 
         $valid = 1;
         $updateValid->execute(array(1,$value));
+
+        //mettre à jour le score
+        $updateScore = $bdd->prepare('UPDATE groupes SET last_score=? WHERE id_group= ?');
+        $calcul += $listdif[$i];
       } 
       else {
         $valid = 0;
         $updateValid->execute(array(0,$value));
       }
+      ++$i;
     }
+    $calcul += $_SESSION['previous_score'];
+    $updateScore->execute(array($calcul,$groupid));
     } 
 
 

@@ -35,6 +35,11 @@ class Group
         return $idGroup;
     }
 
+    public function getPreviousScore(): int
+    {
+        return $previous_score;
+    }
+
 
     //todo : voir si utile
 
