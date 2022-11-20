@@ -20,6 +20,8 @@ session_start();
                 $fetch = $recupUser->fetch();
                 $_SESSION['id_user'] = $fetch['id_user'];
                 $_SESSION['id_group'] = $fetch['id_group'];
+                $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
+                $_SESSION['last_connexion'] = $fetch['last_connexion'];
             }
             //echo $_SESSION['id_user'];
             header('Location: menu.php');

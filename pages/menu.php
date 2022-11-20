@@ -96,9 +96,6 @@ if($_SESSION['id_group'] == -1 ){
       <ul>
         <li><a href="#page2">Tâches</a></li>
         <li><a href="#page3">Mon Groupe</a></li>
-        <li><a href="#page3">SCORE : <?php 
-
-            echo $_SESSION['last_score']; ?></a></li>
       </ul>
     </div>
   </div>
@@ -130,7 +127,11 @@ if($_SESSION['id_group'] == -1 ){
           if($_SESSION['id_group'] != null){
 
         ?>
-        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
+        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p></br>
+        <?php
+          if($_SESSION['last_task_creation'] != null){
+  
+        ?>
         <div class= "taches">
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
         <div class = "listetaches">
@@ -186,16 +187,14 @@ if($_SESSION['id_group'] == -1 ){
               </div>
               </div></br><?php
             }?>
-            <div class="submitTask"><input type="submit" onclick="<?php Task::setvalidtask($listid,$listdif, $_SESSION['id_group']); ?>"  value="Click pour valider !"></div>
-            <?php 
-            $recupScore = $bdd->prepare('SELECT last_score FROM groupes WHERE id_group = ?');
-            $recupScore->execute(array($_SESSION['id_group']));
-            $fetchS = $recupScore->fetch();
-            $_SESSION['last_score'] = $fetchS['last_score'];
-            ?>
+            <div class="submitTask">
+                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif, $_SESSION['id_group']); ?>"  value="Click pour valider !"></div>
             </form>
+            <div class= "score">SCORE : <?php
+            echo $_SESSION['last_score'];
+        ?></div>
             <?php
-          } else {
+          }} else {
            ?> 
            <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
            <br>
@@ -206,9 +205,6 @@ if($_SESSION['id_group'] == -1 ){
            <?php
           }
         ?>
-
-        
-
 
         </div>
           </div>

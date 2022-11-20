@@ -9,13 +9,13 @@ session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
 /*------------------------------*/
-echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
+//echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
 //TODO : current user
 //$currentUser = new User($_SESSION['id_user'],$_SESSION['pseudo'],$_SESSION['id_group'],$_SESSION['email'],$_SESSION['pwd'],$_SESSION['last_task_creation'],$_SESSION['last_connexion']);
 /*------------------------------*/
 
 
- 
+$currentDate = date("Y-m-d H:i:s");
 //pour faire les test et créer plusieurs tâche à la suite
 //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 if($_SESSION['last_task_creation'] != null){
@@ -57,6 +57,9 @@ if(isset($_POST['btn'])){
           <?php
 
         } else {
+          $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
+         $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+         $_SESSION['last_task_creation'] = $currentDate;
           $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
           $task->addTaskToDataBase();        
 
@@ -64,13 +67,6 @@ if(isset($_POST['btn'])){
 
           /*------------------------------*/
          //TODO : insert dans notre current user la date de last creat task
-         $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
-         $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
-         /*------------------------------*/
-
-
-
-         $_SESSION['last_task_creation'] = $currentDate;
          header('Location: menu.php');
         }
         

@@ -35,8 +35,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
         if ($recupGroup->rowCount() > 0) { // on peut connecter l'utilisateur
             $_SESSION['id_group'] = $fetch['id_group'];
-            $_SESSION['last_score'] =  $fetch[0];
-            $_SESSION['previous_score'] =  $fetch[0];
+            $_SESSION['last_score'] =  0;
+            $_SESSION['previous_score'] =  0;
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
 
