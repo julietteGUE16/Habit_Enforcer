@@ -322,3 +322,13 @@ textarea:focus {
     font-size: 1em;
     padding: 0 2em;
 }
+
+.cgroup h2 {
+    color: #2f5394;
+}
+
+.cgroup input::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #2f52947a;
+    text-transform: uppercase;
+}

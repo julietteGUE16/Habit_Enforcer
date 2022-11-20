@@ -111,15 +111,17 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 <?php     
         if($_SESSION['id_group'] == null){
         ?>
+        <div class="cgroup">
         <form method="POST" action="">
-        <p>Créer ton groupe : </p>
+        <h2>Créer ton groupe : </h2>
         <br/>
         <input type="text" name="nom" placeholder="Nom du groupe" required="required" autocomplete="off">
         <br />
         <input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
         <br /><br />
-        <input type="submit" name="envoi" value="créer groupe">
+        <button type="submit" name="envoi">Créer le groupe !</button>
         </form>
+        </div>
         <br/>
         <br/>
         <br/>    
