@@ -51,3 +51,8 @@
     -webkit-text-stroke: 1px var(--color-3);
     text-shadow: 0 0 0px var(--color-1), 0 0 20px var(--color-4), 0 0 40px var(--color-4), 0 0 80px var(--color-4), 0 0 90px var(--color-4), 0 0 100px var(--color-4), 0 0 150px var(--color-4);
 }
+
+a{
+    text-decoration: none;
+    color: transparent;
+}

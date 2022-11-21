@@ -12,7 +12,9 @@
 
 <body>
     <div class="content">
-        <h1 class="title">404 ERROR</h1>
+        <a href="menu.php">
+            <h1 class="title">404 ERROR</h1>
+        </a>
     </div>
 </body>
 </html>
