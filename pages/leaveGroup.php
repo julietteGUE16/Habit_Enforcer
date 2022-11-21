@@ -13,11 +13,7 @@ $deleteInvit->execute(array($_SESSION['id_user']));
 $getSizeGroup = $bdd->prepare('SELECT * FROM users WHERE id_group = ?');
 $getSizeGroup->execute(array($idGroupTemp));
 
-//todo : changer
-if ($getSizeGroup->rowCount() < 0) { 
-    
-    
-} else {
+if ($getSizeGroup->rowCount() == 1) { 
     //suppression du groupe si on quitte en étant le dernier
     $deleteGroup= $bdd->prepare('DELETE FROM groupes WHERE id_group = ? ');
     $deleteGroup->execute(array($idGroupTemp));

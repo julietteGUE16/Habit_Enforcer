@@ -1,20 +1,11 @@
 <?php
 
-
-//TODO : check lequel marche :
 include '../model/Group.php';
 session_start();
 
 
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
 
-//TODO : display point
-//TODO : lors de la suppreision de groupe en cas de défaite delete all tâche + all invit
-
-
-//todo : changer d'endroit
-
-    //public static 
     function createGroupe($nom, $description)
     {
         
@@ -33,8 +24,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         $recupGroup->execute(array($nom, $description));
 
         $fetch = $recupGroup->fetch();
-        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-        if ($recupGroup->rowCount() > 0) { // on peut connecter l'utilisateur
+        if ($recupGroup->rowCount() > 0) {
             $_SESSION['id_group'] = $fetch['id_group'];
             $_SESSION['last_score'] =  0;
             $_SESSION['previous_score'] =  0;
@@ -241,10 +231,6 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <?php
         if (isset($_POST['invit'])){
             if(!empty($_POST['pseudoInvit'])){
-       
-        
-       // echo "count = ". count($pseudo);
-       
            for($i=0 ; $i<count($users); $i++){
                      
             if($users[$i]['pseudo'] == $_POST['pseudoInvit'] && $_POST['pseudoInvit'] != $_SESSION['pseudo']){
@@ -260,7 +246,6 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
            if(!$userExist){
           
             ?>  <br> </br> <?php
-            //TODO : pb de " ' " entre l et utilisateur
 
 
            echo '<span style="color:#FF0000;text-align:center;">l utilisateur n existe pas ou vous essayez de vous inviter, veuillez réitérer votre demande ...</span>';
@@ -269,9 +254,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             ?>
            
          <?php
-           
-          
-            //eviter les doublons d'invit
+            //------------------------------eviter les doublons d'invit----------------------------------------
             $recupInvit = $bdd->prepare('SELECT * FROM invit WHERE id_group_invit = ? AND id_user_invited = ? AND  host_pseudo = ? AND  name_group= ? AND invited = ? ');
             $recupInvit->execute(array($_SESSION['id_group'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'], $userInvited));
 

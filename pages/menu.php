@@ -1,44 +1,41 @@
 <?php
-//todo :
-/*
-- pouvoir suppr une tâche 
-....
-
-*/
 
 include '../model/Task.php';
-
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
 
+setlocale(LC_TIME, "fr_FR.UTF8",'fra');
+$currentday = strftime('%A');
+$currentDate = date("Y-m-d H:i:s");
 
-/**
- * 
- * 
- *  $_SESSION['last_score'] --> DERNIER SCORE APRES CALCUL SI PERTE DE POINT
-*   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
- * 
- * */ 
 if($_SESSION['id_group'] == -1 ){
-  //todo : afficher pop up : votre groupe à été supprimé 
-  //todo : changer id groupe de l'user par null et reload page menu
 } else if($_SESSION['id_group'] != null ){
-
-  //todo : calcul de $_SESSION['last_score']
-  //todo : check chaque task si faite ou non (add or remove point)
-  //todo : si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
-
-  //todo : afficher toute les personnes qui on fait perdre des points depuis ma dernière connexion (on compare la date de derniere co et les dates sur chaque élément de l'historique  )
-  //a chaque remove de point on vérifie que le score ne passe pas en dessous de 0
+  $recupValidTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
+  $recupValidTask->execute(array($_SESSION['id_user']));
+  $fetchVT = $recupValidTask->fetchAll();
+  for($i=0; $i < count($fetchVT); $i++){
+    $_SESSION['isdaily'] = $fetchVT[$i]['isdaily'];
+    $_SESSION['difficulty'] = $fetchVT[$i]['difficulty'];
+    $lastvaliddate = $fetchVT[$i]['last_valid_date'];
+    if($_SESSION['isdaily']){
+      $nbJour = 1;
+    }else{
+      $nbJour = 7;
+    }
+    $diff = (strtotime($currentDate) - strtotime($lastvaliddate))/86400;
+      if ($diff > $nbJour){
+        echo $diff.",";
+        $calcul = $_SESSION['last_score'] - $_SESSION['difficulty'];
+        $updateNegScore = $bdd->prepare('UPDATE groupes SET last_score = ? WHERE id_group = ?');
+        $updateNegScore->execute(array($calcul, $_SESSION['id_group']));
+        $_SESSION['last_score'] = $calcul;
+      }
+  }
 
 
   if($_SESSION['last_score']< 0){
-    //todo : pop-up : votre score de groupes est < 0
-    //todo changer all id du groupe par -1
-    //todo : supprimer toute les tâches et invitations par rapport au groupe et l'historiques
-    //todo : reload la page menu pour qu'il est le message groupe supprimé
   } 
 }
 
@@ -149,7 +146,7 @@ if($_SESSION['id_group'] == -1 ){
         $recupTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
         $recupTask->execute(array($_SESSION['id_user']));
         $fetch = $recupTask->fetchAll();?>
-        <form action="../pages/menu.php" method="POST" >
+        <form action="../pages/menu.php" method="POST">
           <?php
           $listid = array();
             for($i=0; $i < $_SESSION['nombreTaches']; $i++){
@@ -180,6 +177,7 @@ if($_SESSION['id_group'] == -1 ){
               if($_SESSION['style'] == 'travail'){
                 $_image = "https://zupimages.net/up/22/46/pmtj.png";
               }
+              if(strtolower($_SESSION['jour']) == $currentday || $_SESSION['jour']== NULL ){
               ?>
               <div class="box">
               <div class="tache"><?php echo $_SESSION['nom'];?></div>
@@ -188,12 +186,13 @@ if($_SESSION['id_group'] == -1 ){
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
               <div class="checkbox" >
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if(isset($_POST[$_SESSION['idtask']])) echo "checked" ; ?>>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" 
+                  <?php if(isset($_POST[$_SESSION['idtask']])){ echo "checked" ;}?>> 
               </div>
               </div></br><?php
-            }?>
+            }}?>
             <div class="submitTask">
-                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif); ?>"  value="Click pour valider !"></div>
+                <input type="submit" name="submitvalid" value="Click pour valider !" onclick="<?php Task::setvalidtask($listid,$listdif) ?>"></div>
             </form>
             <div class= "score">SCORE : <?php
             echo $_SESSION['last_score'];
@@ -234,7 +233,6 @@ if($_SESSION['id_group'] == -1 ){
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p></br> <?php
-        //TODO : afficher le groupe : correctement
         ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p>
         </br> 
         <div class= "scoregroup" >SCORE DE GROUPE : <?php echo  $_SESSION['last_score']; ?>

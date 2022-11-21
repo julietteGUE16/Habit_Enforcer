@@ -2,13 +2,28 @@
 session_start();
 
 
-    $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8', 'root', '');
-    if (isset($_POST['envoi'])) {
-        if (!empty($_POST['pseudo']) and !empty($_POST['mdp'] and !empty($_POST['email']))) {
-            $pseudo = htmlspecialchars($_POST['pseudo']);
-            $email = htmlspecialchars($_POST['email']);
-            $mdp = sha1($_POST['mdp']);
-            $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,pwd) VALUES (?,?,?)');
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8', 'root', '');
+if (isset($_POST['envoi'])) {
+    if (!empty($_POST['pseudo']) and !empty($_POST['mdp'] and !empty($_POST['email']))) {
+        $pseudo = htmlspecialchars($_POST['pseudo']);
+        $email = htmlspecialchars($_POST['email']);
+        $mdp = sha1($_POST['mdp']);
+        $pseudoExist = false;
+        $recupUser = $bdd->prepare('SELECT id_user ,pseudo FROM users ');
+            $recupUser->execute();
+            if($recupUser->rowCount() > 0){ 
+                $users =  $recupUser->fetchAll();
+                //verifie si le pseudo n'existe pas déjà 
+                for($i=0 ; $i<count($users); $i++){
+                    if($users[$i]['pseudo'] == $_POST['pseudo']){
+                        $pseudoExist = true;
+                    }
+                }
+            }
+        if(!$pseudoExist){
+
+
+            $insertUser = $bdd->prepare('INSERT INTO users (pseudo,email,pwd) VALUES (?,?,?)');
             $resul = $insertUser->execute(array($pseudo, $email, $mdp));
             //recupérer l'utilisateur grâce à une requête
             $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
@@ -26,9 +41,14 @@ session_start();
             //echo $_SESSION['id_user'];
             header('Location: menu.php');
         } else {
-            echo "<script>alert('veuillez compléter tous les champs !')</script>";
+            echo "<script>alert('le pseudo existe déjà !')</script>";
         }
+
+
+    } else {
+        echo "<script>alert('veuillez compléter tous les champs !')</script>";
     }
+}
 
 ?>
 

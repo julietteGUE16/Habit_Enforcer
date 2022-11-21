@@ -112,19 +112,20 @@ class Task
     public static function setvalidtask($listid, $listdif){ //valid/retire validation une fois submit et met à jour le last_score
     $i = 0;
     $calcul = 0;
+    $currentDate = date("Y-m-d H:i:s");
     foreach ($listid as $value) 
     { 
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
-        $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
+        $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=?, last_valid_date = ? WHERE id_task = ?');
       if (isset($_POST["$value"])) 
       { 
         $valid = 1;
-        $updateValid->execute(array(1,$value));
+        $updateValid->execute(array(1,$currentDate,$value));
         $calcul += $listdif[$i];
       } 
       else {
         $valid = 0;
-        $updateValid->execute(array(0,$value));
+        $updateValid->execute(array(0,$currentDate,$value));
       }
       ++$i;
     }
