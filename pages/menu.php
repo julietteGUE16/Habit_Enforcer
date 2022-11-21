@@ -29,6 +29,8 @@ if($_SESSION['know_delete'] == 1 ){
           //todo: ...verif si tache valid sinon isvalid = false
         $isValid = true;
         //todo :recup difficulté pour faire perdre des points
+        $difficulty = 0;
+        
         $point=0; //calculer les points perdu
 
         if(!$isValid){

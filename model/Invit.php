@@ -43,15 +43,7 @@ public function getIdGroup (): string {
 }
 
 
-//todo : voir si utile
 
 
-public function addInvitToDataBase () {
-    //todo
+
 }
-
-public function RemoveInvitToDataBase () {
-    //todo
-}
-
-}//todo : delete : invit

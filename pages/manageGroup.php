@@ -72,7 +72,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
         <br /><br />
         <button type="submit" name="envoi">Créer le groupe !</button>
-        </form>
+        
         </div>
         <br/>
         <br/>
@@ -87,21 +87,23 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             $myInvits = $myInvit->fetchAll();           
             ?> <p>Vous avez  <?php  echo   count($myInvits)  ?> invitation(s) : </p>
             <?php            
-           // echo "le nombre = ". count($invits);
+          
             for($i =0; $i < count($myInvits); $i++){
                 ?>
-                <form method="POST" action="">
-                <br /><br />
+             
+           
                 <?php
                  $listidInvit[$i] = $invits[$i]['id_invit'];
                 echo "" . $myInvits[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $myInvits[$i]['name_group'] . " | ";
                 ?>
-                <input type="submit" name="<?php echo "a".$i?>" value="accepter">
-                <input type="submit" name="<?php echo "r".$i ?>" value="refuser">
+                <input type="submit" name="<?php echo "a".$invits[$i]['id_invit']?>" value="accepter">
+                <input type="submit" name="<?php echo "r". $invits[$i]['id_invit'] ?>" value="refuser">
+
+                </form>
              
                 <?php
 
-                //TODO          : POURQUOI ÇA MARCHE PAAAAAAAAAAAAS???
+                //TODO : POURQUOI ÇA MARCHE PAAAAAAAAAAAAS???
 
             
               foreach ($listid as $value) 
@@ -110,10 +112,10 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                   {
                       
                       $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
-                      $deleteInvit->execute(array($invits[$i]['id_invit']));
+                      $deleteInvit->execute(array($value));
 
                       $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
-                      $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
+                      $UpdateUser->execute(array($value, $_SESSION['id_user']));
 
                       header('Location: manageGroup.php');
                   } 
@@ -121,7 +123,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                   {
                       
                       $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
-                      $deleteInvit->execute(array($invits[$i]['id_invit']));
+                      $deleteInvit->execute(array($value));
 
                   
 
@@ -209,7 +211,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <br /><br />
            
         <div class="invit"><button type="submit" name="invit">Inviter dans <?php echo $_SESSION['name_group'];  ?></button></div>
-        <br /><br />    
+      </form>
     
         <?php
         if (isset($_POST['invit'])){
