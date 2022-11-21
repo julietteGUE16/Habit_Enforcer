@@ -1,5 +1,5 @@
 <?php 
-require 'C:\xampp\htdocs\Habit_Enforcer\model\Group.php';
+require '../model/Group.php';
 
 class Task
 {

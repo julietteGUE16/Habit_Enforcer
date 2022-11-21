@@ -242,6 +242,7 @@ if($_SESSION['id_group'] == -1 ){
         </div>
         <?php
       }
+    
       ?>
 
       <br/>

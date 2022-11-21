@@ -1,25 +1,26 @@
 <?php
 
 //todo : pouvoir delete une tâche ??
+echo $_SERVER['DOCUMENT_ROOT'];
+include('../model/Task.php');
+include('../model/User.php');
 
-require ('../model/Task.php');
-require ('../model/User.php');
+
+echo "test6";
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
-/*------------------------------*/
-//echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
-//TODO : current user
-//$currentUser = new User($_SESSION['id_user'],$_SESSION['pseudo'],$_SESSION['id_group'],$_SESSION['email'],$_SESSION['pwd'],$_SESSION['last_task_creation'],$_SESSION['last_connexion']);
-/*------------------------------*/
 
 
-$currentDate = date("Y-m-d H:i:s");
+
+//$currentDate = date("Y-m-d H:i:s");
 //pour faire les test et créer plusieurs tâche à la suite
-//$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
+$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 if($_SESSION['last_task_creation'] != null){
   $currentDate = date("Y-m-d H:i:s");
+
+  
   //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
   $diff = (strtotime($currentDate) - strtotime($_SESSION['last_task_creation']))/86400;
   } else {
@@ -33,7 +34,6 @@ if(isset($_POST['btn'])){
         $difficulty = $_POST['difficulty'];
         $daySelect = false;
         $name = htmlspecialchars($_POST['name']);
-        //$id_user = $currentUser.getIdUser();
         $id_user = $_SESSION['id_user'];
         $isvalid = false;     
         if($_POST['periode'] == "Quotidienne"){
@@ -52,14 +52,18 @@ if(isset($_POST['btn'])){
 
         if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
           //TODO : le replacer correctement 
+          echo "<script>alert('il faut selectionner un jour !')</script>";
           ?>
-          <h3> il faut selectionner un jour ! </h3>
+        
           <?php
 
         } else {
+          
           $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+         echo "test";
          $_SESSION['last_task_creation'] = $currentDate;
+        
           $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
           $task->addTaskToDataBase();        
 
