@@ -167,7 +167,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                         echo "rzst = ".$value;
                         $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
                         $UpdateUser->execute(array($fetchGC, $_SESSION['id_user']));
-                        $_SESSION['id_group'] = fetchGC;
+                        $_SESSION['id_group'] = $fetchGC;
   
                         header('Location: manageGroup.php');
                     } 

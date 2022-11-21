@@ -65,6 +65,7 @@ class Group
         $total = $this->last_score + $value;
         $updateScore = $bdd->prepare('UPDATE groupes SET last_score = ? WHERE id_group = ?');
         $updateScore->execute(array($total,$this->idGroup));
+        $_SESSION['last_score'] = $total;
     }
 
 } //todo : delete : group

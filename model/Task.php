@@ -128,10 +128,8 @@ class Task
       }
       ++$i;
     }
-    $calcul += $_SESSION['previous_score'];
     $_SESSION['group'] = new Group($_SESSION['id_group'], $_SESSION['name_group'], $_SESSION['last_score'], $_SESSION['description'], $_SESSION['previous_score']);
     $_SESSION['group']->addScore($calcul);
-    $_SESSION['last_score'] = $calcul;
     } 
 
 }
