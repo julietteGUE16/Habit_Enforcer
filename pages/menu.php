@@ -236,6 +236,8 @@ if($_SESSION['id_group'] == -1 ){
       } else {
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p></br> <?php
         ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p>
+        </br>
+        <p>""<?php echo  "  ".$_SESSION['description']."   "; ?>"" </p>
         </br> 
         <div class= "scoregroup" >SCORE DE GROUPE : <?php echo  $_SESSION['last_score']; ?>
         <div class="quitgroup">

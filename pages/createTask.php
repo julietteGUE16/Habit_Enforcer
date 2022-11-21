@@ -16,7 +16,6 @@ if($_SESSION['last_task_creation'] != null){
   } else {
     $diff = 1;
   }
-var_dump(isset($_POST['btn']));
 if(isset($_POST['btn'])){  
     if(abs($diff) >= 1){
       if(!empty($_POST['name']) AND !empty($_POST['category'])AND !empty($_POST['difficulty'])AND !empty($_POST['periode'])){   
