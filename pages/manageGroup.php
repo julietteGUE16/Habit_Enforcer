@@ -127,36 +127,62 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <br/>    
         <?php 
         //afficher liste d'invitation
-        $myInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user_invited = ? ');
-        $myInvit->execute(array($_SESSION['id_user']));
+        $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user_invited = ? ');
+        $allInvit->execute(array($_SESSION['id_user']));
+        $listidInvit = array();
        
-        if ($myInvit->rowCount() > 0) { 
-            $myInvits = $myInvit->fetchAll();           
+        if ($allInvit->rowCount() > 0) { 
+            $fetchallInvit = $allInvit->fetchAll();           
             ?> 
             <div class = "listetaches">
-            <h2>Vous avez  <?php  echo   count($myInvits)  ?> invitation(s) : </h2>
+            <h2>Vous avez  <?php  echo   count($fetchallInvit)  ?> invitation(s) : </h2>
             <?php            
            // echo "le nombre = ". count($invits);
-            for($i =0; $i < count($myInvits); $i++){
+            for($i =0; $i < count($fetchallInvit); $i++){
                 ?>
                 <div class="invitationRecu">
                 <form method="POST" action="">
                 <div class="stat">
                 <?php
-                echo "" . $myInvits[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $myInvits[$i]['name_group'] . " | ";
+                $listidInvit[$i] = $fetchallInvit[$i]['id_invit'];
+                echo "" . $fetchallInvit[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $fetchallInvit[$i]['name_group'] . " | ";
                 ?>
-                <button name="<?php echo $i?>" value="accepter">accepter</button>
-                <button name="<?php /*TODO : !!!!!*/ ?>" value="refuser">refuser</button></div>
+                <button name="<?php echo "a".$fetchallInvit[$i]['id_invit'];?>" value="accepter">accepter</button>
+                <button name="<?php echo "r".$fetchallInvit[$i]['id_invit']; ?>" value="refuser">refuser</button></div>
                 </form>
             </div>
                 <?php
-               // echo "ok = " . $_POST['$i'];
-                if (isset($_POST['$i'])) 
-                {
-                    echo "le i = " . $i;
-                   //TODO : rejoindre le groupe et delete l'invit 
-                } 
-            }
+                }
+                foreach ($listidInvit as $value) 
+                { 
+                  echo $value;
+                    if (isset($_POST["a"."$value"])) 
+                    {
+                        $recupGroupChange = $bdd->prepare('SELECT id_group_invit FROM invit WHERE id_invit = ? ');
+                        $recupGroupChange->execute(array($value));
+                        $fetchGC = $recupGroupChange->fetch()['id_group_invit'];
+
+                        $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                        $deleteInvit->execute(array($value));
+                        echo "rzst = ".$value;
+                        $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
+                        $UpdateUser->execute(array($fetchGC, $_SESSION['id_user']));
+                        $_SESSION['id_group'] = fetchGC;
+  
+                        header('Location: manageGroup.php');
+                    } 
+                    if (isset($_POST["r"."$value"])) 
+                    {
+  
+                        $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                        $deleteInvit->execute(array($value));
+  
+  
+  
+                        header('Location: manageGroup.php');
+                    } 
+  
+                }
 
         } else {
             ?> </div> <div class="zeroinvit"><h2>vous avez 0 invitation : </h2></div>       
@@ -246,8 +272,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
            
           
             //eviter les doublons d'invit
-            $recupInvit = $bdd->prepare('SELECT * FROM invit WHERE id_group = ? AND id_user = ? AND id_user_invited = ? AND  host_pseudo = ? AND  name_group= ? AND invited = ? ');
-            $recupInvit->execute(array($_SESSION['id_group'], $_SESSION['id_user'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'], $userInvited));
+            $recupInvit = $bdd->prepare('SELECT * FROM invit WHERE id_group_invit = ? AND id_user_invited = ? AND  host_pseudo = ? AND  name_group= ? AND invited = ? ');
+            $recupInvit->execute(array($_SESSION['id_group'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'], $userInvited));
 
         $fetch = $recupInvit->fetch();
         //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
@@ -257,8 +283,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 
         } else{
             echo $_POST['pseudoInvit'] . " est invité(e) !";
-            $inserInvit = $bdd->prepare('INSERT INTO invit(id_group,id_user,id_user_invited, host_pseudo, name_group, invited)VALUES (?,?,?,?,?,?)');
-            $inserInvit->execute(array($_SESSION['id_group'], $_SESSION['id_user'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'],$userInvited));
+            $inserInvit = $bdd->prepare('INSERT INTO invit(id_group_invit,id_user_invited, host_pseudo, name_group, invited)VALUES (?,?,?,?,?)');
+            $inserInvit->execute(array($_SESSION['id_group'], $userInvitedId, $_SESSION['pseudo'], $_SESSION['name_group'],$userInvited));
     
         }    
            }
@@ -278,8 +304,8 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <div class = "listetaches">
 <?php
          // afficher les demandes envoyé par le user, pour pouvoir les annuler
-        $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
-        $allInvit->execute(array($_SESSION['id_user']));  
+        $allInvit = $bdd->prepare('SELECT * FROM invit WHERE host_pseudo = ? ');
+        $allInvit->execute(array($_SESSION['pseudo']));  
         $listid = array();       
         if ($allInvit->rowCount() > 0) { 
             $invits = $allInvit->fetchAll();          
