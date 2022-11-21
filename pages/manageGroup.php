@@ -3,49 +3,9 @@
 
 
 
-include '..\model\Group.php';
+include('../model/Group.php');
 session_start();
-$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
-
-    //public static 
-    function createGroupe($nom, $description)
-    {
-        
-        $nom = htmlspecialchars($nom);
-        $description = htmlspecialchars($description);
-  
-        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
-      
-        
-        $inserGroup = $bdd->prepare('INSERT INTO groupes(name_group,description)VALUES (?, ?)');
-        $inserGroup->execute(array($nom, $description));
-       
-      
-
-        $recupGroup = $bdd->prepare('SELECT * FROM groupes WHERE name_group = ? AND description = ?');
-        $recupGroup->execute(array($nom, $description));
-
-        $fetch = $recupGroup->fetch();
-        //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
-        if ($recupGroup->rowCount() > 0) { // on peut connecter l'utilisateur
-            $_SESSION['id_group'] = $fetch['id_group'];
-            $_SESSION['last_score'] =  0;
-            $_SESSION['previous_score'] =  0;
-            $_SESSION['name_group'] = $nom;
-            $_SESSION['description'] = $description;
-
-            $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
-       
-            $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
-
-
-            header('Location: manageGroup.php');
-        }
-
-
-        
- }
-    
+$bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');  
 
 ?>
 
@@ -176,9 +136,12 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             if( $_SESSION['id_group'] == null){
               
                 if (!empty($_POST['nom']) and !empty($_POST['description']) ) {
-                    
-            
-                createGroupe($_POST['nom'], $_POST['description']);
+                  $nom = htmlspecialchars($_POST['nom']);
+                  $description = htmlspecialchars($_POST['description']);
+                  $monGroupe = new Group(null, $nom, 0 ,$description, 0);
+                  $monGroupe->addGroupToDataBase();
+                  $monGroupe->setOnSession();            
+                  header('Location: manageGroup.php');
                 
                 } else {
                     echo "Veuillez compléter tous les champs..";
