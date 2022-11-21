@@ -113,7 +113,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         ?>
         <div class="cgroup">
         <form method="POST" action="">
-        <h2>Créer ton groupe : </h2>
+        <h2>Créer son groupe : </h2>
         <br/>
         <input type="text" name="nom" placeholder="Nom du groupe" required="required" autocomplete="off">
         <br />
@@ -132,19 +132,23 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
        
         if ($myInvit->rowCount() > 0) { 
             $myInvits = $myInvit->fetchAll();           
-            ?> <p>Vous avez  <?php  echo   count($myInvits)  ?> invitation(s) : </p>
+            ?> 
+            <div class = "listetaches">
+            <h2>Vous avez  <?php  echo   count($myInvits)  ?> invitation(s) : </h2>
             <?php            
            // echo "le nombre = ". count($invits);
             for($i =0; $i < count($myInvits); $i++){
                 ?>
+                <div class="invitationRecu">
                 <form method="POST" action="">
-                <br /><br />
+                <div class="stat">
                 <?php
                 echo "" . $myInvits[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $myInvits[$i]['name_group'] . " | ";
                 ?>
-                <input type="button" name="<?php echo $i?>" value="accepter">
-                <input type="button" name="<?php /*TODO : !!!!!*/ ?>" value="refuser">
+                <button name="<?php echo $i?>" value="accepter">accepter</button>
+                <button name="<?php /*TODO : !!!!!*/ ?>" value="refuser">refuser</button></div>
                 </form>
+            </div>
                 <?php
                // echo "ok = " . $_POST['$i'];
                 if (isset($_POST['$i'])) 
@@ -155,7 +159,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             }
 
         } else {
-            ?> <p>vous avez 0 invitation : </p>           
+            ?> </div> <div class="zeroinvit"><h2>vous avez 0 invitation : </h2></div>       
             <?php
         }
         ?>    

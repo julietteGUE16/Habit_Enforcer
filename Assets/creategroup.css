@@ -327,8 +327,45 @@ textarea:focus {
     color: #2f5394;
 }
 
+.cgroup {
+    margin-right: 300px;
+}
+
 .cgroup input::-webkit-input-placeholder {
     /* Chrome/Opera/Safari */
     color: #2f52947a;
     text-transform: uppercase;
+}
+
+.zeroinvit {
+    margin-left: 300px;
+}
+
+
+
+.invitationRecu {
+    background: rgba(255, 255, 255, 0.3);
+    color: #2f5394;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px #9f9fa2;
+    width: 900px;
+    height: 60px;
+    transition: 0.5s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.invitationRecu:hover {
+    box-shadow: none;
+    transition: 0.5s;
+}
+
+
+.invitationRecu button {
+    height: 30px;
+    font-size: 1em;
+    padding: 0 2em;
 }
