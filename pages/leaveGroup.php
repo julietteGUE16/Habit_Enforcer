@@ -19,7 +19,8 @@ if ($getSizeGroup->rowCount() == 1) {
     $deleteGroup->execute(array($idGroupTemp));
 }
 
-$UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
-$UpdateUser->execute(array(NULL, $_SESSION['id_user']));
+$UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?,last_task_creation = ?  WHERE id_user = ? ');
+$UpdateUser->execute(array(NULL, NULL, $_SESSION['id_user']));
+$_SESSION['last_task_creation'] = null;
 header('Location: menu.php');
 ?>

@@ -6,7 +6,6 @@ require ('../model/User.php');
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
-$currentDate = date("Y-m-d H:i:s");
 //pour faire les test et créer plusieurs tâche à la suite
 //$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 if($_SESSION['last_task_creation'] != null){
