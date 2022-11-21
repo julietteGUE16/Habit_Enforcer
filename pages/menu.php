@@ -1,44 +1,164 @@
 <?php
-//todo :
-/*
-- pouvoir suppr une tâche 
-....
-
-*/
 
 include '..\model\Task.php';
-
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
 
 
 
-/**
- * 
- * 
- *  $_SESSION['last_score'] --> DERNIER SCORE APRES CALCUL SI PERTE DE POINT
-*   $_SESSION['previous_score'] --> SCORE AVANT MA PERTE DE POINT
- * 
- * */ 
-if($_SESSION['id_group'] == -1 ){
-  //todo : afficher pop up : votre groupe à été supprimé 
-  //todo : changer id groupe de l'user par null et reload page menu
+
+//Message si groupe supprimé : de base à 0
+if($_SESSION['know_delete'] == 1 ){
+  $UpdateUser = $bdd->prepare('UPDATE users SET know_delete = ?  WHERE id_user = ? ');
+  $UpdateUser->execute(array(0, $_SESSION['id_user']));
+  echo "<script>alert('Votre score de groupe à atteint moins de 0, il a donc été supprimé')</script>";
+
 } else if($_SESSION['id_group'] != null ){
 
-  //todo : calcul de $_SESSION['last_score']
-  //todo : check chaque task si faite ou non (remove point)
-  //todo : si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
+  $currentDate = date("Y-m-d H:i:s");
+  
+    //si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
+    //on rempli l'historique avec nos données
+    $recupTasks = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
+    $recupTasks->execute(array($_SESSION['id_user']));
 
-  //todo : afficher toute les personnes qui on fait perdre des points depuis ma dernière connexion (on compare la date de derniere co et les dates sur chaque élément de l'historique  )
-  //a chaque remove de point on vérifie que le score ne passe pas en dessous de 0
+     $fetchTask = $recupTasks->fetchAll();
 
+       
+     if ($recupTasks->rowCount() > 0) {
+     
+    for($i=0; $i<count($fetchTask); $i++){
+     
+         //todo: ...verif si tache valid sinon isvalid = false
+      $isValid = true;
+   
+      //todo :recup difficulté pour faire perdre des points
+      $point=0; //calculer les points perdu
+
+      if(!$isValid){
+        $insertHistory = $bdd->prepare('INSERT INTO `historical` (id_group,id_user,nb_point,date_hist) VALUES (?,?,?,?)');
+        $resul = $insertHistory->execute(array($_SESSION['id_group'], $_SESSION['id_user'], $point, $currentDate));
+      }
+    }
+  }
+ 
+  //on regarde l'historique
+  
+  $diff = (strtotime($currentDate) - strtotime($_SESSION['last_connexion']))/86400;
+  
+  $recupHistory = $bdd->prepare('SELECT * FROM historical WHERE id_group = ?');
+  $recupHistory->execute(array($_SESSION['id_group']));
+  $accumulation = 0;
+  $pseudoList = array();
+  $pointList = array();
+
+  $fetch = $recupHistory->fetchAll();
+  if ($recupHistory->rowCount() > 0) { 
+    for($i=0; $i<count($fetch); $i++){
+      $diffTemp = (strtotime($currentDate) - strtotime($fetch[$i]['date']))/86400;
+     
+
+      if($diff > $diffTemp){
+        $accumulation = $accumulation + ($fetch[$i]['nb_point']);
+
+        $recupPseudo = $bdd->prepare('SELECT pseudo FROM users WHERE id_user = ?');
+        $recupPseudo->execute(array($fetch[$i]['id_user']));
+        $fetchP = $recupPseudo->fetch();
+         if ($recupPseudo->rowCount() > 0) { 
+          array_push($pseudoList, $fetchP['pseudo']);
+          array_push($pointList, $fetch[$i]['nb_point']);
+         }
+
+
+        
+
+        
+      }
+    }
+  
+
+    $_SESSION['previous_score'] = $_SESSION['last_score'];
+
+    $_SESSION['last_score'] = $_SESSION['last_score'] + $accumulation;
+
+    $UpdateUser = $bdd->prepare('UPDATE groupes SET last_score = ?   WHERE id_group = ? ');
+    $UpdateUser->execute(array($_SESSION['last_score'], $_SESSION['id_group']));
+   
+ 
+    $lost =  $_SESSION['previous_score'] - $_SESSION['last_score'];
+    
+    //todo dans une pop up
+    echo "Votre groupe à perdu : ". $lost . " points depuis la derniere fois ";
+
+    for($j=0; $j<count($pseudoList); $j++){
+    
+      echo "Le membre : ". $pseudoList[$j] ." à fait perdre ". $pointList[$i]." point(s) depuis la derniere fois ";
+    
+    }
+
+
+  }
+
+  
 
   if($_SESSION['last_score']< 0){
+    
+    $_SESSION['know_delete'] = 0;
+   
+    //change know_delete for next connexion
+    $UpdateUser = $bdd->prepare('UPDATE users SET know_delete = ?  WHERE id_group = ? ');
+    $UpdateUser->execute(array(1, $_SESSION['id_group']));
+
+    //todo concatener avec au dessus 
+    $UpdateUser = $bdd->prepare('UPDATE users SET know_delete = ?  WHERE id_user = ? ');
+    $UpdateUser->execute(array(0, $_SESSION['id_user']));
+
+    //TODO : correct ??
+    //change id group to null
+    $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_group = ? ');
+    $UpdateUser->execute(array(null, $_SESSION['id_group']));
+
+
+    //lister les id_user qui étaient dans le groupe
+  
+    $recupUsersOfGroup = $bdd->prepare('SELECT id_user FROM users WHERE id_group = ?');
+    $recupUsersOfGroup->execute(array($_SESSION["id_group"]));
+    $fetchU = $recupUsersOfGroup->fetchAll();
+     if ($recupUsersOfGroup->rowCount() > 0) { 
+      //todo : check if is possible
+      //todo : jetais entrain de recup le nombre de user pour faire un each et delete toute les invit .. histo... task ..etc... de chaque user
+      foreach ($fetchU['id_user'] as $value) 
+    {
+       //delete les tâches des users
+    $deleteTask= $bdd->prepare('DELETE FROM tasks WHERE id_user = ? ');
+    $deleteTask->execute(array($_SESSION["id_user"]));
+    //delete les invitations en attente demandé aux autres car on quitte le groupe
+    $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_user = ? ');
+    $deleteInvit->execute(array($_SESSION['id_user']));
+    //delete les invitations en attente demandé aux autres car on quitte le groupe
+    $deleteHist = $bdd->prepare('DELETE FROM historical WHERE id_user = ? ');
+    $deleteHist->execute(array($_SESSION['id_user']));
+      
+    }
+     
+     }
+
+   
+    
+    
+    //delete le groupe 
+    $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
+    $deleteGroup = $bdd->prepare('DELETE FROM groupes WHERE id_group = ?');
+    $deleteGroup->execute(array( $_SESSION["id_group"]));
+  
+    //change id group user  
+    $_SESSION["id_group"]= null;  
+
+    //mettre le current user directement a null et know_delete pas besoin pour lui puisqu'il le sait
     //todo : pop-up : votre score de groupes est < 0
-    //todo changer all id du groupe par -1
-    //todo : supprimer toute les tâches et invitations par rapport au groupe et l'historiques
-    //todo : reload la page menu pour qu'il est le message groupe supprimé
+    echo "<script>alert('Votre score de groupe à atteint moins de 0, il a donc été supprimé')</script>";
+    //todo : reload la page menu ?
   } 
 }
 
@@ -203,9 +323,9 @@ if($_SESSION['id_group'] == -1 ){
            </br>
            </br>
            <?php
-
+            //todo :marche pas
             function appeltest(){
-            Task::setvalidtask($listid, $listdif);
+              Task::setvalidtask($listid, $listdif);
            }
           }
         ?>

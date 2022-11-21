@@ -44,6 +44,7 @@
                         $_SESSION['id_group'] = $fetch['id_group'];
                         $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
                         $_SESSION['last_connexion'] = $fetch['last_connexion'];
+                        $_SESSION['know_delete'] = $fetch['know_delete'];
 
                         $recupGroupe = $bdd->prepare('SELECT * FROM groupes WHERE id_group = ?');
                         $recupGroupe->execute(array($_SESSION['id_group']));

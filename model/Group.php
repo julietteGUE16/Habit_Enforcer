@@ -18,7 +18,7 @@ class Group
 
     public function __construct(?int $idGroup, string $nameGroup, int $last_score, string $description, int $previous_score)
     {
-
+        
         $this->idGroup = $idGroup;
         $this->nameGroup = $nameGroup;
         $this->last_score = $last_score;
@@ -43,26 +43,7 @@ class Group
    
    
 
-     public function setOnSession()
-     {
-        session_start();
-        $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
-        $recupGroup = $bdd->prepare('SELECT * FROM groupes WHERE name_group = ? AND description = ?');
-        $recupGroup->execute(array($this->nameGroup,$this->description));
-        $fetch = $recupGroup->fetch();
-        if ($recupGroup->rowCount() > 0) { 
-            $_SESSION['id_group'] = $fetch['id_group'];
-            $_SESSION['last_score'] =  0;
-            $_SESSION['previous_score'] =  0;
-            $_SESSION['name_group'] = $nom;
-            $_SESSION['description'] = $description;
-            $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
-            $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
-        }
-
-
-     }
-
+   
     //todo : voir si utile
 
 
@@ -75,6 +56,7 @@ class Group
 
     public function RemoveGroupToDataBase()
     {
+        
         $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', '');
         $deleteGroup = $bdd->prepare('DELETE FROM groupes WHERE id_group = ?');
         $deleteGroup->execute(array($this->idGroup));
@@ -88,6 +70,4 @@ class Group
         $updateScore->execute(array($total,$this->idGroup));
     }
 
-} //todo : delete : group
-//todo : add score 
-//todo : remove score
+} 

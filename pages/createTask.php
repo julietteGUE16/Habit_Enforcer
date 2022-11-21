@@ -53,7 +53,7 @@ if(isset($_POST['btn'])){
         } else {
           $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
           $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
-          echo "test";
+        
           $_SESSION['last_task_creation'] = $currentDate;
           $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
           $task->addTaskToDataBase();        

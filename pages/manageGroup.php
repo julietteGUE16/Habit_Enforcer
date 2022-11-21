@@ -6,7 +6,6 @@
 include('../model/Group.php');
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');  
-
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +81,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         //afficher liste d'invitation
         $myInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user_invited = ? ');
         $myInvit->execute(array($_SESSION['id_user']));
+        $listidInvit = array();
        
         if ($myInvit->rowCount() > 0) { 
             $myInvits = $myInvit->fetchAll();           
@@ -93,44 +93,53 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 <form method="POST" action="">
                 <br /><br />
                 <?php
+                 $listidInvit[$i] = $invits[$i]['id_invit'];
                 echo "" . $myInvits[$i]['host_pseudo']  . " vous a envoyé une demande pour rejoindre ". $myInvits[$i]['name_group'] . " | ";
                 ?>
-                <input type="button" name="<?php echo $i?>" value="accepter">
-                <input type="button" name="<?php /*TODO : !!!!!*/ ?>" value="refuser">
-                </form>
+                <input type="submit" name="<?php echo "a".$i?>" value="accepter">
+                <input type="submit" name="<?php echo "r".$i ?>" value="refuser">
+             
                 <?php
 
-                //TODO
-               // echo "ok = " . $_POST['$i'];
-                /*  <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
-                 </form>
-                <?php
-                //TODO
+                //TODO          : POURQUOI ÇA MARCHE PAAAAAAAAAAAAS???
 
             
-            foreach ($listid as $value) 
-            { 
-                if (isset($_POST["$value"])) 
-                {
-                    //echo "value = " . $value;
-                    //todo delete dans invit
-                    $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
-                    $deleteInvit->execute(array($invits[$i]['id_invit']));
+              foreach ($listid as $value) 
+              { 
+                  if (isset($_POST["a"."$value"])) 
+                  {
+                      
+                      $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                      $deleteInvit->execute(array($invits[$i]['id_invit']));
 
-                    echo"here";
-                    header('Location: manageGroup.php');
-                } 
-              
-            }
-        }*/ 
+                      $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
+                      $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
+
+                      header('Location: manageGroup.php');
+                  } 
+                  if (isset($_POST["r"."$value"])) 
+                  {
+                      
+                      $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
+                      $deleteInvit->execute(array($invits[$i]['id_invit']));
+
+                  
+
+                      header('Location: manageGroup.php');
+                  } 
+                
+              }
+          
             }
 
         } else {
-            ?> <p>vous avez 0 invitation : </p>           
+          
+            ?>   </form> <p>vous avez 0 invitation : </p>           
             <?php
         }
         ?>    
         <?php
+      
         if(isset($_POST['envoi'])){//nom du bouton)
           
             if( $_SESSION['id_group'] == null){
@@ -140,7 +149,24 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                   $description = htmlspecialchars($_POST['description']);
                   $monGroupe = new Group(null, $nom, 0 ,$description, 0);
                   $monGroupe->addGroupToDataBase();
-                  $monGroupe->setOnSession();            
+                  unset($monGroupe);          
+               
+                  
+                  
+                  $recupGroup = $bdd->prepare('SELECT id_group FROM groupes WHERE name_group = ? AND description = ?');
+                  $recupGroup->execute(array($nom,$description));
+                  
+                  $fetch = $recupGroup->fetch();
+                  if ($recupGroup->rowCount() > 0) { 
+                      $_SESSION['id_group'] = $fetch['id_group'];
+                      $_SESSION['last_score'] =  0;
+                      $_SESSION['previous_score'] =  0;
+                      $_SESSION['name_group'] = $nom;
+                      $_SESSION['description'] = $description;
+                      $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
+                      $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
+                  }
+                    
                   header('Location: manageGroup.php');
                 
                 } else {
@@ -156,7 +182,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <div class= "quitter">
             <p>Vous êtes déjà dans le groupe qui se nomme : <?php echo  $_SESSION['name_group']; ?> </p> </br>
         <form action = "leaveGroup.php" name="post">    
-        <button type="submit"  onclick="leaveGroup()"> Quitter les <?php echo $_SESSION['name_group'];  ?></button>
+        <button type="submit"  onclick="leaveGroup()"> Quitter <?php echo $_SESSION['name_group'];  ?></button>
         </form>
       </div>
         </br>
@@ -184,7 +210,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
            
         <div class="invit"><button type="submit" name="invit">Inviter dans <?php echo $_SESSION['name_group'];  ?></button></div>
         <br /><br />    
-      </form>
+    
         <?php
         if (isset($_POST['invit'])){
             if(!empty($_POST['pseudoInvit'])){
@@ -247,6 +273,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 
 
 ?>
+  </form>
  <form method="POST" action="">
  <br> </br> 
  <br> </br> 
@@ -277,16 +304,16 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 ?>
                 
                 <button type="submit" name="<?php echo $i?>">annuler</button>
-               
+                </form>
                  </div>
                 </div>
                 <?php
                 //TODO
-
+              echo "taille = ". count($listid);
             
             foreach ($listid as $value) 
             { 
-              echo "test";
+              echo "ok = ". $_POST["$value"];
                 if (isset($_POST["$value"])) 
                 {
                    
@@ -299,18 +326,18 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 } 
               
             }
-            ?>
-            </form></div><?php
+            ?></div><?php
       }
-    }      
-  }
+    }   
+  }   
       ?> <br /><br />
-   
-   
+    </form>
+    <form action="" method="POST">
+    <div id="result">
         <?php
         ?>
     </div>
-   
+    </form>
 </section>
 </section>
         <?php
