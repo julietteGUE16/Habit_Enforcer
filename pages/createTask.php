@@ -8,7 +8,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', 
 
 $currentDate = date("Y-m-d H:i:s");
 //pour faire les test et créer plusieurs tâche à la suite
-$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
+//$_SESSION['last_task_creation'] = date("22-10-10 01:15:47");
 if($_SESSION['last_task_creation'] != null){
   $currentDate = date("Y-m-d H:i:s");
   //on obtient un nombre à virgule en jour (si diff = 1 --> 1 jour)
