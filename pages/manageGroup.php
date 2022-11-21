@@ -2,7 +2,7 @@
 
 
 //TODO : check lequel marche :
-include 'C:\xampp\htdocs\Habit_Enforcer\model\Group.php';
+include '../model/Group.php';
 session_start();
 
 
@@ -186,12 +186,10 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <div class= "quitter">
             <p>Vous êtes déjà dans le groupe qui se nomme : <?php echo  $_SESSION['name_group']; ?> </p> </br>
         <form action = "leaveGroup.php" name="post">    
-        <button type="submit"  onclick="leaveGroup()"> Quitter les <?php echo $_SESSION['name_group'];  ?></button>
+        <button type="submit"  onclick="leaveGroup()"> Quitter <?php echo $_SESSION['name_group'];  ?></button>
         </form>
       </div>
-        </br>
-        <br> </br> 
-        <br> </br> 
+      <div class="try">
         <form method="POST" action="">
         <h2>Rentrer un pseudo de user pour l'inviter : </h2>
         <input type="text" name="pseudoInvit"  placeholder="pseudo de l'utilisateur..." required="required" autocomplete="off">
@@ -213,7 +211,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         <br /><br />
            
         <div class="invit"><button type="submit" name="invit">Inviter dans <?php echo $_SESSION['name_group'];  ?></button></div>
-        <br /><br />    
+        </form>   
         <?php
         if (isset($_POST['invit'])){
             if(!empty($_POST['pseudoInvit'])){
@@ -276,47 +274,48 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 
 
 ?>
- <form method="POST" action="">
- <br> </br> 
- <br> </br> 
- <br> </br> 
-
         <h2>Liste des invitations en attentes : </h2>
-        <br> </br> 
         <div class = "listetaches">
 <?php
          // afficher les demandes envoyé par le user, pour pouvoir les annuler
         $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
-        $allInvit->execute(array($_SESSION['id_user']));         
+        $allInvit->execute(array($_SESSION['id_user']));  
+        $listid = array();       
         if ($allInvit->rowCount() > 0) { 
             $invits = $allInvit->fetchAll();          
-           // echo "le nombre = ". count($invits);
             for($i =0; $i < count($invits); $i++){
                 ?>
                     <div class="annulinvit">
                   <form method="POST" action="">
                 <div class="stat"><?php
+                $listid[$i] = $invits[$i]['id_invit'];
                 echo "" . $invits[$i]['invited'] . "(". $invits[$i]['id_invit'].")" . " | STATUS : demande en cours... ";
-                ?>
-                <button type="submit" name="<?php echo $i?>">annuler</button>
-                 </form>
-                 </div>
-                </div>
-                <?php
-                //TODO
-                if (isset($_POST['$i'])) 
+                ?></div>
+                <div class="stat"><button type="submit" name="<?php echo $invits[$i]['id_invit']?>">annuler</button></div></div>
+                 
+                 <?php 
+                 }
+
+                 foreach ($listid as $value) 
+            { 
+                if (isset($_POST["$value"])) 
                 {
-                    echo "le i = " . $i;
+
+                    echo "test2";
                     $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
-                    $deleteInvit->execute(array($invits[$i]['id_invit']));
+                    $deleteInvit->execute(array($value));
+
+                    echo"here";
+                    header('Location: manageGroup.php');
                 } 
-              
-            }
-            ?></div><?php
+
+            }?>
+        </form>
+        </div>
+            </div><?php
       }
     }      
       ?> <br /><br />
-    </form>
     <form action="" method="POST">
     <div id="result">
         <?php

@@ -6,7 +6,7 @@
 
 */
 
-include 'C:\xampp\htdocs\Habit_Enforcer\model\Task.php';
+include '../model/Task.php';
 
 
 session_start();
@@ -73,13 +73,18 @@ if($_SESSION['id_group'] == -1 ){
     </button>
     </div>
     <div class="login-popup">
-      <div class="form-popup" id="popupForm">
-        <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2><br /><br />
-          //TODO : changer de pseudo?? sinon à enlever
-          <a>Changer de pseudo</a><br /><br />
-          <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
-          <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+      <div class="form-popup" id="popupForm" onclick="closeForm()">
+        <div class="contentPopUp">
+          <form action="/action_page.php" class="form-container">
+
+            <h2>Mon compte</h2>
+            <?php
+            echo "<p class=\"pseudoPopUP\"> Pseudo :  " . $_SESSION['pseudo'] . "</p>";
+            echo "<p class=\"emailPopUp\"> Email :  " . $_SESSION['email'] . "</p>";
+            ?>
+            <a href="../pages/deconnexion.php" class="btnDeco">Se déconnecter</a>
+            <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+        </div>
         </form>
       </div>
       <script>
@@ -95,7 +100,7 @@ if($_SESSION['id_group'] == -1 ){
     <div class="menu">
       <ul>
         <li><a href="#page2">Tâches</a></li>
-        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : LES ".$_SESSION['name_group'];} ?></a></li>
+        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : ".$_SESSION['name_group'];} ?></a></li>
       </ul>
     </div>
   </div>

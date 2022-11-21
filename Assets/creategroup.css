@@ -290,6 +290,7 @@ textarea:focus {
     width: 100%;
     border-radius: 4px;
     background-color: #2f5394;
+    margin-bottom: 30px;
 }
 
 .annulinvit {
@@ -368,4 +369,8 @@ textarea:focus {
     height: 30px;
     font-size: 1em;
     padding: 0 2em;
+}
+
+.try h2 {
+    margin-top: 30px;
 }
