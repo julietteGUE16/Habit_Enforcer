@@ -7,8 +7,8 @@ $_SESSION["id_group"]= null;
 $deleteGroup= $bdd->prepare('DELETE FROM tasks WHERE id_user = ? ');
 $deleteGroup->execute(array($_SESSION["id_user"]));
 //delete les invitations en attente demandé aux autres car on quitte le groupe
-$deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_user = ? ');
-$deleteInvit->execute(array($_SESSION['id_user']));
+$deleteInvit = $bdd->prepare('DELETE FROM invit WHERE host_pseudo = ? ');
+$deleteInvit->execute(array($_SESSION['pseudo']));
 // si plus personnes dans le groupe il faut delete le groupe 
 $getSizeGroup = $bdd->prepare('SELECT * FROM users WHERE id_group = ?');
 $getSizeGroup->execute(array($idGroupTemp));
