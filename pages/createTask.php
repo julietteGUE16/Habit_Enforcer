@@ -1,19 +1,10 @@
 <?php
 
-//todo : pouvoir delete une tâche ??
-
 require ('../model/Task.php');
 require ('../model/User.php');
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
-
-/*------------------------------*/
-//echo "3"."|". $_SESSION['email']."|".$_SESSION['pwd']."|".$_SESSION['last_task_creation']."|".$_SESSION['last_connexion'];
-//TODO : current user
-//$currentUser = new User($_SESSION['id_user'],$_SESSION['pseudo'],$_SESSION['id_group'],$_SESSION['email'],$_SESSION['pwd'],$_SESSION['last_task_creation'],$_SESSION['last_connexion']);
-/*------------------------------*/
-
 
 $currentDate = date("Y-m-d H:i:s");
 //pour faire les test et créer plusieurs tâche à la suite

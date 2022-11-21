@@ -1,0 +1,26 @@
+Comptes utilisateurs :
+
+->OK: Des informations personnelles (Pseudo, adresse email, etc.) ainsi que des tâches à accomplir
+->OK: Un mot de passe dont le contenu sera sécurisé (hashé)
+->OK: créer un compte et se connecter à travers des interfaces séparées.
+
+Composition d'un groupe d'amis :
+
+->OK:Chaque utilisateur peut faire partie d'un et un seul groupe d'amis à la fois. Il peut
+->OK:créer un nouveau groupe,
+->OK:le quitter,
+->OK:inviter d'autres utilisateurs dans son groupe,
+->OK:accepter une invitation pour rejoindre le groupe de quelqu'un d'autre.
+->OK:defaites
+
+Chaque habitude est composée :
+
+->OK:D'un texte
+->OK:D'un niveau de difficulté
+->OK:D'une couleur d'affichage ---> remplacé par symboles par catégories
+->OK:D'une périodicité (BONUS:Quotidienne ou hebdomadaire)---> Avec jour précis !!!!
+->OK:Chaque utilisateur peut ajouter au maximum une habitude par jour.
+
+Score de groupe :
+-OK: Completion tâche perso ajoute point au score_groupe en fonction de la difficulté
+-OK: Si non-validation de tache(quotidienne et hebdo) -> perte de points en fonction de la difficulté

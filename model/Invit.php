@@ -37,21 +37,4 @@ private string $host_pseudo;
  public function getEmail (): string {
     return $email;
 }
-
-public function getIdGroup (): string {
-    return $idGroup;
 }
-
-
-//todo : voir si utile
-
-
-public function addUserToDataBase () {
-    //todo
-}
-
-public function RemoveUserToDataBase () {
-    //todo
-}
-
-}//todo : delete : invit

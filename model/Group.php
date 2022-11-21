@@ -3,9 +3,6 @@
 class Group
 {
 
-    //id of the user
-//todo : !!!
-
     private int $idGroup;
     //name of the group
     private string $nameGroup;
@@ -68,6 +65,4 @@ class Group
         $_SESSION['last_score'] = $total;
     }
 
-} //todo : delete : group
-//todo : add score 
-//todo : remove score
+}

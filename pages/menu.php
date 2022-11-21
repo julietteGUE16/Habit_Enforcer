@@ -36,6 +36,9 @@ if($_SESSION['id_group'] == -1 ){
 
 
   if($_SESSION['last_score']< 0){
+    $deleteGroup= $bdd->prepare('DELETE FROM groupes WHERE id_group = ? ');
+    $deleteGroup->execute(array($_SESSION['id_group']));
+    $_SESSION['id_group'] = null;
   } 
 }
 
