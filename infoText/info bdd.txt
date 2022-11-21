@@ -47,4 +47,3 @@ INVIT :
      - id_user (personne qui invite l'autre user)
      - id_user_invited
      
-

@@ -6,6 +6,8 @@
 
 */
 
+include '..\model\Task.php';
+
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
@@ -51,7 +53,7 @@ if($_SESSION['id_group'] == -1 ){
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anon  ymous">
+  <link rel="stylesheet" href="../Assets/menu.css" crossorigin="anonymous">
 </head>
 
 <body>
@@ -93,7 +95,7 @@ if($_SESSION['id_group'] == -1 ){
     <div class="menu">
       <ul>
         <li><a href="#page2">Tâches</a></li>
-        <li><a href="#page3">Mon Groupe</a></li>
+        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : LES ".$_SESSION['name_group'];} ?></a></li>
       </ul>
     </div>
   </div>
@@ -125,7 +127,11 @@ if($_SESSION['id_group'] == -1 ){
           if($_SESSION['id_group'] != null){
 
         ?>
-        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p>
+        <p class="flex"> <a href="../pages/createTask.php"> nouvelle tâche ? </a> </p></br>
+        <?php
+          if($_SESSION['last_task_creation'] != null){
+  
+        ?>
         <div class= "taches">
         <div><img class = "photomobile" src="https://zupimages.net/up/22/45/pr92.png" /></div>
         <div class = "listetaches">
@@ -145,11 +151,11 @@ if($_SESSION['id_group'] == -1 ){
               $_SESSION['nom'] = $fetch[$i]['name_task'];
               $_SESSION['difficulté'] = $fetch[$i]['difficulty'];
               $_SESSION['jour'] = $fetch[$i]['chosen_day'];
-              //$_SESSION['difficulté'] = $fetch[$i]['niveau'];
               $_SESSION['style'] = $fetch[$i]['category'];
               $_SESSION['idtask'] = $fetch[$i]['id_task'];
               $_SESSION['idvalid'] = $fetch[$i]['isvalid'];
               $listid[$i] =$_SESSION['idtask'];
+              $listdif[$i] = $_SESSION['difficulté'];
               $_image = "https://zupimages.net/up/22/46/3wl6.png";
               if($_SESSION['style'] == 'important'){
                 $_image = "https://zupimages.net/up/22/46/do4e.png";
@@ -177,35 +183,18 @@ if($_SESSION['id_group'] == -1 ){
               <div class= "daily"><?php echo $_SESSION['jour']; ?></div>
               <img class = "iconstyle" src="<?php echo $_image?>" />
               <div class="checkbox" >
-                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if($_SESSION['idvalid'] == 1){?>checked<?php }?>>
+                  <input type="checkbox" name="<?php echo $_SESSION['idtask'] ?>" <?php if(isset($_POST[$_SESSION['idtask']])) echo "checked" ; ?>>
               </div>
               </div></br><?php
             }?>
-            <div class="submitTask"><input type="submit" value="Click pour valider !"></div>
+            <div class="submitTask">
+                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif); ?>"  value="Click pour valider !"></div>
             </form>
+            <div class= "score">SCORE : <?php
+            echo $_SESSION['last_score'];
+        ?></div>
             <?php
-            $countvalid = 0;
-            $countinvalid = 0;
-            foreach ($listid as $value) 
-            { 
-              if (isset($_POST["$value"])) 
-              { 
-                //TODO : modif trop de repetition
-                $countvalid = $countvalid + 1;
-                $valid = 1;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(1,$value));
-              } 
-              else {
-                $countinvalid = $countvalid + 1;
-                $valid = 0;
-                $updateValid = $bdd->prepare('UPDATE tasks SET isvalid=? WHERE id_task = ?');
-                $updateValid->execute(array(0,$value));
-              }
-            } 
-        
-        
-          } else {
+          }} else {
            ?> 
            <p>Avant de pouvoir créer des tâches il te faut un groupe !</p>
            <br>
@@ -216,9 +205,6 @@ if($_SESSION['id_group'] == -1 ){
            <?php
           }
         ?>
-
-        
-
 
         </div>
           </div>
@@ -242,26 +228,22 @@ if($_SESSION['id_group'] == -1 ){
       if($_SESSION['id_group'] == null){
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
-        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p> <?php
+        ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p></br> <?php
         //TODO : afficher le groupe : correctement
-        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p> 
-          
+        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p>
+        </br> 
+        <div class= "scoregroup" >SCORE DE GROUPE : <?php echo  $_SESSION['last_score']; ?>
+        <div class="quitgroup">
               <form action = "leaveGroup.php" name="post">
                 
                
-                  <button type="submit" onclick="leaveGroup()" name="btnLeave">Quittez groupe</button>
+                  <input type="submit" onclick="leaveGroup()" name="btnLeave" value="Quitter mon groupe !">
               </form>
-      
-
-        <?php 
-
+        </div>
+        <?php
       }
-      
       ?>
 
-
-      
-      
       <br/>
     
     </section>

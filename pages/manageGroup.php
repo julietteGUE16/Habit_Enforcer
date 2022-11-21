@@ -2,8 +2,8 @@
 
 
 //TODO : check lequel marche :
-include '../model/Group';
-include 'Group';
+include '..\model\Group.php';
+session_start();
 
 
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
@@ -36,19 +36,15 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         //si au niveau du tableau on à reçu au moins un élément on va pouvoir traiter les infos
         if ($recupGroup->rowCount() > 0) { // on peut connecter l'utilisateur
             $_SESSION['id_group'] = $fetch['id_group'];
-            $_SESSION['last_score'] =  $fetch[0];
-            $_SESSION['previous_score'] =  $fetch[0];
+            $_SESSION['last_score'] =  0;
+            $_SESSION['previous_score'] =  0;
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
-
 
             $UpdateUser = $bdd->prepare('UPDATE users SET id_group = ?  WHERE id_user = ? ');
        
             $UpdateUser->execute(array($_SESSION['id_group'], $_SESSION['id_user']));
 
-          
-
-            
 
             header('Location: manageGroup.php');
         }
@@ -65,24 +61,67 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 
 <head>
     <title>Groupe</title>
-    //todo : look    
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Assets/creategroup.css" crossorigin="anonymous">
 </head>
 <body>
-<p class="flex"> <a href="../pages/menu.php"> retour au menu ? </a> </p>
-<br> </br>
+<div class="navbar">
+    <div class="profil">
+      <button class="open-button" onclick="openForm()">
+    <img class="logoUSER" src="https://zupimages.net/up/22/45/xme3.png" />
+      <div class="icon">
+        <div class="nameUSER">
+        <?php 
+        echo $_SESSION['pseudo'];?>
+        </div>
+        <?php
+        echo $_SESSION['email'];
+        ?>
+      </div>
+    </button>
+    </div>
+    <div class="login-popup">
+      <div class="form-popup" id="popupForm">
+        <form action="/action_page.php" class="form-container">
+          <h2>Mon compte</h2><br/><br/>
+          <a>Changer de pseudo</a><br/><br/>
+          <a href="../pages/deconnexion.php">se déconnecter</a><br/><br/>
+          <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
+        </form>
+      </div>
+    <script>
+      function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+      }
+
+      function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+      }
+    </script>
+      </div>
+      <div class="menu">
+        <ul>
+          <li><a href="../pages/menu.php">Retour au menu !</a></li>
+        </ul>
+      </div>
+    </div>
+</br>
+<section class="creategroup">
+    <section class="page1">
 <?php     
-        session_start();
         if($_SESSION['id_group'] == null){
         ?>
+        <div class="cgroup">
         <form method="POST" action="">
-        <p>Créer ton groupe : </p>
+        <h2>Créer ton groupe : </h2>
         <br/>
         <input type="text" name="nom" placeholder="Nom du groupe" required="required" autocomplete="off">
         <br />
         <input type="text" name="description" placeholder="Description" required="required" autocomplete="off">
         <br /><br />
-        <input type="submit" name="envoi" value="créer groupe">
+        <button type="submit" name="envoi">Créer le groupe !</button>
         </form>
+        </div>
         <br/>
         <br/>
         <br/>    
@@ -157,18 +196,20 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
             //users invitation
         } 
       } else {
-        ?><p>vous êtes déjà dans le groupe qui se nomme : <?php echo  $_SESSION['name_group']; ?> </p> 
-        <form action = "leaveGroup.php" name="post">             
-        <input type="submit"  onclick="leaveGroup()" value= "quitter <?= $_SESSION['name_group'];  ?>"  >
+        ?>
+        <div class= "quitter">
+            <p>Vous êtes déjà dans le groupe qui se nomme : <?php echo  $_SESSION['name_group']; ?> </p> </br>
+        <form action = "leaveGroup.php" name="post">    
+        <button type="submit"  onclick="leaveGroup()"> Quitter les <?php echo $_SESSION['name_group'];  ?></button>
         </form>
+      </div>
         </br>
         <br> </br> 
         <br> </br> 
         <form method="POST" action="">
-        <p>Rentrer un pseudo de user pour l'inviter : </p>
+        <h2>Rentrer un pseudo de user pour l'inviter : </h2>
         <input type="text" name="pseudoInvit"  placeholder="pseudo de l'utilisateur..." required="required" autocomplete="off">
-     
-        <br /><br />
+      </br></br>
         <?php
         $userExist = false;
         $recupUser = $bdd->prepare('SELECT id_user ,pseudo FROM users ');
@@ -185,9 +226,9 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         ?>
         <br /><br />
            
-        <input type="submit" name="invit" value="inviter dans <?= $_SESSION['name_group'];  ?>">
-        </form>
+        <div class="invit"><button type="submit" name="invit">Inviter dans <?php echo $_SESSION['name_group'];  ?></button></div>
         <br /><br />    
+      </form>
         <?php
         if (isset($_POST['invit'])){
             if(!empty($_POST['pseudoInvit'])){
@@ -257,6 +298,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
 
         <h2>Liste des invitations en attentes : </h2>
         <br> </br> 
+        <div class = "listetaches">
 <?php
          // afficher les demandes envoyé par le user, pour pouvoir les annuler
         $allInvit = $bdd->prepare('SELECT * FROM invit WHERE id_user = ? ');
@@ -268,25 +310,31 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
            // echo "le nombre = ". count($invits);
             for($i =0; $i < count($invits); $i++){
                 ?>
+                    <div class="annulinvit">
                   <form method="POST" action="">
-                <br /><br />
-                <?php
-                
+                <div class="stat"><?php
+
                 $listid[$i] = $invits[$i]['id_invit'];
                 echo "" . $invits[$i]['invited'] . "(". $invits[$i]['id_invit'].")" . " | STATUS : demande en cours... ";
+                
+              
                 ?>
-              <input type="submit" name="<?php echo $invits[$i]['id_invit'] ?>" value="annuler">
-                 </form>
+                
+                <button type="submit" name="<?php echo $i?>">annuler</button>
+               
+                 </div>
+                </div>
                 <?php
                 //TODO
 
             
             foreach ($listid as $value) 
             { 
+              echo "test";
                 if (isset($_POST["$value"])) 
                 {
-                    //echo "value = " . $value;
-                    //todo delete dans invit
+                   
+                    echo "test2";
                     $deleteInvit = $bdd->prepare('DELETE FROM invit WHERE id_invit = ? ');
                     $deleteInvit->execute(array($invits[$i]['id_invit']));
 
@@ -295,17 +343,20 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
                 } 
               
             }
-        }
+            ?>
+            </form></div><?php
       }
     }      
+  }
       ?> <br /><br />
    
-    <form action="" method="POST">
-    <div id="result">
+   
         <?php
         ?>
     </div>
-    </form>
+   
+</section>
+</section>
         <?php
         ?>
   

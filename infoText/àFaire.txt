@@ -25,4 +25,3 @@ on  affiche un message et id_group repasse à null et on peut rejoindre ou crée
 --> ne pouvoir créer une tache que toute les 24h 
 --> devoir choisir un jour si hebdomadaire
 
-
