@@ -8,23 +8,46 @@ session_start();
             $pseudo = htmlspecialchars($_POST['pseudo']);
             $email = htmlspecialchars($_POST['email']);
             $mdp = sha1($_POST['mdp']);
-            $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,pwd) VALUES (?,?,?)');
-            $resul = $insertUser->execute(array($pseudo, $email, $mdp));
-            //recupérer l'utilisateur grâce à une requête
-            $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
-            $recupUser->execute(array($pseudo, $mdp));
-            if ($recupUser->rowCount() > 0) {
-                $_SESSION['pseudo'] = $pseudo;
-                $_SESSION['pwd'] = $mdp;
-                $_SESSION['email'] = $email;
-                $fetch = $recupUser->fetch();
-                $_SESSION['id_user'] = $fetch['id_user'];
-                $_SESSION['id_group'] = $fetch['id_group'];
-                $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
-                $_SESSION['last_connexion'] = $fetch['last_connexion'];
+            $pseudoExist = false;
+
+            $recupUser = $bdd->prepare('SELECT id_user ,pseudo FROM users ');
+            $recupUser->execute();
+            if($recupUser->rowCount() > 0){ 
+                $users =  $recupUser->fetchAll();
+                //verifie si le pseudo n'existe pas déjà 
+                for($i=0 ; $i<count($users); $i++){
+                    if($users[$i]['pseudo'] == $_POST['pseudo']){
+                        $pseudoExist = true;
+                    }
+                }
             }
-            //echo $_SESSION['id_user'];
-            header('Location: menu.php');
+            
+
+            if(!$pseudoExist){
+
+
+                $insertUser = $bdd->prepare('INSERT INTO `users` (pseudo,email,pwd) VALUES (?,?,?)');
+                $resul = $insertUser->execute(array($pseudo, $email, $mdp));
+                //recupérer l'utilisateur grâce à une requête
+                $recupUser = $bdd->prepare('SELECT * FROM users WHERE pseudo = ? AND pwd = ?');
+                $recupUser->execute(array($pseudo, $mdp));
+                if ($recupUser->rowCount() > 0) {
+                    $_SESSION['pseudo'] = $pseudo;
+                    $_SESSION['pwd'] = $mdp;
+                    $_SESSION['email'] = $email;
+                    $fetch = $recupUser->fetch();
+                    $_SESSION['id_user'] = $fetch['id_user'];
+                    $_SESSION['id_group'] = $fetch['id_group'];
+                    $_SESSION['last_task_creation'] = $fetch['last_task_creation'];
+                    $_SESSION['last_connexion'] = $fetch['last_connexion'];
+                }
+                //echo $_SESSION['id_user'];
+                header('Location: menu.php');
+            } else {
+                echo "<script>alert('le pseudo existe déjà !')</script>";
+            }
+
+
         } else {
             echo "<script>alert('veuillez compléter tous les champs !')</script>";
         }

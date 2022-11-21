@@ -27,7 +27,7 @@ if($_SESSION['id_group'] == -1 ){
 } else if($_SESSION['id_group'] != null ){
 
   //todo : calcul de $_SESSION['last_score']
-  //todo : check chaque task si faite ou non (add or remove point)
+  //todo : check chaque task si faite ou non (remove point)
   //todo : si task pas faite on l'ajoute à l'historique avec la date et le nombre de point perdu
 
   //todo : afficher toute les personnes qui on fait perdre des points depuis ma dernière connexion (on compare la date de derniere co et les dates sur chaque élément de l'historique  )
@@ -75,12 +75,12 @@ if($_SESSION['id_group'] == -1 ){
     <div class="login-popup">
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
-          <h2>Mon compte</h2><br /><br />
-          //TODO : changer de pseudo?? sinon à enlever
-          <a>Changer de pseudo</a><br /><br />
-          <a href="../pages/deconnexion.php">se déconnecter</a><br /><br />
+          <h2>Mon compte</h2><br/><br/>
+        
+          <a href="../pages/deconnexion.php">se déconnecter</a><br/><br/>
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>
+      
       </div>
       <script>
         function openForm() {
@@ -95,7 +95,7 @@ if($_SESSION['id_group'] == -1 ){
     <div class="menu">
       <ul>
         <li><a href="#page2">Tâches</a></li>
-        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : LES ".$_SESSION['name_group'];} ?></a></li>
+        <li><a href="#page3">Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : ".$_SESSION['name_group'];} ?></a></li>
       </ul>
     </div>
   </div>
@@ -188,7 +188,7 @@ if($_SESSION['id_group'] == -1 ){
               </div></br><?php
             }?>
             <div class="submitTask">
-                <input type="submit" name= "submitvalid" onclick="<?php Task::setvalidtask($listid,$listdif); ?>"  value="Click pour valider !"></div>
+                <input type="submit" name= "submitvalid" onclick="appeltest()"  value="Click pour valider !"></div>
             </form>
             <div class= "score">SCORE : <?php
             echo $_SESSION['last_score'];
@@ -203,6 +203,10 @@ if($_SESSION['id_group'] == -1 ){
            </br>
            </br>
            <?php
+
+            function appeltest(){
+            Task::setvalidtask($listid, $listdif);
+           }
           }
         ?>
 
@@ -220,8 +224,7 @@ if($_SESSION['id_group'] == -1 ){
           </div>
     </section>
     <section class="page3" id="page3">
-      <h2>Mon Groupe</h2>
-    
+      <h2>Mon Groupe <?php if($_SESSION['id_group'] != NULL){echo " : ".$_SESSION['name_group'];} ?></h2>
       <p>Rejoins un groupe ou suis l'actvité de ton groupe ici !</p>
       <br/>
       <?php
@@ -229,8 +232,8 @@ if($_SESSION['id_group'] == -1 ){
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> créer ou rejoindre un groupe ! </a> </p> <?php
       } else {
         ?> <p class="flex"> <a href="../pages/manageGroup.php"> inviter des users ! </a> </p></br> <?php
-        //TODO : afficher le groupe : correctement
-        ?><p>votre id groupe est : <?php echo  $_SESSION['id_group']; ?> </p>
+        
+        ?>
         </br> 
         <div class= "scoregroup" >SCORE DE GROUPE : <?php echo  $_SESSION['last_score']; ?>
         <div class="quitgroup">

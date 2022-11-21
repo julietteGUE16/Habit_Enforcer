@@ -16,7 +16,7 @@ $getSizeGroup->execute(array($idGroupTemp));
 //todo : si groupe delete on change last_tast_creation dans user ??
 
 
-//todo : changer
+//todo : delete historique défaite
 if ($getSizeGroup->rowCount() < 0) { 
     
     

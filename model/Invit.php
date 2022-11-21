@@ -54,9 +54,4 @@ public function RemoveInvitToDataBase () {
     //todo
 }
 
-<<<<<<< HEAD
-}//todo : delete : invit 
-
-=======
 }//todo : delete : invit
->>>>>>> f798e2fcc5a3938c86d7d3f0e55ea53a12493755

@@ -3,8 +3,7 @@
 class Group
 {
 
-    //id of the user
-//todo : !!!
+    
 
     private int $idGroup;
     //name of the group

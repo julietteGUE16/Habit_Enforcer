@@ -1,18 +1,11 @@
 <?php
 
 
-//TODO : check lequel marche :
+
+
 include '..\model\Group.php';
 session_start();
-
-
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root', '');
-
-//TODO : display point
-//TODO : lors de la suppreision de groupe en cas de défaite delete all tâche + all invit
-
-
-//todo : changer d'endroit
 
     //public static 
     function createGroupe($nom, $description)
@@ -84,7 +77,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br/><br/>
-          <a>Changer de pseudo</a><br/><br/>
+        
           <a href="../pages/deconnexion.php">se déconnecter</a><br/><br/>
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>

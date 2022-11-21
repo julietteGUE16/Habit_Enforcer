@@ -1,12 +1,10 @@
 <?php
 
-//todo : pouvoir delete une tâche ??
-echo $_SERVER['DOCUMENT_ROOT'];
+
 include('../model/Task.php');
 include('../model/User.php');
 
 
-echo "test6";
 
 session_start();
 $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;','root', ''); //on créer notre objet PDO pour pouvoir exécuter nos requetes, host --> hebergeur
@@ -51,27 +49,15 @@ if(isset($_POST['btn'])){
             
 
         if(!$daySelect AND  $_POST['periode'] == "hebdomadaire"){
-          //TODO : le replacer correctement 
           echo "<script>alert('il faut selectionner un jour !')</script>";
-          ?>
-        
-          <?php
-
         } else {
-          
           $UpdateUser = $bdd->prepare(' UPDATE users SET last_task_creation = ?  WHERE id_user = ? ');
-         $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
-         echo "test";
-         $_SESSION['last_task_creation'] = $currentDate;
-        
+          $UpdateUser->execute(array($currentDate, $_SESSION['id_user']));
+          echo "test";
+          $_SESSION['last_task_creation'] = $currentDate;
           $task = new Task(null,$isvalid,$name, $category, $difficulty, $id_user, $isdaily, $jour,null);
           $task->addTaskToDataBase();        
-
-
-
-          /*------------------------------*/
-         //TODO : insert dans notre current user la date de last creat task
-         header('Location: menu.php');
+          header('Location: menu.php');
         }
         
     }else{
@@ -119,7 +105,7 @@ if(isset($_POST['btn'])){
       <div class="form-popup" id="popupForm">
         <form action="/action_page.php" class="form-container">
           <h2>Mon compte</h2><br/><br/>
-          <a>Changer de pseudo</a><br/><br/>
+        
           <a href="../pages/deconnexion.php">se déconnecter</a><br/><br/>
           <button type="button" class="btncancel" onclick="closeForm()">Fermer</button>
         </form>

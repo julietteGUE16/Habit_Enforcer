@@ -108,9 +108,12 @@ class Task
     }
 
 
+  
 
     public static function setvalidtask($listid, $listdif){ //valid/retire validation une fois submit et met à jour le last_score
+   
     $i = 0;
+    
     $calcul = 0;
     foreach ($listid as $value) 
     { 
