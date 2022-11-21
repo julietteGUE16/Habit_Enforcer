@@ -53,5 +53,5 @@ $UpdateUser->execute(array(NULL, $_SESSION['id_user']));
 
 
 
-//header('Location: menu.php');
+header('Location: menu.php');
 ?>
