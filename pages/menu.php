@@ -26,7 +26,6 @@ if($_SESSION['id_group'] == -1 ){
     }
     $diff = (strtotime($currentDate) - strtotime($lastvaliddate))/86400;
       if ($diff > $nbJour){
-        echo $diff.",";
         $calcul = $_SESSION['last_score'] - $_SESSION['difficulty'];
         $updateNegScore = $bdd->prepare('UPDATE groupes SET last_score = ? WHERE id_group = ?');
         $updateNegScore->execute(array($calcul, $_SESSION['id_group']));
