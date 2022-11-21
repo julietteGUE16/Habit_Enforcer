@@ -20,10 +20,10 @@ private string $host_pseudo;
  
  public function __construct(int $idUser, string $pseudo, int $idGroup, int $email)
  {
-     $this->$idUser = $idUser;
-     $this->$pseudo = $pseudo;
+     $this->idUser = $idUser;
+     $this->pseudo = $pseudo;
      $this->idGroup = $idGroup;
-     $this->$email = $email;
+     $this->email = $email;
  }
 
  

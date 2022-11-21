@@ -28,7 +28,6 @@ if($_SESSION['know_delete'] == 1 ){
       
           //todo: ...verif si tache valid sinon isvalid = false
         $isValid = true;
-    
         //todo :recup difficulté pour faire perdre des points
         $point=0; //calculer les points perdu
 
@@ -75,7 +74,7 @@ if($_SESSION['know_delete'] == 1 ){
  
 
   if($_SESSION['last_score']< 0){    
-    
+
     $_SESSION['know_delete'] = 0;
     //change know_delete for next connexion
     $UpdateUser = $bdd->prepare('UPDATE users SET know_delete = ?  WHERE id_group = ? ');
