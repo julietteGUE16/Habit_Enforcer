@@ -10,7 +10,7 @@ $currentday = strftime('%A');
 $currentDate = date("Y-m-d H:i:s");
 
 if($_SESSION['id_group'] == -1 ){
-} else if($_SESSION['id_group'] != null ){
+} else if($_SESSION['id_group'] != null && $_SESSION['last_task_creation'] != $currentDate){ 
   $recupValidTask = $bdd->prepare('SELECT * FROM tasks WHERE id_user = ?');
   $recupValidTask->execute(array($_SESSION['id_user']));
   $fetchVT = $recupValidTask->fetchAll();
@@ -24,7 +24,7 @@ if($_SESSION['id_group'] == -1 ){
       $nbJour = 7;
     }
     $diff = (strtotime($currentDate) - strtotime($lastvaliddate))/86400;
-      if ($diff > $nbJour){
+      if ($diff > $nbJour && $lastvaliddate != null){
         $calcul = $_SESSION['last_score'] - $_SESSION['difficulty'];
         $updateNegScore = $bdd->prepare('UPDATE groupes SET last_score = ? WHERE id_group = ?');
         $updateNegScore->execute(array($calcul, $_SESSION['id_group']));
@@ -33,11 +33,11 @@ if($_SESSION['id_group'] == -1 ){
   }
 
 
-  if($_SESSION['last_score']< 0){
+if($_SESSION['last_score']< 0){
     $deleteGroup= $bdd->prepare('DELETE FROM groupes WHERE id_group = ? ');
     $deleteGroup->execute(array($_SESSION['id_group']));
     $_SESSION['id_group'] = null;
-  } 
+  }
 }
 
 ?>

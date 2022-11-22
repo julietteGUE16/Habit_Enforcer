@@ -26,7 +26,7 @@ $bdd = new PDO('mysql:host=localhost;dbname=bdd_tarootyn;charset=utf8;', 'root',
         $fetch = $recupGroup->fetch();
         if ($recupGroup->rowCount() > 0) {
             $_SESSION['id_group'] = $fetch['id_group'];
-            $_SESSION['last_score'] =  0;
+            $_SESSION['last_score'] =  0;//pas trop le choix à cause de l'erreur de l'execution en reload;
             $_SESSION['previous_score'] =  0;
             $_SESSION['name_group'] = $nom;
             $_SESSION['description'] = $description;
